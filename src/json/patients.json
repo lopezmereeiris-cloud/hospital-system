@@ -1,0 +1,167 @@
+[
+  {
+    "patient_id": "P-001",
+    "name": "Juan Dela Cruz",
+    "age": 42,
+    "gender": "Male",
+    "philhealth_number": "77-403350711-9",
+    "contact_number": "09441493381",
+    "address": "La Trinidad, Benguet",
+    "status": "Admitted",
+    "last_visit": "2025-08-11"
+  },
+  {
+    "patient_id": "P-002",
+    "name": "Maria Santos",
+    "age": 48,
+    "gender": "Female",
+    "philhealth_number": "15-529267240-6",
+    "contact_number": "09185594280",
+    "address": "Itogon, Benguet",
+    "status": "Active",
+    "last_visit": "2025-10-05"
+  },
+  {
+    "patient_id": "P-003",
+    "name": "Pedro Reyes",
+    "age": 50,
+    "gender": "Male",
+    "philhealth_number": "69-339631997-5",
+    "contact_number": "09293262363",
+    "address": "Itogon, Benguet",
+    "status": "Discharged",
+    "last_visit": "2025-03-29"
+  },
+  {
+    "patient_id": "P-004",
+    "name": "Ana Garcia",
+    "age": 66,
+    "gender": "Female",
+    "philhealth_number": "53-706511560-7",
+    "contact_number": "09156698849",
+    "address": "Baguio City, Benguet",
+    "status": "Active",
+    "last_visit": "2025-07-26"
+  },
+  {
+    "patient_id": "P-005",
+    "name": "Carlos Mendoza",
+    "age": 51,
+    "gender": "Male",
+    "philhealth_number": "24-779238437-3",
+    "contact_number": "09678146960",
+    "address": "Baguio City, Benguet",
+    "status": "Active",
+    "last_visit": "2025-03-01"
+  },
+  {
+    "patient_id": "P-006",
+    "name": "Liza Ramos",
+    "age": 47,
+    "gender": "Female",
+    "philhealth_number": "53-879463853-8",
+    "contact_number": "09167883199",
+    "address": "Baguio City, Benguet",
+    "status": "Active",
+    "last_visit": "2025-07-18"
+  },
+  {
+    "patient_id": "P-007",
+    "name": "Mark Lopez",
+    "age": 45,
+    "gender": "Male",
+    "philhealth_number": "59-922039404-5",
+    "contact_number": "09842636644",
+    "address": "Itogon, Benguet",
+    "status": "Active",
+    "last_visit": "2025-05-04"
+  },
+  {
+    "patient_id": "P-008",
+    "name": "Joy Castillo",
+    "age": 56,
+    "gender": "Female",
+    "philhealth_number": "60-496202736-0",
+    "contact_number": "09430025391",
+    "address": "Baguio City, Benguet",
+    "status": "Discharged",
+    "last_visit": "2026-02-19"
+  },
+  {
+    "patient_id": "P-009",
+    "name": "Rene Bautista",
+    "age": 18,
+    "gender": "Male",
+    "philhealth_number": "34-783899074-6",
+    "contact_number": "09750925951",
+    "address": "Baguio City, Benguet",
+    "status": "Active",
+    "last_visit": "2025-03-12"
+  },
+  {
+    "patient_id": "P-010",
+    "name": "Ella Flores",
+    "age": 54,
+    "gender": "Female",
+    "philhealth_number": "91-510756537-3",
+    "contact_number": "09747297714",
+    "address": "Tuba, Benguet",
+    "status": "Discharged",
+    "last_visit": "2025-05-03"
+  },
+  {
+    "patient_id": "P-011",
+    "name": "Nico Navarro",
+    "age": 61,
+    "gender": "Male",
+    "philhealth_number": "69-234598890-5",
+    "contact_number": "09161102661",
+    "address": "La Trinidad, Benguet",
+    "status": "Active",
+    "last_visit": "2025-03-25"
+  },
+  {
+    "patient_id": "P-012",
+    "name": "Mila Torres",
+    "age": 28,
+    "gender": "Female",
+    "philhealth_number": "75-795048695-4",
+    "contact_number": "09922908814",
+    "address": "La Trinidad, Benguet",
+    "status": "Admitted",
+    "last_visit": "2025-09-20"
+  },
+  {
+    "patient_id": "P-013",
+    "name": "Leo Fernandez",
+    "age": 45,
+    "gender": "Male",
+    "philhealth_number": "13-245972181-9",
+    "contact_number": "09616030798",
+    "address": "Tuba, Benguet",
+    "status": "Discharged",
+    "last_visit": "2025-09-06"
+  },
+  {
+    "patient_id": "P-014",
+    "name": "Grace Villanueva",
+    "age": 45,
+    "gender": "Female",
+    "philhealth_number": "72-809288596-4",
+    "contact_number": "09885244257",
+    "address": "Baguio City, Benguet",
+    "status": "Admitted",
+    "last_visit": "2025-05-22"
+  },
+  {
+    "patient_id": "P-015",
+    "name": "Paolo Aquino",
+    "age": 21,
+    "gender": "Male",
+    "philhealth_number": "15-855360356-9",
+    "contact_number": "09643110922",
+    "address": "Tuba, Benguet",
+    "status": "Admitted",
+    "last_visit": "2025-04-04"
+  }
+]

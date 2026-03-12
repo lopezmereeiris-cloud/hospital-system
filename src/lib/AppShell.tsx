@@ -39,6 +39,7 @@ const ContentArea = styled("main", {
 const pageTitles: Record<string, string> = {
   "/": "Dashboard",
   "/yakap": "YAKAP",
+  "/registration": "Patient Registration",
   "/inventory": "Medicine Inventory",
   "/rooms": "Room Management",
   "/doctors": "Doctor Directory",
