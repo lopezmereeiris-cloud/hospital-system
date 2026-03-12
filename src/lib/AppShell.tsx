@@ -40,6 +40,7 @@ const pageTitles: Record<string, string> = {
   "/": "Dashboard",
   "/yakap": "YAKAP",
   "/registration": "Patient Registration",
+  "/appointments": "Appointments",
   "/inventory": "Medicine Inventory",
   "/rooms": "Room Management",
   "/doctors": "Doctor Directory",

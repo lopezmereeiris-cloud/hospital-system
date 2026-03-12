@@ -8,6 +8,7 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import LocalHospitalRoundedIcon from "@mui/icons-material/LocalHospitalRounded";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 import Person2Icon from '@mui/icons-material/Person2';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 export const navIcons: Record<string, React.ReactElement> = {
   dashboard: <DashboardRoundedIcon sx={{ fontSize: 22 }} />,
@@ -17,5 +18,6 @@ export const navIcons: Record<string, React.ReactElement> = {
   doctors: <PersonRoundedIcon sx={{ fontSize: 22 }} />,
   billing: <ReceiptLongRoundedIcon sx={{ fontSize: 22 }} />,
   hospital: <LocalHospitalRoundedIcon sx={{ fontSize: 28, color: "#4361EE" }} />,
+  calendar: <CalendarMonthIcon sx={{ fontSize: 22 }} />,
   Person2: <Person2Icon sx={{ fontSize: 22 }} />,
 };
