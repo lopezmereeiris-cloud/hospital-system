@@ -30,7 +30,7 @@ import roomsData from "@/json/rooms.json";
 import roomTypesData from "@/json/roomTypes.json";
 import schedulesData from "@/json/roomSchedules.json";
 
-type TabValue = "booking" | "room-map" | "room-types";
+type TabValue = "room-list" | "room-map" | "room-types";
 
 const SCHEDULE_STATUS_MAP: Record<RoomSchedule["type"], RoomStatus> = {
   occupied: "Occupied",
@@ -70,7 +70,7 @@ export default function RoomsPage() {
   const [schedules, setSchedules] = useState<RoomSchedule[]>(
     schedulesData as RoomSchedule[]
   );
-  const [tab, setTab] = useState<TabValue>("booking");
+  const [tab, setTab] = useState<TabValue>("room-list");
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
@@ -177,7 +177,7 @@ export default function RoomsPage() {
   };
 
   const tabOptions: { value: TabValue; label: string }[] = [
-    { value: "booking", label: "Booking" },
+    { value: "room-list", label: "Room Lists" },
     { value: "room-map", label: "Room Map" },
     { value: "room-types", label: "Room Types" },
   ];
@@ -231,22 +231,22 @@ export default function RoomsPage() {
         <PremiumFilter options={tabOptions} active={tab} onChange={setTab} />
       </div>
 
-      {tab === "booking" && (
+      {tab === "room-list" && (
+        <RoomMap
+          rooms={rooms}
+          roomTypes={roomTypes}
+          onRoomClick={handleRoomClick}
+          onAddRoom={() => setAddOpen(true)}
+        />
+      )}
+
+      {tab === "room-map" && (
         <RoomTimeline
           rooms={rooms}
           schedules={schedules}
           roomTypes={roomTypes}
           onCellClick={handleCellClick}
           onCreateBooking={handleCreateBooking}
-        />
-      )}
-
-      {tab === "room-map" && (
-        <RoomMap
-          rooms={rooms}
-          roomTypes={roomTypes}
-          onRoomClick={handleRoomClick}
-          onAddRoom={() => setAddOpen(true)}
         />
       )}
 

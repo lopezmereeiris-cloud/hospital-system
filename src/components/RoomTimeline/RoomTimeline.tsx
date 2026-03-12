@@ -9,9 +9,11 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { alpha } from "@mui/material/styles";
 import PremiumFilter from "@/components/PremiumFilter";
 import {
@@ -94,8 +96,6 @@ const STATUS_SHORT: Record<RoomSchedule["type"], string> = {
   maintenance: "MT",
   cleaning: "CL",
 };
-
-type BookingMode = "single-day" | "date-range";
 
 function parseDateKey(value: string): Date {
   const [year, month, day] = value.split("-").map(Number);
@@ -205,7 +205,6 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
 }) => {
   const [range, setRange] = useState<(typeof RANGE_OPTIONS)[number]["value"]>("14d");
   const [bookingForm, setBookingForm] = useState<BookingForm | null>(null);
-  const [bookingMode, setBookingMode] = useState<BookingMode>("date-range");
   const [bookingError, setBookingError] = useState<string>("");
 
   const timelineStart = useMemo(() => getTimelineStartDate(schedules), [schedules]);
@@ -360,7 +359,6 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
 
   const openBookingForm = (room: Room, date: string) => {
     setBookingError("");
-    setBookingMode("date-range");
     setBookingForm({
       roomId: room.roomId,
       type: "occupied",
@@ -470,12 +468,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
         return previous;
       }
 
-      const nextEnd =
-        bookingMode === "single-day"
-          ? value
-          : previous.endDate < value
-            ? value
-            : previous.endDate;
+      const nextEnd = previous.endDate < value ? value : previous.endDate;
 
       return {
         ...previous,
@@ -483,20 +476,6 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
         endDate: nextEnd,
       };
     });
-  };
-
-  const updateMode = (mode: BookingMode) => {
-    setBookingMode(mode);
-    if (mode === "single-day") {
-      setBookingForm((previous) =>
-        previous
-          ? {
-              ...previous,
-              endDate: previous.startDate,
-            }
-          : previous
-      );
-    }
   };
 
   const modalFieldSx = {
@@ -531,26 +510,6 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
     fontWeight: 500,
     lineHeight: 1.5,
   };
-
-  const getModeButtonSx = (active: boolean) => ({
-    textTransform: "none",
-    borderRadius: "11px",
-    minHeight: "44px",
-    fontWeight: 700,
-    fontSize: "1rem",
-    color: "#FFFFFF",
-    background: active
-      ? "linear-gradient(135deg, #4D95B4 0%, #226E8E 100%)"
-      : "linear-gradient(135deg, #6AAECC 0%, #2D7A9D 100%)",
-    border: active ? "1px solid #226E8E" : "1px solid #3A89AA",
-    boxShadow: "none",
-    "&:hover": {
-      boxShadow: "none",
-      background: active
-        ? "linear-gradient(135deg, #4588A6 0%, #1F6785 100%)"
-        : "linear-gradient(135deg, #5FA4C2 0%, #286F90 100%)",
-    },
-  });
 
   return (
     <TimelineContainer elevation={0}>
@@ -748,14 +707,9 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                 {bookingRoom ? ` - ${bookingRoom.zone} - Capacity ${bookingRoom.capacity}` : ""}
               </Typography>
             </Box>
-            <Button
-              size="small"
-              variant="text"
-              onClick={closeBookingForm}
-              sx={{ textTransform: "none", minWidth: "auto", color: "#5F6B76", fontWeight: 600 }}
-            >
-              Close
-            </Button>
+            <IconButton onClick={closeBookingForm} size="small">
+              <CloseRoundedIcon />
+            </IconButton>
           </Stack>
         </DialogTitle>
 
@@ -773,25 +727,6 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                   {bookingError}
                 </Alert>
               )}
-
-              <Stack direction={{ xs: "column", sm: "row" }} spacing={1.2} sx={{ mb: 2.2 }}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={() => updateMode("single-day")}
-                  sx={getModeButtonSx(bookingMode === "single-day")}
-                >
-                  One Day
-                </Button>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={() => updateMode("date-range")}
-                  sx={getModeButtonSx(bookingMode === "date-range")}
-                >
-                  Schedule Range
-                </Button>
-              </Stack>
 
               <Typography sx={{ ...modalHelperTextSx, mb: 1.8 }}>
                 Assign room occupancy, maintenance, or cleaning schedule using hospital room workflow.
@@ -878,7 +813,6 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                   size="small"
                   fullWidth
                   InputLabelProps={{ shrink: true }}
-                  disabled={bookingMode === "single-day"}
                   sx={modalFieldSx}
                 />
               </Stack>

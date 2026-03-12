@@ -6,7 +6,6 @@ import List from "@mui/material/List";
 import Tooltip from "@mui/material/Tooltip";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import Person2Icon from '@mui/icons-material/Person2';
 import KeyboardDoubleArrowLeftRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowLeftRounded";
 import { SidebarProps, NavItem } from "./interface";
 import {
@@ -28,6 +27,7 @@ const navItems: NavItem[] = [
   { label: "Inventory", path: "/inventory", icon: "inventory" },
   { label: "Rooms", path: "/rooms", icon: "rooms" },
   { label: "Doctors", path: "/doctors", icon: "doctors" },
+  { label: "Billing", path: "/billing", icon: "billing" },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({

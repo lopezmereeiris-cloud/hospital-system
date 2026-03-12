@@ -43,6 +43,7 @@ const pageTitles: Record<string, string> = {
   "/inventory": "Medicine Inventory",
   "/rooms": "Room Management",
   "/doctors": "Doctor Directory",
+  "/billing": "Billing",
 };
 
 export default function AppShell({ children }: { children: React.ReactNode }) {

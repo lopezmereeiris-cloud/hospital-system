@@ -33,18 +33,18 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
 
   const handleChange =
     (field: string) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setForm((prev) => ({ ...prev, [field]: e.target.value }));
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setForm((previous) => ({ ...previous, [field]: event.target.value }));
     };
 
   return (
     <TypeManagerContainer elevation={0}>
       <TypeManagerToolbar>
         <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
-          Room Types
+          Room Type Directory
         </div>
         <SmallButton onClick={() => setShowForm(!showForm)}>
-          {showForm ? "Close" : "+ Create Type"}
+          {showForm ? "Close Form" : "+ Create Type"}
         </SmallButton>
       </TypeManagerToolbar>
 
@@ -52,14 +52,15 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
         <CreateTypeForm>
           <div
             style={{
-              fontSize: "0.82rem",
-              fontWeight: 600,
+              fontSize: "0.95rem",
+              fontWeight: 700,
               color: "#1A1D1F",
-              marginBottom: 4,
+              marginBottom: 6,
             }}
           >
             New Room Type
           </div>
+
           <FormRow>
             <FormField>
               <FormLabel>Type Key</FormLabel>
@@ -88,6 +89,7 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
               />
             </FormField>
           </FormRow>
+
           <FormField>
             <FormLabel>Amenities (comma separated)</FormLabel>
             <FormInput
@@ -96,14 +98,15 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
               onChange={handleChange("amenities")}
             />
           </FormField>
+
           <FormField>
             <FormLabel>Color</FormLabel>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <input
                 type="color"
                 value={form.color}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, color: e.target.value }))
+                onChange={(event) =>
+                  setForm((previous) => ({ ...previous, color: event.target.value }))
                 }
                 style={{
                   width: 36,
@@ -114,11 +117,10 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
                   padding: 2,
                 }}
               />
-              <span style={{ fontSize: "0.75rem", color: "#6F767E" }}>
-                {form.color}
-              </span>
+              <span style={{ fontSize: "0.75rem", color: "#6F767E" }}>{form.color}</span>
             </div>
           </FormField>
+
           <SmallButton
             onClick={() => {
               setShowForm(false);
@@ -137,22 +139,22 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
       )}
 
       <TypeGrid>
-        {roomTypes.map((rt) => (
-          <TypeCard key={rt.key} typeColor={rt.color}>
+        {roomTypes.map((roomType) => (
+          <TypeCard key={roomType.key} typeColor={roomType.color}>
             <TypeCardHeader>
-              <TypeCardTitle>{rt.label}</TypeCardTitle>
-              <ActiveBadge isActive={rt.active}>
-                {rt.active ? "Active" : "Inactive"}
+              <TypeCardTitle>{roomType.label}</TypeCardTitle>
+              <ActiveBadge isActive={roomType.active}>
+                {roomType.active ? "Active" : "Inactive"}
               </ActiveBadge>
             </TypeCardHeader>
             <TypeCardMeta>
-              Key: <strong>{rt.key}</strong> · Default Capacity:{" "}
-              <strong>{rt.defaultCapacity}</strong>
+              Key: <strong>{roomType.key}</strong> | Default Capacity:{" "}
+              <strong>{roomType.defaultCapacity}</strong>
             </TypeCardMeta>
             <AmenityList>
-              {rt.amenities.map((am) => (
-                <AmenityChip key={am} chipColor={rt.color}>
-                  {am}
+              {roomType.amenities.map((amenity) => (
+                <AmenityChip key={amenity} chipColor={roomType.color}>
+                  {amenity}
                 </AmenityChip>
               ))}
             </AmenityList>

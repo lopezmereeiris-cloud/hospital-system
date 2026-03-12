@@ -47,9 +47,7 @@ const RegisterPatientModal: React.FC<RegisterPatientModalProps> = ({
           </IconButton>
         </ModalHeader>
 
-        <SectionTitle>
-          PERSONAL INFORMATION
-        </SectionTitle>
+        <SectionTitle>PERSONAL INFORMATION</SectionTitle>
 
         <FormGrid>
           <TextField label="Patient ID" fullWidth />
@@ -63,9 +61,7 @@ const RegisterPatientModal: React.FC<RegisterPatientModalProps> = ({
 
         <SectionDivider />
 
-        <SectionTitle>
-            CONTACT INFORMATION        
-        </SectionTitle>
+        <SectionTitle>CONTACT INFORMATION</SectionTitle>
 
         <FormGrid>
           <TextField label="Contact Number" fullWidth />
@@ -79,9 +75,7 @@ const RegisterPatientModal: React.FC<RegisterPatientModalProps> = ({
 
         <SectionDivider />
 
-        <SectionTitle>
-          PATIENT STATUS
-        </SectionTitle>
+        <SectionTitle>PATIENT STATUS</SectionTitle>
 
         <FormGrid>
           <TextField label="Status" select fullWidth>
@@ -113,23 +107,23 @@ const RegisterPatientModal: React.FC<RegisterPatientModalProps> = ({
             Cancel
           </Button>
 
-        <Button
-  variant="contained"
-  sx={{
-    backgroundColor: "#4361EE !important",
-    color: "#FFFFFF !important",
-    textTransform: "none",
-    borderRadius: "10px",
-    px: 2.5,
-    py: 1,
-    fontWeight: 600,
-    "&:hover": {
-      backgroundColor: "#3A56D4 !important",
-    },
-  }}
->
-  Save Patient
-</Button>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#4361EE !important",
+              color: "#FFFFFF !important",
+              textTransform: "none",
+              borderRadius: "10px",
+              px: 2.5,
+              py: 1,
+              fontWeight: 600,
+              "&:hover": {
+                backgroundColor: "#3A56D4 !important",
+              },
+            }}
+          >
+            Save Patient
+          </Button>
         </FormActions>
       </DialogContent>
     </Dialog>
