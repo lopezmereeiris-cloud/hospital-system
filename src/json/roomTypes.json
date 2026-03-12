@@ -1,0 +1,74 @@
+[
+  {
+    "key": "consultation",
+    "label": "Consultation",
+    "defaultCapacity": 1,
+    "amenities": ["Examination Table", "BP Monitor", "Stethoscope"],
+    "active": true,
+    "color": "#4361EE"
+  },
+  {
+    "key": "dental",
+    "label": "Dental",
+    "defaultCapacity": 1,
+    "amenities": ["Dental Chair", "X-Ray Unit", "Sterilizer"],
+    "active": true,
+    "color": "#7C3AED"
+  },
+  {
+    "key": "laboratory",
+    "label": "Laboratory",
+    "defaultCapacity": 4,
+    "amenities": ["Centrifuge", "Microscope", "Analyzers"],
+    "active": true,
+    "color": "#36BFFA"
+  },
+  {
+    "key": "radiology",
+    "label": "Radiology",
+    "defaultCapacity": 1,
+    "amenities": ["Imaging Equipment", "Lead Shielding", "Film Processor"],
+    "active": true,
+    "color": "#F79009"
+  },
+  {
+    "key": "emergency",
+    "label": "Emergency",
+    "defaultCapacity": 2,
+    "amenities": ["Trauma Bed", "Cardiac Monitor", "Crash Cart", "Defibrillator"],
+    "active": true,
+    "color": "#F04438"
+  },
+  {
+    "key": "surgical",
+    "label": "Surgical",
+    "defaultCapacity": 1,
+    "amenities": ["Operating Table", "Surgical Light", "Anesthesia Machine"],
+    "active": true,
+    "color": "#B42318"
+  },
+  {
+    "key": "recovery",
+    "label": "Recovery",
+    "defaultCapacity": 2,
+    "amenities": ["Adjustable Bed", "Patient Monitor", "IV Stand"],
+    "active": true,
+    "color": "#12B76A"
+  },
+  {
+    "key": "physical-therapy",
+    "label": "Physical Therapy",
+    "defaultCapacity": 3,
+    "amenities": ["Treadmill", "Exercise Equipment", "Treatment Bed"],
+    "active": true,
+    "color": "#027A48"
+  },
+  {
+    "key": "isolation",
+    "label": "Isolation",
+    "defaultCapacity": 1,
+    "amenities": ["HEPA Filter", "Negative Pressure", "Intercom"],
+    "active": true,
+    "color": "#475467"
+  }
+]

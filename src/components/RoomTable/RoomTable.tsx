@@ -59,7 +59,6 @@ const RoomTable: React.FC<RoomTableProps> = ({ rooms }) => {
               <StyledHeaderCell>Room Name</StyledHeaderCell>
               <StyledHeaderCell>Type</StyledHeaderCell>
               <StyledHeaderCell>Floor</StyledHeaderCell>
-              <StyledHeaderCell>Building</StyledHeaderCell>
               <StyledHeaderCell>Wing</StyledHeaderCell>
               <StyledHeaderCell>Status</StyledHeaderCell>
               <StyledHeaderCell>Description</StyledHeaderCell>
@@ -73,13 +72,12 @@ const RoomTable: React.FC<RoomTableProps> = ({ rooms }) => {
                 <StyledBodyCell>
                   <Chip label={room.roomType} size="small" variant="outlined" />
                 </StyledBodyCell>
-                <StyledBodyCell>{room.floorNumber}</StyledBodyCell>
-                <StyledBodyCell>{room.building}</StyledBodyCell>
+                <StyledBodyCell>{room.floor}</StyledBodyCell>
                 <StyledBodyCell>{room.wing}</StyledBodyCell>
                 <StyledBodyCell>
                   <Chip
-                    label={room.roomStatus}
-                    color={statusColor[room.roomStatus] || "default"}
+                    label={room.status}
+                    color={statusColor[room.status] || "default"}
                     size="small"
                   />
                 </StyledBodyCell>
