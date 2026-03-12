@@ -23,7 +23,7 @@ import { navIcons } from "./icons";
 const navItems: NavItem[] = [
   { label: "Dashboard", path: "/", icon: "dashboard" },
   { label: "YAKAP", path: "/yakap", icon: "yakap" },
-  { label: "Patient Registration", path: "/registration", icon: "Person2" },
+  { label: "Patient Registration", path: "/registration", icon: "register" },
   { label: "Appointments", path: "/appointments", icon: "calendar" },
   { label: "Inventory", path: "/inventory", icon: "inventory" },
   { label: "Rooms", path: "/rooms", icon: "rooms" },
