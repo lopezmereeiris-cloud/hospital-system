@@ -1,0 +1,17 @@
+"use client";
+
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import VolunteerActivismRoundedIcon from "@mui/icons-material/VolunteerActivismRounded";
+import MedicationRoundedIcon from "@mui/icons-material/MedicationRounded";
+import MeetingRoomRoundedIcon from "@mui/icons-material/MeetingRoomRounded";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import LocalHospitalRoundedIcon from "@mui/icons-material/LocalHospitalRounded";
+
+export const navIcons: Record<string, React.ReactElement> = {
+  dashboard: <DashboardRoundedIcon sx={{ fontSize: 22 }} />,
+  yakap: <VolunteerActivismRoundedIcon sx={{ fontSize: 22 }} />,
+  inventory: <MedicationRoundedIcon sx={{ fontSize: 22 }} />,
+  rooms: <MeetingRoomRoundedIcon sx={{ fontSize: 22 }} />,
+  doctors: <PersonRoundedIcon sx={{ fontSize: 22 }} />,
+  hospital: <LocalHospitalRoundedIcon sx={{ fontSize: 28, color: "#4361EE" }} />,
+};

@@ -1,0 +1,46 @@
+{
+  "totalPatients": 1284,
+  "availableRooms": {
+    "general": 45,
+    "private": 12,
+    "icu": 4,
+    "pediatric": 8,
+    "maternity": 6,
+    "total": 75
+  },
+  "bedOccupancy": {
+    "totalBeds": 320,
+    "occupiedBeds": 247,
+    "availableBeds": 73,
+    "occupancyRate": 77.2
+  },
+  "lowInventoryAlerts": 14,
+  "occupancyByMonth": [
+    { "month": "Jul", "rate": 68 },
+    { "month": "Aug", "rate": 72 },
+    { "month": "Sep", "rate": 75 },
+    { "month": "Oct", "rate": 82 },
+    { "month": "Nov", "rate": 79 },
+    { "month": "Dec", "rate": 85 },
+    { "month": "Jan", "rate": 77 },
+    { "month": "Feb", "rate": 74 },
+    { "month": "Mar", "rate": 80 }
+  ],
+  "roomAvailability": [
+    { "category": "General", "available": 45, "occupied": 80 },
+    { "category": "Private", "available": 12, "occupied": 28 },
+    { "category": "ICU", "available": 4, "occupied": 26 },
+    { "category": "Pediatric", "available": 8, "occupied": 22 },
+    { "category": "Maternity", "available": 6, "occupied": 14 }
+  ],
+  "inventoryAlerts": [
+    { "id": 1, "medicine": "Amoxicillin 500mg", "type": "low_stock", "quantity": 12, "reorderLevel": 50 },
+    { "id": 2, "medicine": "Ibuprofen 200mg", "type": "near_expiry", "expiryDate": "2026-04-15", "quantity": 200 },
+    { "id": 3, "medicine": "Metformin 850mg", "type": "low_stock", "quantity": 8, "reorderLevel": 40 },
+    { "id": 4, "medicine": "Paracetamol 500mg", "type": "expired", "expiryDate": "2026-02-28", "quantity": 45 },
+    { "id": 5, "medicine": "Cetirizine 10mg", "type": "near_expiry", "expiryDate": "2026-04-01", "quantity": 150 },
+    { "id": 6, "medicine": "Omeprazole 20mg", "type": "low_stock", "quantity": 5, "reorderLevel": 30 },
+    { "id": 7, "medicine": "Losartan 50mg", "type": "near_expiry", "expiryDate": "2026-03-25", "quantity": 88 },
+    { "id": 8, "medicine": "Salbutamol Inhaler", "type": "low_stock", "quantity": 3, "reorderLevel": 20 }
+  ]
+}

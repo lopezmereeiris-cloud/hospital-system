@@ -1,0 +1,122 @@
+[
+  {
+    "roomId": "RM-001",
+    "roomName": "Consultation Room 1",
+    "roomType": "Consultation",
+    "floorNumber": 1,
+    "building": "Main Building",
+    "wing": "East Wing",
+    "roomStatus": "Active",
+    "description": "General consultation room with standard medical equipment and patient examination table."
+  },
+  {
+    "roomId": "RM-002",
+    "roomName": "Consultation Room 2",
+    "roomType": "Consultation",
+    "floorNumber": 1,
+    "building": "Main Building",
+    "wing": "East Wing",
+    "roomStatus": "Active",
+    "description": "General consultation room adjacent to the nurse station."
+  },
+  {
+    "roomId": "RM-003",
+    "roomName": "Dental Room A",
+    "roomType": "Dental",
+    "floorNumber": 2,
+    "building": "Main Building",
+    "wing": "West Wing",
+    "roomStatus": "Active",
+    "description": "Fully equipped dental room with dental chair, X-ray unit, and sterilization equipment."
+  },
+  {
+    "roomId": "RM-004",
+    "roomName": "Dental Room B",
+    "roomType": "Dental",
+    "floorNumber": 2,
+    "building": "Main Building",
+    "wing": "West Wing",
+    "roomStatus": "Under Maintenance",
+    "description": "Dental room currently undergoing equipment upgrade and renovation."
+  },
+  {
+    "roomId": "RM-005",
+    "roomName": "Clinical Laboratory",
+    "roomType": "Laboratory",
+    "floorNumber": 1,
+    "building": "Main Building",
+    "wing": "North Wing",
+    "roomStatus": "Active",
+    "description": "Full-service clinical laboratory for hematology, urinalysis, and blood chemistry."
+  },
+  {
+    "roomId": "RM-006",
+    "roomName": "Physical Therapy Room 1",
+    "roomType": "Physical Therapy",
+    "floorNumber": 3,
+    "building": "Annex Building",
+    "wing": "South Wing",
+    "roomStatus": "Active",
+    "description": "Spacious physical therapy room with treadmill, exercise equipment, and treatment beds."
+  },
+  {
+    "roomId": "RM-007",
+    "roomName": "X-Ray Room",
+    "roomType": "Radiology",
+    "floorNumber": 1,
+    "building": "Main Building",
+    "wing": "North Wing",
+    "roomStatus": "Active",
+    "description": "Digital X-ray room with lead-lined walls and modern imaging equipment."
+  },
+  {
+    "roomId": "RM-008",
+    "roomName": "Ultrasound Room",
+    "roomType": "Radiology",
+    "floorNumber": 1,
+    "building": "Main Building",
+    "wing": "North Wing",
+    "roomStatus": "Active",
+    "description": "Diagnostic ultrasound room for prenatal, abdominal, and general imaging."
+  },
+  {
+    "roomId": "RM-009",
+    "roomName": "Emergency Treatment Room",
+    "roomType": "Emergency",
+    "floorNumber": 1,
+    "building": "Main Building",
+    "wing": "East Wing",
+    "roomStatus": "Active",
+    "description": "Emergency treatment room with trauma beds, cardiac monitor, and crash cart."
+  },
+  {
+    "roomId": "RM-010",
+    "roomName": "Minor Surgery Room",
+    "roomType": "Surgical",
+    "floorNumber": 2,
+    "building": "Main Building",
+    "wing": "East Wing",
+    "roomStatus": "Inactive",
+    "description": "Room for minor surgical procedures. Currently not in use pending new equipment delivery."
+  },
+  {
+    "roomId": "RM-011",
+    "roomName": "OB-GYN Clinic",
+    "roomType": "Consultation",
+    "floorNumber": 2,
+    "building": "Main Building",
+    "wing": "West Wing",
+    "roomStatus": "Active",
+    "description": "Obstetrics and gynecology clinic room with ultrasound and examination table."
+  },
+  {
+    "roomId": "RM-012",
+    "roomName": "Pediatric Clinic",
+    "roomType": "Consultation",
+    "floorNumber": 2,
+    "building": "Main Building",
+    "wing": "East Wing",
+    "roomStatus": "Active",
+    "description": "Child-friendly pediatric consultation room with growth chart and vaccination area."
+  }
+]
