@@ -6,7 +6,7 @@ import MedicationRoundedIcon from "@mui/icons-material/MedicationRounded";
 import MeetingRoomRoundedIcon from "@mui/icons-material/MeetingRoomRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import LocalHospitalRoundedIcon from "@mui/icons-material/LocalHospitalRounded";
-import Person2Icon from '@mui/icons-material/Person2';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 export const navIcons: Record<string, React.ReactElement> = {
@@ -17,5 +17,5 @@ export const navIcons: Record<string, React.ReactElement> = {
   doctors: <PersonRoundedIcon sx={{ fontSize: 22 }} />,
   hospital: <LocalHospitalRoundedIcon sx={{ fontSize: 28, color: "#4361EE" }} />,
   calendar: <CalendarMonthIcon sx={{ fontSize: 22 }} />,
-  Person2: <Person2Icon sx={{ fontSize: 22 }} />,
+  register: <AssignmentIcon sx={{ fontSize: 22 }} />,
 };
