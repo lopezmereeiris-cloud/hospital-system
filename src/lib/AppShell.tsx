@@ -39,11 +39,7 @@ const ContentArea = styled("main", {
 const pageTitles: Record<string, string> = {
   "/": "Dashboard",
   "/yakap": "YAKAP",
-<<<<<<< HEAD
-  "/yakap/register": "YAKAP Registration",
-=======
   "/registration": "Patient Registration",
->>>>>>> 61be9111fce65c6e8ef6ed3031b0dc4fc2517441
   "/inventory": "Medicine Inventory",
   "/rooms": "Room Management",
   "/doctors": "Doctor Directory",

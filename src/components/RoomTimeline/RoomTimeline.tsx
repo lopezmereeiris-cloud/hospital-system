@@ -499,6 +499,59 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
     }
   };
 
+  const modalFieldSx = {
+    "& .MuiInputLabel-root": {
+      fontSize: "0.82rem",
+      fontWeight: 600,
+      color: "#5F6B76",
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "#4361EE",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "10px",
+      backgroundColor: "#FFFFFF",
+      "& .MuiInputBase-input": {
+        fontSize: "0.82rem",
+        fontWeight: 500,
+      },
+    },
+  };
+
+  const modalSectionTitleSx = {
+    fontSize: "0.95rem",
+    fontWeight: 700,
+    color: "#1A1D1F",
+    mb: 0.8,
+  };
+
+  const modalHelperTextSx = {
+    fontSize: "0.9rem",
+    color: "#5F6B76",
+    fontWeight: 500,
+    lineHeight: 1.5,
+  };
+
+  const getModeButtonSx = (active: boolean) => ({
+    textTransform: "none",
+    borderRadius: "11px",
+    minHeight: "44px",
+    fontWeight: 700,
+    fontSize: "1rem",
+    color: "#FFFFFF",
+    background: active
+      ? "linear-gradient(135deg, #4D95B4 0%, #226E8E 100%)"
+      : "linear-gradient(135deg, #6AAECC 0%, #2D7A9D 100%)",
+    border: active ? "1px solid #226E8E" : "1px solid #3A89AA",
+    boxShadow: "none",
+    "&:hover": {
+      boxShadow: "none",
+      background: active
+        ? "linear-gradient(135deg, #4588A6 0%, #1F6785 100%)"
+        : "linear-gradient(135deg, #5FA4C2 0%, #286F90 100%)",
+    },
+  });
+
   return (
     <TimelineContainer elevation={0}>
       <TimelineToolbar>
@@ -659,14 +712,37 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
         ))}
       </TimelineScrollArea>
 
-      <Dialog open={!!bookingForm} onClose={closeBookingForm} fullWidth maxWidth="lg">
-        <DialogTitle sx={{ pb: 1.5, borderBottom: "1px solid #EAECF0" }}>
-          <Stack direction="row" justifyContent="space-between" alignItems="flex-start" gap={2}>
+      <Dialog
+        open={!!bookingForm}
+        onClose={closeBookingForm}
+        fullWidth
+        maxWidth="lg"
+        PaperProps={{
+          sx: {
+            borderRadius: "16px",
+            overflow: "hidden",
+          },
+        }}
+      >
+        <DialogTitle sx={{ p: 3, pb: 2.4 }}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="flex-start"
+            gap={2}
+            sx={{
+              p: "20px 22px",
+              borderRadius: "16px",
+              background:
+                "linear-gradient(135deg, rgba(13, 138, 63, 0.08) 0%, rgba(13, 138, 63, 0.03) 100%)",
+              border: "1px solid rgba(13, 138, 63, 0.12)",
+            }}
+          >
             <Box>
-              <Typography sx={{ fontSize: "1.1rem", fontWeight: 700, color: "#101828" }}>
+              <Typography sx={{ fontSize: "1.4rem", fontWeight: 700, color: "#1A1D1F", lineHeight: 1.2 }}>
                 Room #{bookingRoom?.roomNumber || "--"} Admission Scheduling
               </Typography>
-              <Typography sx={{ mt: 0.6, fontSize: "0.78rem", color: "#667085" }}>
+              <Typography sx={{ mt: 1, ...modalHelperTextSx }}>
                 {bookingRoom?.roomName || ""}
                 {bookingRoomType ? ` - ${bookingRoomType.label}` : ""}
                 {bookingRoom ? ` - ${bookingRoom.zone} - Capacity ${bookingRoom.capacity}` : ""}
@@ -676,7 +752,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
               size="small"
               variant="text"
               onClick={closeBookingForm}
-              sx={{ textTransform: "none", minWidth: "auto" }}
+              sx={{ textTransform: "none", minWidth: "auto", color: "#5F6B76", fontWeight: 600 }}
             >
               Close
             </Button>
@@ -691,33 +767,33 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
               minHeight: { md: 620 },
             }}
           >
-            <Box sx={{ p: { xs: 2, md: 3 } }}>
+            <Box sx={{ p: { xs: 2.5, md: 3.25 } }}>
               {bookingError && (
                 <Alert severity="error" sx={{ mb: 2 }}>
                   {bookingError}
                 </Alert>
               )}
 
-              <Stack direction={{ xs: "column", sm: "row" }} spacing={1.2} sx={{ mb: 2 }}>
+              <Stack direction={{ xs: "column", sm: "row" }} spacing={1.2} sx={{ mb: 2.2 }}>
                 <Button
                   fullWidth
-                  variant={bookingMode === "single-day" ? "outlined" : "contained"}
+                  variant="contained"
                   onClick={() => updateMode("single-day")}
-                  sx={{ textTransform: "none", borderRadius: "10px", fontWeight: 700 }}
+                  sx={getModeButtonSx(bookingMode === "single-day")}
                 >
                   One Day
                 </Button>
                 <Button
                   fullWidth
-                  variant={bookingMode === "date-range" ? "contained" : "outlined"}
+                  variant="contained"
                   onClick={() => updateMode("date-range")}
-                  sx={{ textTransform: "none", borderRadius: "10px", fontWeight: 700 }}
+                  sx={getModeButtonSx(bookingMode === "date-range")}
                 >
                   Schedule Range
                 </Button>
               </Stack>
 
-              <Typography sx={{ fontSize: "0.74rem", color: "#667085", mb: 1.5 }}>
+              <Typography sx={{ ...modalHelperTextSx, mb: 1.8 }}>
                 Assign room occupancy, maintenance, or cleaning schedule using hospital room workflow.
               </Typography>
 
@@ -738,11 +814,11 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                   }
                   size="small"
                   fullWidth
-                  sx={{ mb: 1.7 }}
+                  sx={{ ...modalFieldSx, mb: 1.9 }}
                 />
               )}
 
-              <Typography sx={{ fontSize: "0.67rem", fontWeight: 700, color: "#667085", mb: 0.7 }}>
+              <Typography sx={modalSectionTitleSx}>
                 ROOM STATUS
               </Typography>
               <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mb: 1.8 }}>
@@ -774,7 +850,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                 })}
               </Stack>
 
-              <Stack direction={{ xs: "column", sm: "row" }} spacing={1.2} sx={{ mb: 1.7 }}>
+              <Stack direction={{ xs: "column", sm: "row" }} spacing={1.2} sx={{ mb: 1.9 }}>
                 <TextField
                   label="Admit Date"
                   type="date"
@@ -783,6 +859,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                   size="small"
                   fullWidth
                   InputLabelProps={{ shrink: true }}
+                  sx={modalFieldSx}
                 />
                 <TextField
                   label="Discharge Date"
@@ -802,11 +879,12 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                   fullWidth
                   InputLabelProps={{ shrink: true }}
                   disabled={bookingMode === "single-day"}
+                  sx={modalFieldSx}
                 />
               </Stack>
 
               {bookingForm?.type === "occupied" && (
-                <Stack direction={{ xs: "column", sm: "row" }} spacing={1.2} sx={{ mb: 1.7 }}>
+                <Stack direction={{ xs: "column", sm: "row" }} spacing={1.2} sx={{ mb: 1.9 }}>
                   <TextField
                     label="Admission Time"
                     type="time"
@@ -824,6 +902,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                     size="small"
                     fullWidth
                     InputLabelProps={{ shrink: true }}
+                    sx={modalFieldSx}
                   />
                   <TextField
                     label="Expected Discharge Time"
@@ -842,6 +921,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                     size="small"
                     fullWidth
                     InputLabelProps={{ shrink: true }}
+                    sx={modalFieldSx}
                   />
                 </Stack>
               )}
@@ -849,7 +929,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
               {bookingForm?.type === "occupied" && (
                 <>
                   <Typography
-                    sx={{ fontSize: "0.67rem", fontWeight: 700, color: "#667085", mb: 0.7 }}
+                    sx={modalSectionTitleSx}
                   >
                     COVERAGE CATEGORY
                   </Typography>
@@ -904,19 +984,19 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                 multiline
                 minRows={2}
                 fullWidth
-                sx={{ mb: 2 }}
+                sx={{ ...modalFieldSx, mb: 2.1 }}
               />
 
               <Box
                 sx={{
-                  border: "1px solid #D0D5DD",
+                  border: "1px solid #ECECEC",
                   borderRadius: "12px",
-                  p: 1.6,
+                  p: 1.8,
                   mb: 1.8,
-                  backgroundColor: "#F8F9FF",
+                  backgroundColor: "#F9FAFB",
                 }}
               >
-                <Typography sx={{ fontSize: "0.66rem", fontWeight: 700, color: "#667085", mb: 1 }}>
+                <Typography sx={{ ...modalSectionTitleSx, fontSize: "0.9rem", mb: 1 }}>
                   PRICE BREAKDOWN
                 </Typography>
                 <Stack spacing={0.55}>
@@ -963,7 +1043,17 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                   variant="outlined"
                   onClick={closeBookingForm}
                   fullWidth
-                  sx={{ textTransform: "none", borderRadius: "10px", fontWeight: 700 }}
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "10px",
+                    fontWeight: 600,
+                    borderColor: "#D0D5DD",
+                    color: "#1A1D1F",
+                    "&:hover": {
+                      borderColor: "#98A2B3",
+                      backgroundColor: "#F9FAFB",
+                    },
+                  }}
                 >
                   Cancel
                 </Button>
@@ -971,7 +1061,16 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                   variant="contained"
                   onClick={handleCreateBooking}
                   fullWidth
-                  sx={{ textTransform: "none", borderRadius: "10px", fontWeight: 700 }}
+                  sx={{
+                    backgroundColor: "#4361EE !important",
+                    color: "#FFFFFF !important",
+                    textTransform: "none",
+                    borderRadius: "10px",
+                    fontWeight: 600,
+                    "&:hover": {
+                      backgroundColor: "#3A56D4 !important",
+                    },
+                  }}
                 >
                   Save Room Schedule
                 </Button>
@@ -982,16 +1081,16 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
               sx={{
                 borderLeft: { xs: "none", md: "1px solid #EAECF0" },
                 borderTop: { xs: "1px solid #EAECF0", md: "none" },
-                backgroundColor: "#F8FAFC",
+                backgroundColor: "#FCFCFD",
                 p: { xs: 2, md: 2.5 },
               }}
             >
               <Typography
-                sx={{ fontSize: "0.7rem", fontWeight: 800, color: "#667085", letterSpacing: "0.06em" }}
+                sx={{ ...modalSectionTitleSx, fontSize: "0.9rem", letterSpacing: "0.02em", mb: 0.5 }}
               >
                 SCHEDULED ROOM CHANGES
               </Typography>
-              <Typography sx={{ fontSize: "0.74rem", color: "#667085", mt: 0.5, mb: 1.6 }}>
+              <Typography sx={{ ...modalHelperTextSx, fontSize: "0.82rem", mb: 1.6 }}>
                 Upcoming occupancy and service windows for this room.
               </Typography>
 
