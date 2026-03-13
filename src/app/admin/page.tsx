@@ -83,7 +83,7 @@ export default function DashboardPage() {
 
   function handleViewAll() {
     // Default to low_stock filter if any, else show all
-    router.push("/dashboard/inventory?filter=low_stock");
+    router.push("/admin/inventory?filter=low_stock");
   }
 
   return (

@@ -4,6 +4,8 @@ export interface SidebarProps {
   onClose: () => void;
   onToggleCollapse: () => void;
   currentPath: string;
+  navItems?: NavItem[];
+  logoText?: string;
 }
 
 export interface NavItem {

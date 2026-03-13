@@ -78,7 +78,7 @@ export default function YakapPage() {
             PhilHealth beneficiary management — ₱20,000 annual medicine benefit
           </p>
         </div>
-        <Link href="/dashboard/yakap/register" style={{ textDecoration: "none" }}>
+        <Link href="/admin/yakap/register" style={{ textDecoration: "none" }}>
           <Box
             component="button"
             sx={{

@@ -9,6 +9,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import theme from "@/theme/theme";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import { NavItem } from "@/components/Sidebar/interface";
 
 const EXPANDED_WIDTH = 260;
 const COLLAPSED_WIDTH = 78;
@@ -36,35 +37,47 @@ const ContentArea = styled("main", {
   },
 }));
 
-const pageTitles: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/dashboard/yakap": "YAKAP",
-  "/dashboard/registration": "Patient Registration",
-  "/dashboard/appointments": "Appointments",
-  "/dashboard/inventory": "Medicine Inventory",
-  "/dashboard/rooms": "Room Management",
-  "/dashboard/doctors": "Doctor Directory",
-  "/dashboard/billing": "Billing",
+const defaultPageTitles: Record<string, string> = {
+  "/admin": "Dashboard",
+  "/admin/yakap": "YAKAP",
+  "/admin/registration": "Patient Registration",
+  "/admin/appointments": "Appointments",
+  "/admin/inventory": "Medicine Inventory",
+  "/admin/rooms": "Room Management",
+  "/admin/doctors": "Doctor Directory",
+  "/admin/billing": "Billing",
 };
 
-function getPageTitle(pathname: string): string {
-  if (pageTitles[pathname]) {
-    return pageTitles[pathname];
+function getPageTitle(pathname: string, titles: Record<string, string>): string {
+  if (titles[pathname]) {
+    return titles[pathname];
   }
 
-  if (pathname.startsWith("/dashboard/yakap/")) {
-    return "YAKAP";
+  // Walk up the path to find the closest match
+  const segments = pathname.split("/");
+  while (segments.length > 1) {
+    segments.pop();
+    const parent = segments.join("/");
+    if (titles[parent]) return titles[parent];
   }
 
   return "Dashboard";
 }
 
-export default function AppShell({ children }: { children: React.ReactNode }) {
+interface AppShellProps {
+  children: React.ReactNode;
+  navItems?: NavItem[];
+  pageTitles?: Record<string, string>;
+  logoText?: string;
+}
+
+export default function AppShell({ children, navItems, pageTitles, logoText }: AppShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const currentSidebarWidth = isDesktop ? (collapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH) : 0;
+  const titles = pageTitles || defaultPageTitles;
 
   return (
     <ThemeProvider theme={theme}>
@@ -76,10 +89,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           onClose={() => setSidebarOpen(false)}
           onToggleCollapse={() => setCollapsed(!collapsed)}
           currentPath={pathname}
+          navItems={navItems}
+          logoText={logoText}
         />
         <Header
           onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-          title={getPageTitle(pathname)}
+          title={getPageTitle(pathname, titles)}
           sidebarWidth={currentSidebarWidth}
         />
         <ContentArea sidebarWidth={currentSidebarWidth}>

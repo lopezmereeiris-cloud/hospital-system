@@ -180,7 +180,7 @@ const BeneficiaryTable: React.FC<BeneficiaryTableProps> = ({ beneficiaries }) =>
                 return (
                   <StyledRow
                     key={b.id}
-                    onClick={() => router.push(`/dashboard/yakap/${encodeURIComponent(b.id)}`)}
+                    onClick={() => router.push(`/admin/yakap/${encodeURIComponent(b.id)}`)}
                     sx={{ cursor: "pointer" }}
                   >
                     <StyledBodyCell sx={{ fontWeight: 600, whiteSpace: "nowrap" }}>

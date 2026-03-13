@@ -20,23 +20,24 @@ import {
 } from "./elements";
 import { navIcons } from "./icons";
 
-const navItems: NavItem[] = [
-  { label: "Dashboard", path: "/dashboard", icon: "dashboard" },
-  { label: "YAKAP", path: "/dashboard/yakap", icon: "yakap" },
-  { label: "Patient Registration", path: "/dashboard/registration", icon: "register" },
-  { label: "Appointments", path: "/dashboard/appointments", icon: "calendar" },
-  { label: "Inventory", path: "/dashboard/inventory", icon: "inventory" },
-  { label: "Rooms", path: "/dashboard/rooms", icon: "rooms" },
-  { label: "Doctors", path: "/dashboard/doctors", icon: "doctors" },
-  { label: "Billing", path: "/dashboard/billing", icon: "billing" },
+const defaultNavItems: NavItem[] = [
+  { label: "Dashboard", path: "/admin", icon: "dashboard" },
+  { label: "YAKAP", path: "/admin/yakap", icon: "yakap" },
+  { label: "Patient Registration", path: "/admin/registration", icon: "register" },
+  { label: "Appointments", path: "/admin/appointments", icon: "calendar" },
+  { label: "Inventory", path: "/admin/inventory", icon: "inventory" },
+  { label: "Rooms", path: "/admin/rooms", icon: "rooms" },
+  { label: "Doctors", path: "/admin/doctors", icon: "doctors" },
+  { label: "Billing", path: "/admin/billing", icon: "billing" },
 ];
 
-function isActiveRoute(currentPath: string, itemPath: string): boolean {
+function isActiveRoute(currentPath: string, itemPath: string, allItems: NavItem[]): boolean {
   if (currentPath === itemPath) {
     return true;
   }
 
-  if (itemPath === "/dashboard") {
+  const dashboardItem = allItems[0];
+  if (dashboardItem && itemPath === dashboardItem.path && currentPath !== itemPath) {
     return false;
   }
 
@@ -49,16 +50,19 @@ const Sidebar: React.FC<SidebarProps> = ({
   onClose,
   onToggleCollapse,
   currentPath,
+  navItems: navItemsProp,
+  logoText = "Lorem Ipsum",
 }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const isCollapsed = collapsed && isDesktop;
+  const navItems = navItemsProp || defaultNavItems;
 
   const drawerContent = (
     <>
       <LogoContainer collapsed={isCollapsed}>
         {navIcons.hospital}
-        {!isCollapsed && <LogoText>Lorem Ipsum</LogoText>}
+        {!isCollapsed && <LogoText>{logoText}</LogoText>}
       </LogoContainer>
 
       <SectionLabel collapsed={isCollapsed}>
@@ -69,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         {navItems.map((item) => {
           const button = (
             <NavItemButton
-              active={isActiveRoute(currentPath, item.path)}
+              active={isActiveRoute(currentPath, item.path, navItems)}
               collapsed={isCollapsed}
               onClick={() => {
                 if (!isDesktop) onClose();
