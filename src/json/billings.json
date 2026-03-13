@@ -1,0 +1,44 @@
+[
+  {
+    "billId": "BL-2026-2010",
+    "patientName": "Roberto Villanueva",
+    "serviceLabel": "Checkup with Medicine Purchase - OPD - Dr. Ana Reyes",
+    "serviceType": "Checkup + Pharmacy",
+    "serviceDate": "2026-03-15",
+    "encounterType": "Outpatient",
+    "patientType": "Regular",
+    "grossAmount": 1432,
+    "coverageDiscount": 286,
+    "yakapDeduction": 0,
+    "netAmount": 1146,
+    "paidAmount": 1146,
+    "balance": 0,
+    "status": "Paid",
+    "lineItems": [
+      { "label": "Outpatient Consultation - Dr. Ana Reyes", "amount": 1300 },
+      { "label": "Medicine: Omeprazole 20mg x11", "amount": 132 }
+    ],
+    "notes": "Fully settled after outpatient visit."
+  },
+  {
+    "billId": "BL-2026-2007",
+    "patientName": "Roberto Villanueva",
+    "serviceLabel": "Follow-up Consultation - OPD - Dr. Ana Reyes",
+    "serviceType": "Consultation",
+    "serviceDate": "2026-02-21",
+    "encounterType": "Outpatient",
+    "patientType": "Regular",
+    "grossAmount": 2200,
+    "coverageDiscount": 400,
+    "yakapDeduction": 200,
+    "netAmount": 1600,
+    "paidAmount": 900,
+    "balance": 700,
+    "status": "Partial",
+    "lineItems": [
+      { "label": "Follow-up Consultation", "amount": 1200 },
+      { "label": "Laboratory Request", "amount": 1000 }
+    ],
+    "notes": "Please settle remaining balance before next visit."
+  }
+]
