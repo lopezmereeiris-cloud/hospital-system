@@ -11,6 +11,8 @@ export interface Appointment {
   gender: string;
   medicalHistory: string;
   specialNotes: string;
+  verificationIdType?: string;
+  verificationIdNumber?: string;
 }
 
 export interface AppointmentTableProps {
