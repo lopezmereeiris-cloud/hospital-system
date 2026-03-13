@@ -40,7 +40,7 @@ const avatarColors = [
   "linear-gradient(135deg, #36BFFA, #7DD3FC)",
 ];
 
-const DoctorCards: React.FC<DoctorCardProps> = ({ doctors }) => {
+const DoctorCards: React.FC<DoctorCardProps> = ({ doctors, onDoctorClick }) => {
   const [filter, setFilter] = useState("all");
 
   const departments = Array.from(new Set(doctors.map((d) => d.department)));
@@ -71,7 +71,12 @@ const DoctorCards: React.FC<DoctorCardProps> = ({ doctors }) => {
 
       <DoctorGrid>
         {filtered.map((doc, idx) => (
-          <DoctorCardContainer key={doc.doctorId} elevation={0}>
+          <DoctorCardContainer
+            key={doc.doctorId}
+            elevation={0}
+            onClick={() => onDoctorClick?.(doc)}
+            sx={onDoctorClick ? { cursor: "pointer" } : undefined}
+          >
             <DoctorHeader>
               <Avatar
                 sx={{

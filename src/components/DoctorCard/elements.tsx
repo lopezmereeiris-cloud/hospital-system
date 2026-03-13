@@ -14,7 +14,7 @@ export const DoctorCardContainer = styled(Paper)(({ theme }) => ({
   border: "1px solid #F0F2F5",
   padding: theme.spacing(3),
   transition: "all 0.22s ease",
-  cursor: "default",
+  cursor: "pointer",
   "&:hover": {
     borderColor: alpha("#4361EE", 0.2),
     boxShadow: `0 4px 20px ${alpha("#4361EE", 0.08)}`,

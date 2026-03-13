@@ -19,4 +19,5 @@ export interface Doctor {
 
 export interface DoctorCardProps {
   doctors: Doctor[];
+  onDoctorClick?: (doctor: Doctor) => void;
 }
