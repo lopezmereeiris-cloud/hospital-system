@@ -75,7 +75,9 @@ export const BadgeRow = styled(Box)(() => ({
   marginTop: 14,
 }));
 
-export const CoverageBadge = styled(Chip)<{ active?: boolean }>(({ active }) => ({
+export const CoverageBadge = styled(Chip, {
+  shouldForwardProp: (prop) => prop !== "active",
+})<{ active?: boolean }>(({ active }) => ({
   height: 30,
   borderRadius: 999,
   fontWeight: 600,
@@ -89,7 +91,9 @@ export const CoverageBadge = styled(Chip)<{ active?: boolean }>(({ active }) => 
   },
 }));
 
-export const StatusBadge = styled("span")<{
+export const StatusBadge = styled("span", {
+  shouldForwardProp: (prop) => prop !== "status",
+})<{
   status: "Paid" | "Partial" | "Unpaid";
 }>(({ status }) => {
   const styles = {
@@ -175,7 +179,10 @@ export const BreakdownHeader = styled("div")(() => ({
   borderBottom: "1px solid #E8ECF2",
 }));
 
-export const BreakdownRow = styled(Box)<{
+export const BreakdownRow = styled(Box, {
+  shouldForwardProp: (prop) =>
+    !["positive", "total", "danger"].includes(String(prop)),
+})<{
   positive?: boolean;
   total?: boolean;
   danger?: boolean;
