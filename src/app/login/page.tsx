@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './login.module.css';
+import { palette } from '@/theme/palette';
+import { typography } from '@/theme/typography';
 
 const EYE_OPEN_PATH = (
   <>
@@ -21,14 +23,30 @@ const EYE_CLOSE_PATH = (
 
 function getStrength(val: string): { score: number; label: string; color: string } {
   if (!val) return { score: 0, label: '', color: '' };
+  const colors = [palette.error.main, palette.warning.main, palette.info.dark, palette.success.main];
   let score = 0;
   if (val.length >= 8) score++;
   if (/[A-Z]/.test(val)) score++;
   if (/[0-9]/.test(val)) score++;
   if (/[^A-Za-z0-9]/.test(val)) score++;
   const labels = ['Weak', 'Fair', 'Good', 'Strong'];
-  const colors = ['#E74C3C', '#E67E22', '#d4ac0d', '#27AE60'];
   return { score, label: labels[score - 1] || '', color: colors[score - 1] || '' };
+}
+
+function hexToRgba(hex: string, alpha: number): string {
+  const normalized = hex.replace('#', '');
+  const isShort = normalized.length === 3;
+  const value = isShort
+    ? normalized.split('').map((char) => char + char).join('')
+    : normalized;
+
+  if (value.length !== 6) return hex;
+
+  const r = Number.parseInt(value.slice(0, 2), 16);
+  const g = Number.parseInt(value.slice(2, 4), 16);
+  const b = Number.parseInt(value.slice(4, 6), 16);
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
 export default function LoginPage() {
@@ -58,6 +76,41 @@ export default function LoginPage() {
   const [regSuccess, setRegSuccess] = useState(false);
 
   const strength = getStrength(regPw);
+  const layoutThemeVars = {
+    fontFamily: typography.fontFamily,
+    '--font-family': typography.fontFamily,
+    '--cream': palette.background.default,
+    '--ink': palette.text.primary,
+    '--teal': palette.primary.main,
+    '--teal-light': palette.primary.dark,
+    '--teal-pale': hexToRgba(palette.primary.main, 0.12),
+    '--gold': palette.secondary.main,
+    '--muted': palette.text.secondary,
+    '--error': palette.error.main,
+    '--success': palette.success.main,
+    '--success-bg': hexToRgba(palette.success.main, 0.1),
+    '--success-border': palette.success.light,
+    '--border': palette.divider,
+    '--panel-glow-1': hexToRgba(palette.primary.main, 0.45),
+    '--panel-glow-2': hexToRgba(palette.secondary.main, 0.2),
+    '--ring-border': hexToRgba(palette.background.paper, 0.08),
+    '--ring-accent-border': hexToRgba(palette.primary.light, 0.35),
+    '--tabs-bg': palette.grey[200],
+    '--tabs-slider-bg': palette.primary.main,
+    '--tabs-active-text': palette.primary.contrastText,
+    '--tabs-inactive-text': palette.text.secondary,
+    '--input-focus-ring': hexToRgba(palette.primary.main, 0.12),
+    '--input-error-ring': hexToRgba(palette.error.main, 0.14),
+    '--btn-primary-bg': palette.primary.main,
+    '--btn-primary-hover': palette.primary.dark,
+    '--btn-primary-shadow': hexToRgba(palette.primary.main, 0.28),
+    '--alert-error-bg': hexToRgba(palette.error.light, 0.2),
+    '--alert-error-border': hexToRgba(palette.error.main, 0.3),
+    '--strength-1': palette.error.main,
+    '--strength-2': palette.warning.main,
+    '--strength-3': palette.info.dark,
+    '--strength-4': palette.success.main,
+  } as React.CSSProperties;
 
   // Lock body scroll when on login page
   useEffect(() => {
@@ -105,7 +158,7 @@ export default function LoginPage() {
   return (
     <div
       className={styles.layout}
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
+      style={layoutThemeVars}
     >
       {/* ── LEFT PANEL ── */}
       <div className={styles.panelLeft}>
