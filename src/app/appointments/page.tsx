@@ -108,19 +108,19 @@ export default function AppointmentsPage() {
         }}
       >
         <Grid container spacing={2} sx={{ flex: 1 }}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard label="Total Appointments" value={counts.total} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard label="Pending" value={counts.pending} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard label="Confirmed" value={counts.confirmed} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard label="Completed" value={counts.completed} />
           </Grid>
         </Grid>
