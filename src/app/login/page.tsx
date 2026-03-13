@@ -1,502 +1,225 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import styles from './login.module.css';
-import { palette } from '@/theme/palette';
-import { typography } from '@/theme/typography';
-
-const EYE_OPEN_PATH = (
-  <>
-    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-    <circle cx="12" cy="12" r="3" />
-  </>
-);
-
-const EYE_CLOSE_PATH = (
-  <>
-    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
-    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
-    <line x1="1" y1="1" x2="23" y2="23" />
-  </>
-);
-
-function getStrength(val: string): { score: number; label: string; color: string } {
-  if (!val) return { score: 0, label: '', color: '' };
-  const colors = [palette.error.main, palette.warning.main, palette.info.dark, palette.success.main];
-  let score = 0;
-  if (val.length >= 8) score++;
-  if (/[A-Z]/.test(val)) score++;
-  if (/[0-9]/.test(val)) score++;
-  if (/[^A-Za-z0-9]/.test(val)) score++;
-  const labels = ['Weak', 'Fair', 'Good', 'Strong'];
-  return { score, label: labels[score - 1] || '', color: colors[score - 1] || '' };
-}
-
-function hexToRgba(hex: string, alpha: number): string {
-  const normalized = hex.replace('#', '');
-  const isShort = normalized.length === 3;
-  const value = isShort
-    ? normalized.split('').map((char) => char + char).join('')
-    : normalized;
-
-  if (value.length !== 6) return hex;
-
-  const r = Number.parseInt(value.slice(0, 2), 16);
-  const g = Number.parseInt(value.slice(2, 4), 16);
-  const b = Number.parseInt(value.slice(4, 6), 16);
-
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Alert from "@mui/material/Alert";
+import Divider from "@mui/material/Divider";
+import VisibilityRounded from "@mui/icons-material/VisibilityRounded";
+import VisibilityOffRounded from "@mui/icons-material/VisibilityOffRounded";
+import LocalHospitalRounded from "@mui/icons-material/LocalHospitalRounded";
+import { palette } from "../../theme/palette";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [tab, setTab] = useState<'login' | 'register'>('login');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // Login state
-  const [loginError, setLoginError] = useState(false);
-  const [loginShake, setLoginShake] = useState(false);
-  const [loginLoading, setLoginLoading] = useState(false);
-  const [loginPwVisible, setLoginPwVisible] = useState(false);
-
-  // Register state
-  const [regFirst, setRegFirst] = useState('');
-  const [regLast, setRegLast] = useState('');
-  const [regDob, setRegDob] = useState('');
-  const [regPhone, setRegPhone] = useState('');
-  const [regEmail, setRegEmail] = useState('');
-  const [regPw, setRegPw] = useState('');
-  const [regPw2, setRegPw2] = useState('');
-  const [regPw2Invalid, setRegPw2Invalid] = useState(false);
-  const [regPwVisible, setRegPwVisible] = useState(false);
-  const [regPw2Visible, setRegPw2Visible] = useState(false);
-  const [regTerms, setRegTerms] = useState(false);
-  const [regError, setRegError] = useState('');
-  const [regLoading, setRegLoading] = useState(false);
-  const [regSuccess, setRegSuccess] = useState(false);
-
-  const strength = getStrength(regPw);
-  const layoutThemeVars = {
-    fontFamily: typography.fontFamily,
-    '--font-family': typography.fontFamily,
-    '--cream': palette.background.default,
-    '--ink': palette.text.primary,
-    '--teal': palette.primary.main,
-    '--teal-light': palette.primary.dark,
-    '--teal-pale': hexToRgba(palette.primary.main, 0.12),
-    '--gold': palette.secondary.main,
-    '--muted': palette.text.secondary,
-    '--error': palette.error.main,
-    '--success': palette.success.main,
-    '--success-bg': hexToRgba(palette.success.main, 0.1),
-    '--success-border': palette.success.light,
-    '--border': palette.divider,
-    '--panel-glow-1': hexToRgba(palette.primary.main, 0.45),
-    '--panel-glow-2': hexToRgba(palette.secondary.main, 0.2),
-    '--ring-border': hexToRgba(palette.background.paper, 0.08),
-    '--ring-accent-border': hexToRgba(palette.primary.light, 0.35),
-    '--tabs-bg': palette.grey[200],
-    '--tabs-slider-bg': palette.primary.main,
-    '--tabs-active-text': palette.primary.contrastText,
-    '--tabs-inactive-text': palette.text.secondary,
-    '--input-focus-ring': hexToRgba(palette.primary.main, 0.12),
-    '--input-error-ring': hexToRgba(palette.error.main, 0.14),
-    '--btn-primary-bg': palette.primary.main,
-    '--btn-primary-hover': palette.primary.dark,
-    '--btn-primary-shadow': hexToRgba(palette.primary.main, 0.28),
-    '--alert-error-bg': hexToRgba(palette.error.light, 0.2),
-    '--alert-error-border': hexToRgba(palette.error.main, 0.3),
-    '--strength-1': palette.error.main,
-    '--strength-2': palette.warning.main,
-    '--strength-3': palette.info.dark,
-    '--strength-4': palette.success.main,
-  } as React.CSSProperties;
-
-  // Lock body scroll when on login page
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
-  }, []);
-
-  function handleLogin(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoginLoading(true);
+    setError("");
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+    setLoading(true);
     setTimeout(() => {
-      router.push('/admin');
+      router.push("/admin");
     }, 800);
   }
 
-  function handleRegister(e: React.FormEvent) {
-    e.preventDefault();
-    setRegError('');
-    setRegPw2Invalid(false);
-
-    if (!regFirst || !regLast || !regDob || !regEmail) {
-      setRegError('Please fill in all required fields.'); return;
-    }
-    if (regPw.length < 8) {
-      setRegError('Password must be at least 8 characters.'); return;
-    }
-    if (regPw !== regPw2) {
-      setRegError('Passwords do not match.');
-      setRegPw2Invalid(true); return;
-    }
-    if (!regTerms) {
-      setRegError('Please accept the Terms of Service to continue.'); return;
-    }
-
-    setRegLoading(true);
-    setTimeout(() => {
-      setRegLoading(false);
-      setRegSuccess(true);
-    }, 2000);
-  }
-
-  const isRegActive = tab === 'register';
-
   return (
-    <div
-      className={styles.layout}
-      style={layoutThemeVars}
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: palette.grey[100],
+        p: { xs: 2, sm: 4 },
+      }}
     >
-      {/* ── LEFT PANEL ── */}
-      <div className={styles.panelLeft}>
-        <div className={styles.cross} />
-        <div className={`${styles.ring} ${styles.ringOne}`} />
-        <div className={`${styles.ring} ${styles.ringTwo}`} />
-
-        <div className={styles.brand}>
-          <div className={styles.brandMark}>
-            <div className={styles.brandIcon} />
-            <span className={styles.brandName}>Meridian Health</span>
-          </div>
-          <div className={styles.brandSub}>Patient Portal</div>
-        </div>
-
-        <div className={styles.leftMid}>
-          {/* Login copy */}
-          <div className={`${styles.leftSlot} ${isRegActive ? styles.leftSlotHidden : ''}`}>
-            <div className={styles.tagline}>
-              <h1>Care that centers<br /><em>you.</em></h1>
-              <p>Access your medical records, appointments, prescriptions, and care team — all in one secure place.</p>
-            </div>
-          </div>
-
-          {/* Register copy */}
-          <div className={`${styles.leftSlot} ${!isRegActive ? styles.leftSlotHidden : ''}`}>
-            <div className={`${styles.regIntro} ${styles.tagline}`}>
-              <h1>Join<br /><em>Meridian.</em></h1>
-              <p>Create your account in minutes and connect with your full care team.</p>
-            </div>
-            <div className={styles.regSteps}>
-              {[
-                { n: '1', title: 'Create your account', desc: 'Provide your basic personal and contact details.' },
-                { n: '2', title: 'Verify your identity', desc: "We'll send a confirmation link to your email." },
-                { n: '3', title: 'Access your portal', desc: 'View records, book appointments, message your care team.' },
-              ].map(step => (
-                <div className={styles.regStep} key={step.n}>
-                  <div className={styles.stepNum}>{step.n}</div>
-                  <div className={styles.stepText}>
-                    <h4>{step.title}</h4>
-                    <p>{step.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.stats} style={{ opacity: isRegActive ? 0 : 1 }}>
-          <div><div className={styles.statValue}>98%</div><div className={styles.statLabel}>Satisfaction</div></div>
-          <div className={styles.statDivider} />
-          <div><div className={styles.statValue}>240+</div><div className={styles.statLabel}>Specialists</div></div>
-          <div className={styles.statDivider} />
-          <div><div className={styles.statValue}>24/7</div><div className={styles.statLabel}>Support</div></div>
-        </div>
-      </div>
-
-      {/* ── RIGHT PANEL ── */}
-      <div className={styles.panelRight}>
-        {/* Tabs */}
-        <div className={`${styles.tabs} ${isRegActive ? styles.tabsRegActive : ''}`}>
-          <div className={styles.tabSlider} />
-          <button
-            className={`${styles.tabBtn} ${!isRegActive ? styles.active : ''}`}
-            onClick={() => setTab('login')}
-          >Sign In</button>
-          <button
-            className={`${styles.tabBtn} ${isRegActive ? styles.active : ''}`}
-            onClick={() => setTab('register')}
-          >Create Account</button>
-        </div>
-
-        <div className={styles.views}>
-
-          {/* ── LOGIN VIEW ── */}
-          <div className={`${styles.view} ${isRegActive ? styles.viewHidden : ''}`}>
-            <div className={styles.formHeader}>
-              <div className={styles.eyebrow}>Welcome back</div>
-              <h2>Sign in to<br />your account</h2>
-              <p>Enter your credentials to access your patient portal.</p>
-            </div>
-
-            {/* Error alert */}
-            <div
-              className={`${styles.alert} ${styles.alertError} ${loginError ? styles.alertShow : ''} ${loginShake ? styles.shake : ''}`}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+          width: "100%",
+          maxWidth: 960,
+          minHeight: { md: 560 },
+          borderRadius: 4,
+          overflow: "hidden",
+          bgcolor: palette.background.paper,
+          boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+        }}
+      >
+        {/* ── Left: Form ── */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            px: { xs: 3, sm: 5, lg: 6 },
+            py: { xs: 5, md: 6 },
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 4 }}>
+            <Box
+              sx={{
+                width: 40,
+                height: 40,
+                borderRadius: 2,
+                background: "linear-gradient(135deg, #4A8CA8 0%, #1B5E7B 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
-              </svg>
-              <span>Invalid email or password. Please try again.</span>
-            </div>
+              <LocalHospitalRounded sx={{ color: "#fff", fontSize: 22 }} />
+            </Box>
+            <Typography fontWeight={700} sx={{ fontSize: "1.1rem", color: palette.text.primary }}>
+              MedAdmin
+            </Typography>
+          </Box>
 
-            <form onSubmit={handleLogin} autoComplete="on">
-              <div className={styles.field}>
-                <label className={styles.fieldLabel} htmlFor="lEmail">Email Address</label>
-                <div className={styles.inputWrap}>
-                  <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2" /><path d="M2 7l10 7 10-7" />
-                  </svg>
-                  <input type="email" id="lEmail" placeholder="your@email.com" autoComplete="email" required />
-                </div>
-              </div>
+          <Typography fontWeight={700} sx={{ fontSize: "1.5rem", mb: 0.5, color: palette.text.primary }}>
+            Welcome Back
+          </Typography>
+          <Typography variant="body2" sx={{ color: palette.text.secondary, mb: 1.5 }}>
+            Sign in to your admin account
+          </Typography>
 
-              <div className={styles.field}>
-                <div className={styles.fieldRow}>
-                  <label className={styles.fieldLabel} htmlFor="lPw">Password</label>
-                  <a href="#" className={styles.forgot}>Forgot password?</a>
-                </div>
-                <div className={styles.inputWrap}>
-                  <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                  </svg>
-                  <input type={loginPwVisible ? 'text' : 'password'} id="lPw" placeholder="••••••••" autoComplete="current-password" required />
-                  <button type="button" className={styles.togglePw} onClick={() => setLoginPwVisible(v => !v)}>
-                    <svg viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      {loginPwVisible ? EYE_CLOSE_PATH : EYE_OPEN_PATH}
-                    </svg>
-                  </button>
-                </div>
-              </div>
+          <Divider sx={{ mb: 3 }} />
 
-              <div className={`${styles.checkRow}`} style={{ marginBottom: 20 }}>
-                <input type="checkbox" id="remMe" />
-                <span onClick={() => (document.getElementById('remMe') as HTMLInputElement)?.click()}>
-                  Keep me signed in for 30 days
-                </span>
-              </div>
+          {error && (
+            <Alert severity="error" sx={{ mb: 2, borderRadius: 2 }}>
+              {error}
+            </Alert>
+          )}
 
-              <button type="submit" className={styles.btnPrimary} disabled={loginLoading}>
-                {loginLoading && (
-                  <svg className={styles.spinner} viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 2 A10 10 0 0 1 22 12" />
-                  </svg>
-                )}
-                <span>{loginLoading ? 'Signing in…' : 'Sign In'}</span>
-              </button>
-            </form>
+          <form onSubmit={handleSubmit} autoComplete="on">
+            <Typography variant="subtitle2" fontWeight={600} mb={0.75} color="text.primary">
+              Email
+            </Typography>
+            <TextField
+              type="email"
+              placeholder="you@hospital.com"
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              size="small"
+              sx={{ mb: 2.5 }}
+            />
 
-            <div className={styles.divider}><span>or</span></div>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 0.75 }}>
+              <Typography variant="subtitle2" fontWeight={600} color="text.primary">
+                Password
+              </Typography>
+              <Link
+                href="#"
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "#1B5E7B",
+                  textDecoration: "none",
+                }}
+              >
+                Forgot?
+              </Link>
+            </Box>
+            <TextField
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              size="small"
+              sx={{ mb: 3.5 }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword((v) => !v)} edge="end" size="small">
+                      {showPassword ? (
+                        <VisibilityOffRounded sx={{ fontSize: 20, color: palette.grey[400] }} />
+                      ) : (
+                        <VisibilityRounded sx={{ fontSize: 20, color: palette.grey[400] }} />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-            <button
-              className={styles.btnSecondary}
-              onClick={() => alert('Hospital SSO coming soon')}
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              disabled={loading}
+              sx={{ py: 1.3, fontWeight: 600, borderRadius: 2.5 }}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-              </svg>
-              Sign in with Hospital SSO
-            </button>
+              {loading ? "Signing in…" : "Sign In"}
+            </Button>
+          </form>
 
-            <div className={styles.securityNote}>
-              <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
-              256-bit SSL encrypted · HIPAA compliant
-            </div>
-          </div>
+          <Typography variant="body2" color="text.secondary" textAlign="center" mt={3}>
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/signup"
+              style={{ color: "#1B5E7B", fontWeight: 600, textDecoration: "none" }}
+            >
+              Sign up
+            </Link>
+          </Typography>
+        </Box>
 
-          {/* ── REGISTER VIEW ── */}
-          <div className={`${styles.view} ${!isRegActive ? styles.viewHidden : ''}`}>
-
-            {/* Success screen */}
-            <div className={`${styles.successScreen} ${regSuccess ? styles.successScreenShow : ''}`}>
-              <div className={styles.successIcon}>
-                <svg viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-              </div>
-              <h3>Account Created!</h3>
-              <p>We&apos;ve sent a verification link to your email. Please check your inbox to activate your account.</p>
-              <button className={styles.btnPrimary} onClick={() => { setTab('login'); setRegSuccess(false); }}>
-                Back to Sign In
-              </button>
-            </div>
-
-            {/* Register form */}
-            {!regSuccess && (
-              <div>
-                <div className={styles.formHeader}>
-                  <div className={styles.eyebrow}>New patient</div>
-                  <h2>Create your<br />account</h2>
-                  <p>Fill in your details to get started with your patient portal.</p>
-                </div>
-
-                {regError && (
-                  <div className={`${styles.alert} ${styles.alertError} ${styles.alertShow}`}>
-                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
-                    </svg>
-                    <span>{regError}</span>
-                  </div>
-                )}
-
-                <form onSubmit={handleRegister} autoComplete="on" noValidate>
-                  <div className={styles.twoCol}>
-                    <div className={styles.field}>
-                      <label className={styles.fieldLabel} htmlFor="rFirst">First Name</label>
-                      <div className={styles.inputWrap}>
-                        <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-                        </svg>
-                        <input type="text" id="rFirst" placeholder="Jane" autoComplete="given-name" value={regFirst} onChange={e => setRegFirst(e.target.value)} required />
-                      </div>
-                    </div>
-                    <div className={styles.field}>
-                      <label className={styles.fieldLabel} htmlFor="rLast">Last Name</label>
-                      <div className={styles.inputWrap}>
-                        <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-                        </svg>
-                        <input type="text" id="rLast" placeholder="Doe" autoComplete="family-name" value={regLast} onChange={e => setRegLast(e.target.value)} required />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={styles.twoCol}>
-                    <div className={styles.field}>
-                      <label className={styles.fieldLabel} htmlFor="rDob">Date of Birth</label>
-                      <div className={styles.inputWrap}>
-                        <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
-                        </svg>
-                        <input type="date" id="rDob" autoComplete="bday" value={regDob} onChange={e => setRegDob(e.target.value)} required />
-                      </div>
-                    </div>
-                    <div className={styles.field}>
-                      <label className={styles.fieldLabel} htmlFor="rPhone">Phone</label>
-                      <div className={styles.inputWrap}>
-                        <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.76a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z" />
-                        </svg>
-                        <input type="tel" id="rPhone" placeholder="+1 (555) 000-0000" autoComplete="tel" value={regPhone} onChange={e => setRegPhone(e.target.value)} />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={styles.field}>
-                    <label className={styles.fieldLabel} htmlFor="rEmail">Email Address</label>
-                    <div className={styles.inputWrap}>
-                      <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="2" y="4" width="20" height="16" rx="2" /><path d="M2 7l10 7 10-7" />
-                      </svg>
-                      <input type="email" id="rEmail" placeholder="your@email.com" autoComplete="email" value={regEmail} onChange={e => setRegEmail(e.target.value)} required />
-                    </div>
-                  </div>
-
-                  <div className={styles.field}>
-                    <label className={styles.fieldLabel} htmlFor="rPw">Password</label>
-                    <div className={styles.inputWrap}>
-                      <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                      </svg>
-                      <input
-                        type={regPwVisible ? 'text' : 'password'}
-                        id="rPw"
-                        placeholder="Min. 8 characters"
-                        autoComplete="new-password"
-                        value={regPw}
-                        onChange={e => setRegPw(e.target.value)}
-                        required
-                      />
-                      <button type="button" className={styles.togglePw} onClick={() => setRegPwVisible(v => !v)}>
-                        <svg viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          {regPwVisible ? EYE_CLOSE_PATH : EYE_OPEN_PATH}
-                        </svg>
-                      </button>
-                    </div>
-                    {/* Password strength */}
-                    {regPw && (
-                      <div className={styles.pwStrength}>
-                        <div className={styles.strengthBars}>
-                          {[1, 2, 3, 4].map(i => (
-                            <div
-                              key={i}
-                              className={`${styles.strengthBar} ${i <= strength.score ? styles[`s${strength.score}` as keyof typeof styles] : ''}`}
-                            />
-                          ))}
-                        </div>
-                        <div className={styles.strengthLbl} style={{ color: strength.color }}>{strength.label}</div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className={styles.field}>
-                    <label className={styles.fieldLabel} htmlFor="rPw2">Confirm Password</label>
-                    <div className={styles.inputWrap}>
-                      <svg className={styles.fieldIcon} viewBox="0 0 24 24" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                      </svg>
-                      <input
-                        type={regPw2Visible ? 'text' : 'password'}
-                        id="rPw2"
-                        placeholder="Re-enter password"
-                        autoComplete="new-password"
-                        value={regPw2}
-                        onChange={e => { setRegPw2(e.target.value); setRegPw2Invalid(false); }}
-                        className={regPw2Invalid ? 'invalid' : ''}
-                        required
-                      />
-                      <button type="button" className={styles.togglePw} onClick={() => setRegPw2Visible(v => !v)}>
-                        <svg viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          {regPw2Visible ? EYE_CLOSE_PATH : EYE_OPEN_PATH}
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className={styles.checkRow}>
-                    <input type="checkbox" id="terms" checked={regTerms} onChange={e => setRegTerms(e.target.checked)} required />
-                    <span onClick={() => setRegTerms(v => !v)}>
-                      I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>, and consent to electronic collection of my health information per HIPAA regulations.
-                    </span>
-                  </div>
-
-                  <button type="submit" className={styles.btnPrimary} disabled={regLoading}>
-                    {regLoading && (
-                      <svg className={styles.spinner} viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 2 A10 10 0 0 1 22 12" />
-                      </svg>
-                    )}
-                    <span>{regLoading ? 'Creating account…' : 'Create Account'}</span>
-                  </button>
-                </form>
-
-                <div className={styles.securityNote} style={{ marginTop: 14 }}>
-                  <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  </svg>
-                  256-bit SSL encrypted · HIPAA compliant
-                </div>
-              </div>
-            )}
-          </div>
-
-        </div>{/* /views */}
-      </div>{/* /panel-right */}
-    </div>
+        {/* ── Right: Brand Panel ── */}
+        <Box
+          sx={{
+            display: { xs: "none", md: "flex" },
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            background: "linear-gradient(160deg, #1B5E7B 0%, #4A8CA8 100%)",
+            color: "#fff",
+            px: 6,
+            py: 8,
+            position: "relative",
+          }}
+        >
+          <Typography
+            sx={{
+              fontWeight: 700,
+              fontSize: "2.4rem",
+              lineHeight: 1.2,
+              textAlign: "center",
+              mb: 2,
+            }}
+          >
+            Hospital{" "}
+            <Box component="span" sx={{ fontStyle: "italic", fontWeight: 400 }}>
+              Administration
+            </Box>
+            <br />
+            System
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{ color: "rgba(255,255,255,0.65)", textAlign: "center", maxWidth: 320, lineHeight: 1.7 }}
+          >
+            Manage patients, appointments, billing, inventory and more — all in one place.
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 }
