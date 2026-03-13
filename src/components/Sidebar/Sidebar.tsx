@@ -21,15 +21,27 @@ import {
 import { navIcons } from "./icons";
 
 const navItems: NavItem[] = [
-  { label: "Dashboard", path: "/", icon: "dashboard" },
-  { label: "YAKAP", path: "/yakap", icon: "yakap" },
-  { label: "Patient Registration", path: "/registration", icon: "register" },
-  { label: "Appointments", path: "/appointments", icon: "calendar" },
-  { label: "Inventory", path: "/inventory", icon: "inventory" },
-  { label: "Rooms", path: "/rooms", icon: "rooms" },
-  { label: "Doctors", path: "/doctors", icon: "doctors" },
-  { label: "Billing", path: "/billing", icon: "billing" },
+  { label: "Dashboard", path: "/dashboard", icon: "dashboard" },
+  { label: "YAKAP", path: "/dashboard/yakap", icon: "yakap" },
+  { label: "Patient Registration", path: "/dashboard/registration", icon: "register" },
+  { label: "Appointments", path: "/dashboard/appointments", icon: "calendar" },
+  { label: "Inventory", path: "/dashboard/inventory", icon: "inventory" },
+  { label: "Rooms", path: "/dashboard/rooms", icon: "rooms" },
+  { label: "Doctors", path: "/dashboard/doctors", icon: "doctors" },
+  { label: "Billing", path: "/dashboard/billing", icon: "billing" },
 ];
+
+function isActiveRoute(currentPath: string, itemPath: string): boolean {
+  if (currentPath === itemPath) {
+    return true;
+  }
+
+  if (itemPath === "/dashboard") {
+    return false;
+  }
+
+  return currentPath.startsWith(`${itemPath}/`);
+}
 
 const Sidebar: React.FC<SidebarProps> = ({
   open,
@@ -57,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         {navItems.map((item) => {
           const button = (
             <NavItemButton
-              active={currentPath === item.path}
+              active={isActiveRoute(currentPath, item.path)}
               collapsed={isCollapsed}
               onClick={() => {
                 if (!isDesktop) onClose();

@@ -246,7 +246,7 @@ export default function YakapBeneficiaryDetailPage() {
           }}
         >
           <Link
-            href="/yakap"
+            href="/dashboard/yakap"
             style={{
               textDecoration: "none",
               fontSize: "0.82rem",
@@ -349,7 +349,7 @@ export default function YakapBeneficiaryDetailPage() {
         }}
       >
         <Link
-          href="/yakap"
+          href="/dashboard/yakap"
           style={{
             textDecoration: "none",
             fontSize: "0.82rem",

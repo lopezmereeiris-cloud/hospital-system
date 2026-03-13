@@ -23,7 +23,7 @@ export default function YakapRegisterPage() {
     void data;
     setSuccess(true);
     setTimeout(() => {
-      router.push("/yakap");
+      router.push("/dashboard/yakap");
     }, 2000);
   };
 
@@ -39,7 +39,7 @@ export default function YakapRegisterPage() {
         }}
       >
         <Link
-          href="/yakap"
+          href="/dashboard/yakap"
           style={{
             textDecoration: "none",
             fontSize: "0.82rem",

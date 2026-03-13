@@ -37,15 +37,27 @@ const ContentArea = styled("main", {
 }));
 
 const pageTitles: Record<string, string> = {
-  "/": "Dashboard",
-  "/yakap": "YAKAP",
-  "/registration": "Patient Registration",
-  "/appointments": "Appointments",
-  "/inventory": "Medicine Inventory",
-  "/rooms": "Room Management",
-  "/doctors": "Doctor Directory",
-  "/billing": "Billing",
+  "/dashboard": "Dashboard",
+  "/dashboard/yakap": "YAKAP",
+  "/dashboard/registration": "Patient Registration",
+  "/dashboard/appointments": "Appointments",
+  "/dashboard/inventory": "Medicine Inventory",
+  "/dashboard/rooms": "Room Management",
+  "/dashboard/doctors": "Doctor Directory",
+  "/dashboard/billing": "Billing",
 };
+
+function getPageTitle(pathname: string): string {
+  if (pageTitles[pathname]) {
+    return pageTitles[pathname];
+  }
+
+  if (pathname.startsWith("/dashboard/yakap/")) {
+    return "YAKAP";
+  }
+
+  return "Dashboard";
+}
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -67,7 +79,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         />
         <Header
           onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-          title={pageTitles[pathname] || "Dashboard"}
+          title={getPageTitle(pathname)}
           sidebarWidth={currentSidebarWidth}
         />
         <ContentArea sidebarWidth={currentSidebarWidth}>
