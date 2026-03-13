@@ -180,6 +180,7 @@ export default function PatientBillingStatement({ billing }: Props) {
   <Button
     variant="contained"
     startIcon={<PrintRoundedIcon />}
+    onClick={handlePrint}
     sx={{
       backgroundColor: "#4361EE",
       textTransform: "none",
