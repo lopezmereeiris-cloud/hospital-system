@@ -168,15 +168,16 @@ export default function AppointmentsPage() {
   return (
     <div>
       <Box sx={{ mb: 2 }}>
-        <Typography
-          sx={{
-            fontSize: "1.3rem",
-            fontWeight: 700,
-            color: "text.primary",
-          }}
-        >
-          March 12, 2026
-        </Typography>
+         <h2
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: 700,
+              margin: "0 0 4px 0",
+              color: "text.primary",
+            }}
+          >
+            Appointments
+          </h2>
       </Box>
 
       <Box
