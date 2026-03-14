@@ -1,7 +1,7 @@
 "use client";
-import { palette } from "@/theme/palette";
 
 import React, { useState } from "react";
+import { palette } from "@/theme/palette";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableHead from "@mui/material/TableHead";
@@ -9,13 +9,13 @@ import TableContainer from "@mui/material/TableContainer";
 import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import RegisterPatientModal from "./RegisterPatientModal";
-import { PatientListProps } from "./interface";
-
+import PatientDetailModal from "@/components/PatientModal/PatientDetailModal";
+import { Patient, PatientListProps } from "./interface";
 import {
   PatientContainer,
   StyledHeaderCell,
   StyledBodyCell,
-  StyledRow
+  StyledRow,
 } from "./elements";
 
 const statusColor: Record<string, "success" | "error" | "warning"> = {
@@ -26,6 +26,8 @@ const statusColor: Record<string, "success" | "error" | "warning"> = {
 
 const PatientList: React.FC<PatientListProps> = ({ patients }) => {
   const [open, setOpen] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+  const [detailOpen, setDetailOpen] = useState(false);
 
   return (
     <PatientContainer>
@@ -42,27 +44,32 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
           style={{
             fontSize: "18px",
             fontWeight: 700,
-            color: "text.primary",
+            color: "#1A1D1F",
           }}
         >
           Patient List
         </div>
 
-    <Button
-  variant="contained"
-  onClick={() => setOpen(true)}
-  style={{
-    backgroundColor: "primary.main",
-    color: palette.background.paper,
-    textTransform: "none",
-    borderRadius: "10px",
-    fontWeight: 600,
-    padding: "8px 20px",
-    boxShadow: "none",
-  }}
->
-  Register Patient
-</Button>
+        <Button
+          variant="contained"
+          onClick={() => setOpen(true)}
+          sx={{
+            backgroundColor: "primary.main",
+            color: palette.background.paper,
+            textTransform: "none",
+            borderRadius: "10px",
+            fontWeight: 600,
+            px: 2.5,
+            py: 1,
+            boxShadow: "none",
+            "&:hover": {
+              backgroundColor: "#3A56D4",
+              boxShadow: "none",
+            },
+          }}
+        >
+          Register Patient
+        </Button>
       </div>
 
       <TableContainer>
@@ -81,7 +88,14 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
 
           <TableBody>
             {patients.map((patient) => (
-              <StyledRow key={patient.patient_id}>
+              <StyledRow
+                key={patient.patient_id}
+                onClick={() => {
+                  setSelectedPatient(patient);
+                  setDetailOpen(true);
+                }}
+                sx={{ cursor: "pointer" }}
+              >
                 <StyledBodyCell>{patient.patient_id}</StyledBodyCell>
                 <StyledBodyCell>{patient.name}</StyledBodyCell>
                 <StyledBodyCell>{patient.age}</StyledBodyCell>
@@ -102,6 +116,12 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
       </TableContainer>
 
       <RegisterPatientModal open={open} onClose={() => setOpen(false)} />
+
+      <PatientDetailModal
+        open={detailOpen}
+        onClose={() => setDetailOpen(false)}
+        patient={selectedPatient}
+      />
     </PatientContainer>
   );
 };
