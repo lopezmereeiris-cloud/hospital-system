@@ -14,10 +14,19 @@ import TableHead from "@mui/material/TableHead";
 import Tabs from "@mui/material/Tabs";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+
+import ViewListRoundedIcon from "@mui/icons-material/ViewListRounded";
+import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+
 import ConfirmActionModal from "@/components/ConfirmActionModal";
 import AppointmentCalendar from "@/components/AppointmentCalendar";
 import AppointmentTable from "@/components/AppointmentTable";
 import AppointmentModal from "@/components/AppointmentModal";
+import BookAppointmentModal from "@/components/BookAppointmentModal";
 import {
   StyledBodyCell,
   StyledHeaderCell,
@@ -26,17 +35,8 @@ import {
 } from "@/components/AppointmentTable/elements";
 import { Appointment } from "@/components/AppointmentTable/interface";
 import appointmentsData from "@/json/appointments.json";
-
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ViewListRoundedIcon from "@mui/icons-material/ViewListRounded";
-import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
-import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import HourglassTopRoundedIcon from "@mui/icons-material/HourglassTopRounded";
-import BookAppointmentModal from "@/components/BookAppointmentModal";
-
 import { palette } from "@/theme/palette";
+
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState<Appointment[]>(
     appointmentsData as Appointment[]
@@ -47,7 +47,11 @@ export default function AppointmentsPage() {
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [bookModalOpen, setBookModalOpen] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
-  const [toast, setToast] = useState<{ open: boolean; message: string; severity: "success" | "error" }>({
+  const [toast, setToast] = useState<{
+    open: boolean;
+    message: string;
+    severity: "success" | "error";
+  }>({
     open: false,
     message: "",
     severity: "success",
@@ -83,7 +87,9 @@ export default function AppointmentsPage() {
   const commitConfirm = () => {
     const { type, appointmentId } = confirm;
     if (appointmentId === null) return;
+
     const appt = appointments.find((a) => a.id === appointmentId);
+
     if (type === "approve") {
       handleStatusChange(appointmentId, "Confirmed");
       setToast({
@@ -99,6 +105,7 @@ export default function AppointmentsPage() {
         severity: "error",
       });
     }
+
     closeConfirm();
   };
 
@@ -201,58 +208,62 @@ export default function AppointmentsPage() {
         </Grid>
       </Box>
 
-      {/* ── Tabs ── */}
-      <Tabs
-        value={tabIndex}
-        onChange={(_, v) => setTabIndex(v)}
+      <Box
         sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 2,
           mb: 2.5,
-          minHeight: 36,
-          "& .MuiTab-root": {
-            textTransform: "none",
-            fontWeight: 600,
-            fontSize: "0.82rem",
-            minHeight: 36,
-            px: 2,
-          },
-          "& .MuiTabs-indicator": { height: 2.5, borderRadius: 2 },
+          flexWrap: "wrap",
         }}
       >
-        <Tab label="All Appointments" />
-        <Tab
-          label={
-            <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-              Appointment Requests
-              {counts.pending > 0 && (
-                <Chip
-                  label={counts.pending}
-                  size="small"
-                  sx={{
-                    height: 20,
-                    minWidth: 20,
-                    fontSize: "0.7rem",
-                    fontWeight: 700,
-                    bgcolor: "#FEF3F2",
-                    color: palette.error.dark,
-                    "& .MuiChip-label": { px: 0.6 },
-                  }}
-                />
-              )}
-            </Box>
-          }
-        />
-      </Tabs>
+        <Tabs
+          value={tabIndex}
+          onChange={(_, v) => setTabIndex(v)}
+          sx={{
+            minHeight: 36,
+            "& .MuiTab-root": {
+              textTransform: "none",
+              fontWeight: 600,
+              fontSize: "0.82rem",
+              minHeight: 36,
+              px: 2,
+            },
+            "& .MuiTabs-indicator": { height: 2.5, borderRadius: 2 },
+          }}
+        >
+          <Tab label="All Appointments" />
+          <Tab
+            label={
+              <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+                Appointment Requests
+                {counts.pending > 0 && (
+                  <Chip
+                    label={counts.pending}
+                    size="small"
+                    sx={{
+                      height: 20,
+                      minWidth: 20,
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                      bgcolor: "#FEF3F2",
+                      color: palette.error.dark,
+                      "& .MuiChip-label": { px: 0.6 },
+                    }}
+                  />
+                )}
+              </Box>
+            }
+          />
+        </Tabs>
 
-      {/* ── Tab 0: All Appointments ── */}
-      {tabIndex === 0 && (
-        <>
+        {tabIndex === 0 && (
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "flex-end",
               gap: 1.5,
-              mb: 2.5,
               flexWrap: "wrap",
             }}
           >
@@ -304,7 +315,11 @@ export default function AppointmentsPage() {
               Book Appointment
             </Button>
           </Box>
+        )}
+      </Box>
 
+      {tabIndex === 0 && (
+        <>
           {viewMode === "list" ? (
             <AppointmentTable
               appointments={appointments}
@@ -319,7 +334,6 @@ export default function AppointmentsPage() {
         </>
       )}
 
-      {/* ── Tab 1: Appointment Requests ── */}
       {tabIndex === 1 && (
         <>
           {pendingRequests.length === 0 ? (
@@ -335,7 +349,14 @@ export default function AppointmentsPage() {
               <CheckCircleOutlineRoundedIcon
                 sx={{ fontSize: 48, color: "grey.300", mb: 1.5 }}
               />
-              <Typography sx={{ fontSize: "1rem", fontWeight: 600, color: "text.primary", mb: 0.5 }}>
+              <Typography
+                sx={{
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  color: "text.primary",
+                  mb: 0.5,
+                }}
+              >
                 No Pending Requests
               </Typography>
               <Typography sx={{ fontSize: "0.85rem", color: "text.secondary" }}>
@@ -365,57 +386,107 @@ export default function AppointmentsPage() {
                   </TableHead>
                   <TableBody>
                     {pendingRequests.map((appt) => (
-                      <StyledTableRow key={appt.id} onClick={() => handleRowClick(appt)}>
+                      <StyledTableRow
+                        key={appt.id}
+                        onClick={() => handleRowClick(appt)}
+                      >
                         <StyledBodyCell>
                           <Box>
-                            <Typography sx={{ fontSize: "0.84rem", fontWeight: 600, color: "text.primary" }}>
+                            <Typography
+                              sx={{
+                                fontSize: "0.84rem",
+                                fontWeight: 600,
+                                color: "text.primary",
+                              }}
+                            >
                               {appt.patientName}
                             </Typography>
-                            <Typography sx={{ fontSize: "0.72rem", color: "text.secondary" }}>
+                            <Typography
+                              sx={{
+                                fontSize: "0.72rem",
+                                color: "text.secondary",
+                              }}
+                            >
                               {appt.contact}
                             </Typography>
                           </Box>
                         </StyledBodyCell>
+
                         <StyledBodyCell>
-                          <Typography sx={{ fontSize: "0.84rem", color: "grey.700" }}>
+                          <Typography
+                            sx={{ fontSize: "0.84rem", color: "grey.700" }}
+                          >
                             {appt.assignedDoctor}
                           </Typography>
                         </StyledBodyCell>
+
                         <StyledBodyCell>
-                          <Typography sx={{ fontSize: "0.84rem", color: "grey.700" }}>
+                          <Typography
+                            sx={{ fontSize: "0.84rem", color: "grey.700" }}
+                          >
                             {fmtDate(appt.date)}
                           </Typography>
                         </StyledBodyCell>
+
                         <StyledBodyCell>
-                          <Typography sx={{ fontSize: "0.84rem", color: "grey.700" }}>
+                          <Typography
+                            sx={{ fontSize: "0.84rem", color: "grey.700" }}
+                          >
                             {appt.time}
                           </Typography>
                         </StyledBodyCell>
+
                         <StyledBodyCell>
                           {appt.verificationIdType ? (
                             <Box>
-                              <Typography sx={{ fontSize: "0.78rem", fontWeight: 500, color: "grey.700" }}>
+                              <Typography
+                                sx={{
+                                  fontSize: "0.78rem",
+                                  fontWeight: 500,
+                                  color: "grey.700",
+                                }}
+                              >
                                 {appt.verificationIdType}
                               </Typography>
-                              <Typography sx={{ fontSize: "0.72rem", color: "text.secondary" }}>
+                              <Typography
+                                sx={{
+                                  fontSize: "0.72rem",
+                                  color: "text.secondary",
+                                }}
+                              >
                                 {appt.verificationIdNumber}
                               </Typography>
                             </Box>
                           ) : (
-                            <Typography sx={{ fontSize: "0.78rem", color: "grey.400", fontStyle: "italic" }}>
+                            <Typography
+                              sx={{
+                                fontSize: "0.78rem",
+                                color: "grey.400",
+                                fontStyle: "italic",
+                              }}
+                            >
                               Not provided
                             </Typography>
                           )}
                         </StyledBodyCell>
+
                         <StyledBodyCell align="right">
                           <Box
-                            sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}
+                            sx={{
+                              display: "flex",
+                              gap: 1,
+                              justifyContent: "flex-end",
+                            }}
                             onClick={(e) => e.stopPropagation()}
                           >
                             <Button
                               size="small"
                               variant="contained"
-                              startIcon={<CheckCircleOutlineRoundedIcon sx={{ fontSize: 16 }} />}
+                              startIcon={
+                                <CheckCircleOutlineRoundedIcon
+                                  sx={{ fontSize: 16 }}
+                                />
+                              }
                               onClick={() => openConfirm("approve", appt.id)}
                               sx={{
                                 bgcolor: "success.main",
@@ -426,15 +497,21 @@ export default function AppointmentsPage() {
                                 boxShadow: "none",
                                 px: 1.5,
                                 py: 0.5,
-                                "&:hover": { bgcolor: "#039855", boxShadow: "none" },
+                                "&:hover": {
+                                  bgcolor: "#039855",
+                                  boxShadow: "none",
+                                },
                               }}
                             >
                               Approve
                             </Button>
+
                             <Button
                               size="small"
                               variant="outlined"
-                              startIcon={<CancelOutlinedIcon sx={{ fontSize: 16 }} />}
+                              startIcon={
+                                <CancelOutlinedIcon sx={{ fontSize: 16 }} />
+                              }
                               onClick={() => openConfirm("reject", appt.id)}
                               sx={{
                                 color: "#D92D20",
@@ -445,7 +522,10 @@ export default function AppointmentsPage() {
                                 borderRadius: "8px",
                                 px: 1.5,
                                 py: 0.5,
-                                "&:hover": { bgcolor: "#FEF3F2", borderColor: "#D92D20" },
+                                "&:hover": {
+                                  bgcolor: "#FEF3F2",
+                                  borderColor: "#D92D20",
+                                },
                               }}
                             >
                               Reject
@@ -462,13 +542,14 @@ export default function AppointmentsPage() {
         </>
       )}
 
-      {/* ── Confirmation Modal ── */}
       <ConfirmActionModal
         open={confirm.open}
         onClose={closeConfirm}
         onConfirm={commitConfirm}
         type={confirm.type}
-        appointment={appointments.find((a) => a.id === confirm.appointmentId) ?? null}
+        appointment={
+          appointments.find((a) => a.id === confirm.appointmentId) ?? null
+        }
       />
 
       <AppointmentModal

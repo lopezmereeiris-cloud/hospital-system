@@ -138,5 +138,19 @@
     "gender": "Male",
     "medicalHistory": "COPD, Atrial fibrillation, Type 2 Diabetes",
     "specialNotes": "Post-hospitalization check-up. INR monitoring needed."
+  },
+   {
+    "id": 11,
+    "patientName": "Jane Santos",
+    "assignedDoctor": "Dr. Ana Reyes",
+    "date": "2026-03-12",
+    "time": "09:00 AM",
+    "status": "Confirmed",
+    "contact": "+63 917 123 4567",
+    "email": "jane.santos@email.com",
+    "age": 34,
+    "gender": "Female",
+    "medicalHistory": "Hypertension, Type 2 Diabetes",
+    "specialNotes": "Patient prefers morning appointments. Allergic to Penicillin."
   }
 ]
