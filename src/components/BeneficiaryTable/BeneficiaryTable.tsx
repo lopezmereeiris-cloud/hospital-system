@@ -11,6 +11,7 @@ import Chip from "@mui/material/Chip";
 import LinearProgress from "@mui/material/LinearProgress";
 import PremiumFilter from "@/components/PremiumFilter";
 import { BeneficiaryTableProps, Beneficiary } from "./interface";
+import { palette } from "@/theme/palette";
 import {
   BeneficiaryContainer,
   StyledHeaderCell,
@@ -131,7 +132,7 @@ const BeneficiaryTable: React.FC<BeneficiaryTableProps> = ({ beneficiaries }) =>
   return (
     <BeneficiaryContainer>
         <BeneficiaryToolbar>
-          <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+          <div style={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
             Registered Beneficiaries
           </div>
           <PremiumFilter
@@ -153,7 +154,7 @@ const BeneficiaryTable: React.FC<BeneficiaryTableProps> = ({ beneficiaries }) =>
                       onClick={() => handleSort(column.key)}
                       sx={{
                         color: "inherit",
-                        "&.Mui-active": { color: "#344054" },
+                        "&.Mui-active": { color: "grey.700" },
                         "& .MuiTableSortLabel-icon": { color: "inherit !important" },
                       }}
                     >
@@ -168,9 +169,9 @@ const BeneficiaryTable: React.FC<BeneficiaryTableProps> = ({ beneficiaries }) =>
                 const usedPct = Math.round((b.benefitUsed / b.annualBenefit) * 100);
                 const barColor =
                   b.benefitBalance === 0
-                    ? "#F04438"
+                    ? palette.error.main
                     : b.benefitBalance <= 3000
-                    ? "#F79009"
+                    ? palette.warning.main
                     : PH.green;
 
                 const fullName = [b.firstName, b.middleName, b.lastName, b.suffix]
@@ -223,7 +224,7 @@ const BeneficiaryTable: React.FC<BeneficiaryTableProps> = ({ beneficiaries }) =>
                           style={{
                             fontSize: "0.68rem",
                             fontWeight: 600,
-                            color: "#6F767E",
+                            color: "text.secondary",
                             minWidth: 28,
                           }}
                         >
@@ -234,7 +235,7 @@ const BeneficiaryTable: React.FC<BeneficiaryTableProps> = ({ beneficiaries }) =>
                     <StyledBodyCell
                       sx={{
                         fontWeight: 700,
-                        color: b.benefitBalance === 0 ? "#F04438" : PH.green,
+                        color: b.benefitBalance === 0 ? palette.error.main : PH.green,
                         whiteSpace: "nowrap",
                       }}
                     >

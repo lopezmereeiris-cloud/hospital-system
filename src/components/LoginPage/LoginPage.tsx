@@ -1,4 +1,5 @@
 "use client";
+import { palette } from "@/theme/palette";
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -38,7 +39,7 @@ import {
   ActiveBadge,
 } from "./elements";
 
-const HospitalIcon = ({ size = 24, color = "#fff" }: { size?: number; color?: string }) => (
+const HospitalIcon = ({ size = 24, color = palette.background.paper }: { size?: number; color?: string }) => (
   <svg width={size} height={size} fill="none" viewBox="0 0 24 24" stroke={color} strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 6v4m0 0v4m0-4h4m-4 0H8" />
   </svg>

@@ -35,6 +35,7 @@ import {
 import TransactionDetailModal from "@/components/TransactionDetailModal";
 import yakapData from "@/json/yakap.json";
 
+import { palette } from "@/theme/palette";
 /* ── Simulated logged-in patient ── */
 const CURRENT_PATIENT_ID = "YKP-2025-0001";
 
@@ -52,88 +53,88 @@ const fmtDate = (iso: string) => {
 };
 
 /* ── Styled Components ── */
-const PageWrapper = styled(Box)(() => ({}));
+const PageWrapper = styled(Box)(({ theme }) => ({}));
 
-const PageTitle = styled("h2")(() => ({
+const PageTitle = styled("h2")(({ theme }) => ({
   fontSize: "1.5rem",
   fontWeight: 700,
   margin: "0 0 4px 0",
-  color: "#1A1D1F",
+  color: "text.primary",
 }));
 
-const PageSubtitle = styled("p")(() => ({
+const PageSubtitle = styled("p")(({ theme }) => ({
   fontSize: "0.88rem",
-  color: "#6F767E",
+  color: "text.secondary",
   margin: 0,
 }));
 
-const StatCardRoot = styled(Card)(() => ({
+const StatCardRoot = styled(Card)(({ theme }) => ({
   padding: "17.6px",
   borderRadius: 8,
-  border: "1px solid #ECEFF3",
+  border: `1px solid ${palette.grey[200]}`,
   boxShadow: "none",
   height: "100%",
 }));
 
-const StatIconBox = styled(Box)(() => ({
+const StatIconBox = styled(Box)(({ theme }) => ({
   width: 36,
   height: 36,
   borderRadius: 10,
   backgroundColor: "#EEF4FF",
-  color: "#4361EE",
+  color: "primary.main",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 }));
 
-const StatLabel = styled(Typography)(() => ({
+const StatLabel = styled(Typography)(({ theme }) => ({
   fontSize: "0.74rem",
-  color: "#026AA2",
+  color: palette.info.dark,
   fontWeight: 600,
   marginBottom: 2,
 }));
 
-const StatValue = styled(Typography)(() => ({
+const StatValue = styled(Typography)(({ theme }) => ({
   fontSize: "1.45rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: "text.primary",
   lineHeight: 1.1,
 }));
 
-const ProgressCard = styled(Card)(() => ({
+const ProgressCard = styled(Card)(({ theme }) => ({
   padding: 20,
   borderRadius: 8,
-  border: "1px solid #ECEFF3",
+  border: `1px solid ${palette.grey[200]}`,
   boxShadow: "none",
   marginBottom: 24,
 }));
 
-const ProgressHeader = styled(Box)(() => ({
+const ProgressHeader = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   marginBottom: 8,
 }));
 
-const ProgressLabel = styled(Typography)(() => ({
+const ProgressLabel = styled(Typography)(({ theme }) => ({
   fontSize: "0.88rem",
   fontWeight: 600,
-  color: "#1A1D1F",
+  color: "text.primary",
 }));
 
-const ProgressMeta = styled(Box)(() => ({
+const ProgressMeta = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   marginBottom: 6,
 }));
 
-const ProgressFooter = styled(Box)(() => ({
+const ProgressFooter = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   marginTop: 6,
 }));
 
-const StyledTabs = styled(Tabs)(() => ({
+const StyledTabs = styled(Tabs)(({ theme }) => ({
   marginBottom: 20,
   minHeight: 36,
   "& .MuiTab-root": {
@@ -147,14 +148,14 @@ const StyledTabs = styled(Tabs)(() => ({
   "& .MuiTabs-indicator": { height: 2.5, borderRadius: 2 },
 }));
 
-const TableCard = styled(Card)(() => ({
+const TableCard = styled(Card)(({ theme }) => ({
   borderRadius: 8,
-  border: "1px solid #ECEFF3",
+  border: `1px solid ${palette.grey[200]}`,
   boxShadow: "none",
   overflow: "hidden",
 }));
 
-const TxIconBox = styled(Box)(() => ({
+const TxIconBox = styled(Box)(({ theme }) => ({
   width: 28,
   height: 28,
   borderRadius: 8,
@@ -167,20 +168,20 @@ const TxIconBox = styled(Box)(() => ({
 }));
 
 /* ── Profile Styled Components ── */
-const ProfileCard = styled(Card)(() => ({
+const ProfileCard = styled(Card)(({ theme }) => ({
   borderRadius: 12,
-  border: "1px solid #ECEFF3",
+  border: `1px solid ${palette.grey[200]}`,
   boxShadow: "none",
   overflow: "hidden",
 }));
 
-const ProfileBanner = styled(Box)(() => ({
+const ProfileBanner = styled(Box)(({ theme }) => ({
   height: 80,
-  background: "linear-gradient(135deg, #4361EE 0%, #3A56D4 100%)",
+  background: `linear-gradient(135deg, ${palette.primary.main} 0%, #3A56D4 100%)`,
   position: "relative",
 }));
 
-const ProfileAvatarWrapper = styled(Box)(() => ({
+const ProfileAvatarWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -188,16 +189,16 @@ const ProfileAvatarWrapper = styled(Box)(() => ({
   paddingBottom: 16,
 }));
 
-const ProfileName = styled(Typography)(() => ({
+const ProfileName = styled(Typography)(({ theme }) => ({
   fontSize: "1.12rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: "text.primary",
   marginTop: 10,
 }));
 
-const ProfileIdText = styled(Typography)(() => ({
+const ProfileIdText = styled(Typography)(({ theme }) => ({
   fontSize: "0.78rem",
-  color: "#6F767E",
+  color: "text.secondary",
   marginTop: 2,
 }));
 
@@ -205,17 +206,17 @@ const InfoSection = styled(Box)(({ theme }) => ({
   padding: theme.spacing(0, 3, 2.5, 3),
 }));
 
-const InfoSectionHeader = styled(Box)(() => ({
+const InfoSectionHeader = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: 8,
   marginBottom: 12,
 }));
 
-const InfoSectionTitle = styled(Typography)(() => ({
+const InfoSectionTitle = styled(Typography)(({ theme }) => ({
   fontSize: "0.78rem",
   fontWeight: 700,
-  color: "#6F767E",
+  color: "text.secondary",
   textTransform: "uppercase" as const,
   letterSpacing: "0.06em",
 }));
@@ -235,26 +236,26 @@ const InfoItem = styled("div")(({ theme }) => ({
   gap: 2,
   padding: theme.spacing(1.25, 1.5),
   borderRadius: 10,
-  backgroundColor: "#FCFCFD",
-  border: "1px solid #F0F2F5",
+  backgroundColor: "grey.50",
+  border: `1px solid ${palette.divider}`,
 }));
 
-const InfoItemLabel = styled("span")(() => ({
+const InfoItemLabel = styled("span")(({ theme }) => ({
   fontSize: "0.68rem",
   fontWeight: 700,
-  color: "#98A2B3",
+  color: "grey.400",
   textTransform: "uppercase" as const,
   letterSpacing: "0.05em",
 }));
 
-const InfoItemValue = styled("span")(() => ({
+const InfoItemValue = styled("span")(({ theme }) => ({
   fontSize: "0.84rem",
-  color: "#1A1D1F",
+  color: "text.primary",
   fontWeight: 500,
 }));
 
 const SectionDivider = styled("div")(({ theme }) => ({
-  borderTop: "1px solid #F0F2F5",
+  borderTop: `1px solid ${palette.divider}`,
   margin: theme.spacing(0, 3),
   marginBottom: theme.spacing(2),
 }));
@@ -404,15 +405,15 @@ export default function YakapBalancePage() {
               fontWeight: 600,
               fontSize: "0.72rem",
               bgcolor: beneficiary.status === "Active" ? "#ECFDF3" : "#FEF3F2",
-              color: beneficiary.status === "Active" ? "#067647" : "#B42318",
+              color: beneficiary.status === "Active" ? "#067647" : palette.error.dark,
             }}
           />
         </ProgressHeader>
         <ProgressMeta>
-          <Typography sx={{ fontSize: "0.78rem", color: "#6F767E" }}>
+          <Typography sx={{ fontSize: "0.78rem", color: "text.secondary" }}>
             {peso(beneficiary.benefitUsed)} of {peso(beneficiary.annualBenefit)} used
           </Typography>
-          <Typography sx={{ fontSize: "0.78rem", color: "#6F767E", fontWeight: 600 }}>
+          <Typography sx={{ fontSize: "0.78rem", color: "text.secondary", fontWeight: 600 }}>
             {usedPct}%
           </Typography>
         </ProgressMeta>
@@ -422,20 +423,20 @@ export default function YakapBalancePage() {
           sx={{
             height: 10,
             borderRadius: 5,
-            bgcolor: "#F2F4F7",
+            bgcolor: "grey.100",
             "& .MuiLinearProgress-bar": {
               borderRadius: 5,
               background:
                 usedPct >= 90
-                  ? "linear-gradient(90deg, #F04438 0%, #D92D20 100%)"
+                  ? `linear-gradient(90deg, ${palette.error.main} 0%, #D92D20 100%)`
                   : usedPct >= 70
-                    ? "linear-gradient(90deg, #F79009 0%, #DC6803 100%)"
-                    : "linear-gradient(90deg, #12B76A 0%, #039855 100%)",
+                    ? `linear-gradient(90deg, ${palette.warning.main} 0%, #DC6803 100%)`
+                    : `linear-gradient(90deg, ${palette.success.main} 0%, #039855 100%)`,
             },
           }}
         />
         <ProgressFooter>
-          <Typography sx={{ fontSize: "0.72rem", color: "#98A2B3" }}>
+          <Typography sx={{ fontSize: "0.72rem", color: "grey.400" }}>
             Benefit Year {beneficiary.benefitYear}
           </Typography>
           <Typography
@@ -473,7 +474,7 @@ export default function YakapBalancePage() {
                 {sortedTransactions.length === 0 ? (
                   <StyledTableRow>
                     <StyledBodyCell colSpan={4} sx={{ textAlign: "center", py: 4 }}>
-                      <Typography sx={{ color: "#98A2B3", fontSize: "0.85rem" }}>
+                      <Typography sx={{ color: "grey.400", fontSize: "0.85rem" }}>
                         No transactions yet
                       </Typography>
                     </StyledBodyCell>
@@ -488,7 +489,7 @@ export default function YakapBalancePage() {
                         onClick={() => handleTxClick(tx)}
                       >
                         <StyledBodyCell>
-                          <Typography sx={{ fontSize: "0.82rem", fontWeight: 500, color: "#344054" }}>
+                          <Typography sx={{ fontSize: "0.82rem", fontWeight: 500, color: "grey.700" }}>
                             {fmtDate(tx.date)}
                           </Typography>
                         </StyledBodyCell>
@@ -497,7 +498,7 @@ export default function YakapBalancePage() {
                             <TxIconBox>
                               <LocalHospitalRoundedIcon sx={{ fontSize: 15 }} />
                             </TxIconBox>
-                            <Typography sx={{ fontSize: "0.82rem", color: "#1A1D1F", fontWeight: 500 }}>
+                            <Typography sx={{ fontSize: "0.82rem", color: "text.primary", fontWeight: 500 }}>
                               {tx.description}
                             </Typography>
                           </Box>
@@ -508,7 +509,7 @@ export default function YakapBalancePage() {
                           </Typography>
                         </StyledBodyCell>
                         <StyledBodyCell align="right">
-                          <Typography sx={{ fontSize: "0.82rem", fontWeight: 600, color: "#1A1D1F" }}>
+                          <Typography sx={{ fontSize: "0.82rem", fontWeight: 600, color: "text.primary" }}>
                             {peso(running)}
                           </Typography>
                         </StyledBodyCell>
@@ -536,7 +537,7 @@ export default function YakapBalancePage() {
                     height: 72,
                     fontSize: "1.5rem",
                     fontWeight: 700,
-                    bgcolor: "#4361EE",
+                    bgcolor: "primary.main",
                     border: "4px solid #FFFFFF",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
                   }}
@@ -553,7 +554,7 @@ export default function YakapBalancePage() {
                     fontWeight: 600,
                     fontSize: "0.72rem",
                     bgcolor: beneficiary.status === "Active" ? "#ECFDF3" : "#FEF3F2",
-                    color: beneficiary.status === "Active" ? "#067647" : "#B42318",
+                    color: beneficiary.status === "Active" ? "#067647" : palette.error.dark,
                   }}
                 />
               </ProfileAvatarWrapper>
@@ -562,7 +563,7 @@ export default function YakapBalancePage() {
 
               <InfoSection>
                 <InfoSectionHeader>
-                  <BadgeRoundedIcon sx={{ fontSize: 16, color: "#4361EE" }} />
+                  <BadgeRoundedIcon sx={{ fontSize: 16, color: "primary.main" }} />
                   <InfoSectionTitle>YAKAP Account</InfoSectionTitle>
                 </InfoSectionHeader>
                 <InfoGrid>
@@ -593,7 +594,7 @@ export default function YakapBalancePage() {
               {/* Personal Information */}
               <ProfileCard sx={{ p: 2.5 }}>
                 <InfoSectionHeader>
-                  <PersonRoundedIcon sx={{ fontSize: 16, color: "#4361EE" }} />
+                  <PersonRoundedIcon sx={{ fontSize: 16, color: "primary.main" }} />
                   <InfoSectionTitle>Personal Information</InfoSectionTitle>
                 </InfoSectionHeader>
                 <InfoGrid>
@@ -633,7 +634,7 @@ export default function YakapBalancePage() {
               {/* Emergency Contact */}
               <ProfileCard sx={{ p: 2.5 }}>
                 <InfoSectionHeader>
-                  <ContactPhoneRoundedIcon sx={{ fontSize: 16, color: "#4361EE" }} />
+                  <ContactPhoneRoundedIcon sx={{ fontSize: 16, color: "primary.main" }} />
                   <InfoSectionTitle>Emergency Contact</InfoSectionTitle>
                 </InfoSectionHeader>
                 <InfoGrid>

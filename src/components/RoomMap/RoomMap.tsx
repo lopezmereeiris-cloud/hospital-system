@@ -7,6 +7,7 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import ListFiltersBar from "@/components/ListFiltersBar";
 import { STATUS_COLORS } from "@/components/RoomTable/interface";
 import { RoomMapProps } from "./interface";
+import { palette } from "@/theme/palette";
 import {
   MapContainer,
   MapToolbar,
@@ -56,7 +57,7 @@ const RoomMap: React.FC<RoomMapProps> = ({
 
   const getTypeColor = (typeKey: string) => {
     const found = roomTypes.find((roomType) => roomType.key === typeKey);
-    return found?.color || "#667085";
+    return found?.color || palette.grey[500];
   };
 
   const normalizedSearch = search.trim().toLowerCase();
@@ -215,7 +216,7 @@ const RoomMap: React.FC<RoomMapProps> = ({
                       style={{
                         fontSize: "0.76rem",
                         fontWeight: 700,
-                        color: room.finalRate === 0 ? "#12B76A" : "#1A1D1F",
+                        color: room.finalRate === 0 ? palette.success.main : palette.text.primary,
                       }}
                     >
                       {room.finalRate === 0
@@ -227,7 +228,7 @@ const RoomMap: React.FC<RoomMapProps> = ({
                         style={{
                           fontSize: "0.62rem",
                           textDecoration: "line-through",
-                          color: "#98A2B3",
+                          color: "grey.400",
                         }}
                       >
                         PHP {room.ratePerDay.toLocaleString()}
@@ -241,7 +242,7 @@ const RoomMap: React.FC<RoomMapProps> = ({
                           padding: "1px 5px",
                           borderRadius: 4,
                           backgroundColor: "#ECFDF3",
-                          color: "#027A48",
+                          color: palette.success.dark,
                         }}
                       >
                         -{room.discountPercent}%

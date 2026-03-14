@@ -7,6 +7,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { styled, alpha } from "@mui/material/styles";
 
+import { palette } from "@/theme/palette";
 export interface ListFilterOption {
   value: string;
   label: string;
@@ -43,23 +44,23 @@ const FiltersContainer = styled("div")(({ theme }) => ({
 const sharedFieldSx = {
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "background.paper",
     fontSize: "0.82rem",
     "& fieldset": {
-      borderColor: "#EAECF0",
+      borderColor: "grey.200",
     },
     "&:hover fieldset": {
-      borderColor: "#D0D5DD",
+      borderColor: "grey.300",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#4361EE",
-      boxShadow: `0 0 0 3px ${alpha("#4361EE", 0.08)}`,
+      borderColor: "primary.main",
+      boxShadow: `0 0 0 3px ${alpha(palette.primary.main, 0.08)}`,
     },
   },
   "& .MuiInputLabel-root": {
     fontSize: "0.78rem",
     fontWeight: 600,
-    color: "#667085",
+    color: "grey.500",
   },
 };
 
@@ -80,7 +81,7 @@ const ListFiltersBar: React.FC<ListFiltersBarProps> = ({
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchRoundedIcon sx={{ fontSize: 18, color: "#98A2B3" }} />
+              <SearchRoundedIcon sx={{ fontSize: 18, color: "grey.400" }} />
             </InputAdornment>
           ),
         }}

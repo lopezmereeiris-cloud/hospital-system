@@ -1,29 +1,11 @@
 ﻿"use client";
 
 import React, { useMemo, useState } from "react";
-import Alert from "@mui/material/Alert";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { alpha } from "@mui/material/styles";
 import PremiumFilter from "@/components/PremiumFilter";
-import {
-  DISCOUNT_MAP,
-  PatientType,
-  Room,
-  RoomSchedule,
-  STATUS_COLORS,
-} from "@/components/RoomTable/interface";
+import { Room, RoomSchedule, STATUS_COLORS } from "@/components/RoomTable/interface";
 import { RoomTimelineProps } from "./interface";
+import { palette } from "@/theme/palette";
 import {
   TimelineContainer,
   TimelineToolbar,
@@ -38,163 +20,22 @@ import {
   CellLabel,
   TimelineHeaderLabel,
 } from "./elements";
-
-const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const MONTH_NAMES = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
-const RANGE_OPTIONS = [
-  { value: "7d", label: "7 Days" },
-  { value: "14d", label: "2 Weeks" },
-  { value: "30d", label: "1 Month" },
-] as const;
-
-const RANGE_DAY_COUNT: Record<(typeof RANGE_OPTIONS)[number]["value"], number> = {
-  "7d": 7,
-  "14d": 14,
-  "30d": 30,
-};
-
-const PATIENT_TYPES: PatientType[] = [
-  "Regular",
-  "Senior Citizen",
-  "PWD",
-  "PhilHealth",
-  "Indigent",
-];
-
-const PATIENT_TYPE_LABEL: Record<PatientType, string> = {
-  Regular: "None",
-  "Senior Citizen": "Senior Citizen",
-  PWD: "PWD",
-  PhilHealth: "PhilHealth",
-  Indigent: "Indigent",
-};
-
-const STATUS_OPTIONS: RoomSchedule["type"][] = ["occupied", "maintenance", "cleaning"];
-
-const STATUS_LABELS: Record<RoomSchedule["type"], string> = {
-  occupied: "Occupied",
-  maintenance: "Maintenance",
-  cleaning: "Cleaning",
-};
-
-const STATUS_SHORT: Record<RoomSchedule["type"], string> = {
-  occupied: "OC",
-  maintenance: "MT",
-  cleaning: "CL",
-};
-
-function parseDateKey(value: string): Date {
-  const [year, month, day] = value.split("-").map(Number);
-  return new Date(year, month - 1, day);
-}
-
-function formatDateKey(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
-function formatDateLabel(value: string): string {
-  const date = parseDateKey(value);
-  return date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
-
-function formatTimeLabel(value: string | null): string {
-  if (!value) {
-    return "--";
-  }
-
-  const parts = value.split(":");
-  if (parts.length < 2) {
-    return value;
-  }
-
-  const hour24 = Number(parts[0]);
-  const minute = Number(parts[1]);
-  if (!Number.isFinite(hour24) || !Number.isFinite(minute)) {
-    return value;
-  }
-
-  const suffix = hour24 >= 12 ? "PM" : "AM";
-  const hour12 = ((hour24 + 11) % 12) + 1;
-  return `${hour12}:${String(minute).padStart(2, "0")} ${suffix}`;
-}
-
-function isToday(date: Date): boolean {
-  const now = new Date();
-  return (
-    date.getDate() === now.getDate() &&
-    date.getMonth() === now.getMonth() &&
-    date.getFullYear() === now.getFullYear()
-  );
-}
-
-function getTimelineStartDate(schedules: RoomSchedule[]): Date {
-  if (schedules.length === 0) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return today;
-  }
-
-  let earliest = parseDateKey(schedules[0].startDate);
-  for (const schedule of schedules) {
-    const scheduleStart = parseDateKey(schedule.startDate);
-    if (scheduleStart < earliest) {
-      earliest = scheduleStart;
-    }
-  }
-
-  const start = new Date(earliest);
-  start.setDate(start.getDate() - 1);
-  return start;
-}
-
-function getDates(start: Date, count: number): Date[] {
-  const dates: Date[] = [];
-  for (let i = 0; i < count; i++) {
-    const date = new Date(start);
-    date.setDate(date.getDate() + i);
-    dates.push(date);
-  }
-  return dates;
-}
-
-type CellInfo = {
-  schedule: RoomSchedule | null;
-  isStart: boolean;
-  isEnd: boolean;
-};
-
-type BookingForm = {
-  roomId: string;
-  type: RoomSchedule["type"];
-  patientName: string;
-  patientType: PatientType;
-  startDate: string;
-  endDate: string;
-  checkInTime: string;
-  checkOutTime: string;
-  notes: string;
-};
+import {
+  BookingForm,
+  CellInfo,
+  DAY_NAMES,
+  formatDateKey,
+  getCellLabel,
+  getDates,
+  getStatusColor,
+  getTimelineStartDate,
+  isToday,
+  MONTH_NAMES,
+  RANGE_DAY_COUNT,
+  RANGE_OPTIONS,
+  parseDateKey,
+} from "./timelineUtils";
+import BookingModal from "./BookingModal";
 
 const RoomTimeline: React.FC<RoomTimelineProps> = ({
   rooms,
@@ -245,117 +86,6 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
 
     return map;
   }, [rooms, schedules, dates]);
-
-  const bookingRoom = useMemo(
-    () => rooms.find((room) => room.roomId === bookingForm?.roomId) || null,
-    [rooms, bookingForm?.roomId]
-  );
-
-  const bookingRoomType = useMemo(
-    () => roomTypes.find((type) => type.key === bookingRoom?.roomType) || null,
-    [roomTypes, bookingRoom?.roomType]
-  );
-
-  const bookingPricing = useMemo(() => {
-    if (!bookingForm || !bookingRoom || bookingForm.type !== "occupied") {
-      return null;
-    }
-
-    const discount = DISCOUNT_MAP[bookingForm.patientType];
-    const billingRate = Math.round(bookingRoom.ratePerDay * (1 - discount / 100));
-    return { discount, billingRate };
-  }, [bookingForm, bookingRoom]);
-
-  const stayDays = useMemo(() => {
-    if (!bookingForm) {
-      return 0;
-    }
-
-    const start = parseDateKey(bookingForm.startDate).getTime();
-    const end = parseDateKey(bookingForm.endDate).getTime();
-    if (end < start) {
-      return 0;
-    }
-
-    return Math.floor((end - start) / (24 * 60 * 60 * 1000)) + 1;
-  }, [bookingForm]);
-
-  const totalBase = useMemo(() => {
-    if (!bookingRoom) {
-      return 0;
-    }
-
-    return stayDays * bookingRoom.ratePerDay;
-  }, [bookingRoom, stayDays]);
-
-  const totalEstimated = useMemo(() => {
-    if (!bookingPricing) {
-      return 0;
-    }
-
-    return stayDays * bookingPricing.billingRate;
-  }, [bookingPricing, stayDays]);
-
-  const selectedRoomSchedules = useMemo(() => {
-    if (!bookingForm) {
-      return [] as RoomSchedule[];
-    }
-
-    return schedules
-      .filter((schedule) => schedule.roomId === bookingForm.roomId)
-      .sort((a, b) =>
-        a.startDate === b.startDate
-          ? a.scheduleId.localeCompare(b.scheduleId)
-          : a.startDate.localeCompare(b.startDate)
-      )
-      .slice(0, 8);
-  }, [schedules, bookingForm]);
-
-  const getStatusColor = (type: RoomSchedule["type"]): string => {
-    switch (type) {
-      case "occupied":
-        return STATUS_COLORS.Occupied;
-      case "maintenance":
-        return STATUS_COLORS.Maintenance;
-      case "cleaning":
-        return STATUS_COLORS.Cleaning;
-      default:
-        return STATUS_COLORS.Available;
-    }
-  };
-
-  const getCellLabel = (cell: CellInfo): string | null => {
-    if (!cell.schedule) {
-      return null;
-    }
-
-    if (cell.isStart) {
-      if (cell.schedule.type === "occupied") {
-        const patientType = cell.schedule.patientType;
-        if (patientType && patientType !== "Regular") {
-          const abbreviation =
-            patientType === "Senior Citizen"
-              ? "SC"
-              : patientType === "PhilHealth"
-                ? "PH"
-                : patientType;
-          return `IN - ${abbreviation}`;
-        }
-        return "IN";
-      }
-
-      return "START";
-    }
-
-    if (cell.isEnd) {
-      if (cell.schedule.type === "occupied") {
-        return "OUT";
-      }
-      return "END";
-    }
-
-    return null;
-  };
 
   const openBookingForm = (room: Room, date: string) => {
     setBookingError("");
@@ -478,47 +208,14 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
     });
   };
 
-  const modalFieldSx = {
-    "& .MuiInputLabel-root": {
-      fontSize: "0.82rem",
-      fontWeight: 600,
-      color: "#5F6B76",
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "#4361EE",
-    },
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "10px",
-      backgroundColor: "#FFFFFF",
-      "& .MuiInputBase-input": {
-        fontSize: "0.82rem",
-        fontWeight: 500,
-      },
-    },
-  };
-
-  const modalSectionTitleSx = {
-    fontSize: "0.95rem",
-    fontWeight: 700,
-    color: "#1A1D1F",
-    mb: 0.8,
-  };
-
-  const modalHelperTextSx = {
-    fontSize: "0.9rem",
-    color: "#5F6B76",
-    fontWeight: 500,
-    lineHeight: 1.5,
-  };
-
   return (
     <TimelineContainer elevation={0}>
       <TimelineToolbar>
         <div>
-          <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+          <div style={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
             Availability Timeline
           </div>
-          <div style={{ fontSize: "0.68rem", color: "#6F767E", marginTop: 3 }}>
+          <div style={{ fontSize: "0.68rem", color: "text.secondary", marginTop: 3 }}>
             Click any empty date cell to create a booking.
           </div>
         </div>
@@ -549,7 +246,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
               flexWrap: "wrap",
               fontSize: "0.72rem",
               fontWeight: 500,
-              color: "#6F767E",
+              color: "text.secondary",
             }}
           >
             {[
@@ -624,7 +321,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                     style={{
                       fontSize: "0.6rem",
                       fontWeight: 700,
-                      color: room.finalRate === 0 ? "#12B76A" : "#475467",
+                      color: room.finalRate === 0 ? palette.success.main : palette.grey[600],
                     }}
                   >
                     {room.finalRate === 0 ? "FREE" : `PHP ${room.finalRate.toLocaleString()}/d`}
@@ -637,7 +334,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
                         padding: "0px 3px",
                         borderRadius: 3,
                         backgroundColor: "#ECFDF3",
-                        color: "#027A48",
+                        color: palette.success.dark,
                       }}
                     >
                       -{room.discountPercent}%
@@ -671,431 +368,18 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
         ))}
       </TimelineScrollArea>
 
-      <Dialog
-        open={!!bookingForm}
+      <BookingModal
+        bookingForm={bookingForm}
+        bookingError={bookingError}
+        rooms={rooms}
+        roomTypes={roomTypes}
+        schedules={schedules}
         onClose={closeBookingForm}
-        fullWidth
-        maxWidth="lg"
-        PaperProps={{
-          sx: {
-            borderRadius: "16px",
-            overflow: "hidden",
-          },
-        }}
-      >
-        <DialogTitle sx={{ p: 3, pb: 2.4 }}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="flex-start"
-            gap={2}
-            sx={{
-              p: "20px 22px",
-              borderRadius: "16px",
-              background:
-                "linear-gradient(135deg, rgba(13, 138, 63, 0.08) 0%, rgba(13, 138, 63, 0.03) 100%)",
-              border: "1px solid rgba(13, 138, 63, 0.12)",
-            }}
-          >
-            <Box>
-              <Typography sx={{ fontSize: "1.4rem", fontWeight: 700, color: "#1A1D1F", lineHeight: 1.2 }}>
-                Room #{bookingRoom?.roomNumber || "--"} Admission Scheduling
-              </Typography>
-              <Typography sx={{ mt: 1, ...modalHelperTextSx }}>
-                {bookingRoom?.roomName || ""}
-                {bookingRoomType ? ` - ${bookingRoomType.label}` : ""}
-                {bookingRoom ? ` - ${bookingRoom.zone} - Capacity ${bookingRoom.capacity}` : ""}
-              </Typography>
-            </Box>
-            <IconButton onClick={closeBookingForm} size="small">
-              <CloseRoundedIcon />
-            </IconButton>
-          </Stack>
-        </DialogTitle>
-
-        <DialogContent sx={{ p: 0 }}>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: { xs: "1fr", md: "1.5fr 1fr" },
-              minHeight: { md: 620 },
-            }}
-          >
-            <Box sx={{ p: { xs: 2.5, md: 3.25 } }}>
-              {bookingError && (
-                <Alert severity="error" sx={{ mb: 2 }}>
-                  {bookingError}
-                </Alert>
-              )}
-
-              <Typography sx={{ ...modalHelperTextSx, mb: 1.8 }}>
-                Assign room occupancy, maintenance, or cleaning schedule using hospital room workflow.
-              </Typography>
-
-              {bookingForm?.type === "occupied" && (
-                <TextField
-                  label="Patient Name"
-                  placeholder="Example: Juan Dela Cruz"
-                  value={bookingForm.patientName}
-                  onChange={(event) =>
-                    setBookingForm((previous) =>
-                      previous
-                        ? {
-                            ...previous,
-                            patientName: event.target.value,
-                          }
-                        : previous
-                    )
-                  }
-                  size="small"
-                  fullWidth
-                  sx={{ ...modalFieldSx, mb: 1.9 }}
-                />
-              )}
-
-              <Typography sx={modalSectionTitleSx}>
-                ROOM STATUS
-              </Typography>
-              <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mb: 1.8 }}>
-                {STATUS_OPTIONS.map((statusType) => {
-                  const active = bookingForm?.type === statusType;
-                  const statusColor = getStatusColor(statusType);
-                  return (
-                    <Button
-                      key={statusType}
-                      fullWidth
-                      variant={active ? "contained" : "outlined"}
-                      onClick={() => updateBookingType(statusType)}
-                      sx={{
-                        textTransform: "none",
-                        fontWeight: 700,
-                        borderRadius: "10px",
-                        borderColor: alpha(statusColor, 0.34),
-                        color: active ? "#FFFFFF" : statusColor,
-                        backgroundColor: active ? statusColor : "#FFFFFF",
-                        "&:hover": {
-                          backgroundColor: active ? statusColor : alpha(statusColor, 0.08),
-                          borderColor: statusColor,
-                        },
-                      }}
-                    >
-                      {STATUS_LABELS[statusType]}
-                    </Button>
-                  );
-                })}
-              </Stack>
-
-              <Stack direction={{ xs: "column", sm: "row" }} spacing={1.2} sx={{ mb: 1.9 }}>
-                <TextField
-                  label="Admit Date"
-                  type="date"
-                  value={bookingForm?.startDate || ""}
-                  onChange={(event) => updateStartDate(event.target.value)}
-                  size="small"
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  sx={modalFieldSx}
-                />
-                <TextField
-                  label="Discharge Date"
-                  type="date"
-                  value={bookingForm?.endDate || ""}
-                  onChange={(event) =>
-                    setBookingForm((previous) =>
-                      previous
-                        ? {
-                            ...previous,
-                            endDate: event.target.value,
-                          }
-                        : previous
-                    )
-                  }
-                  size="small"
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  sx={modalFieldSx}
-                />
-              </Stack>
-
-              {bookingForm?.type === "occupied" && (
-                <Stack direction={{ xs: "column", sm: "row" }} spacing={1.2} sx={{ mb: 1.9 }}>
-                  <TextField
-                    label="Admission Time"
-                    type="time"
-                    value={bookingForm.checkInTime}
-                    onChange={(event) =>
-                      setBookingForm((previous) =>
-                        previous
-                          ? {
-                              ...previous,
-                              checkInTime: event.target.value,
-                            }
-                          : previous
-                      )
-                    }
-                    size="small"
-                    fullWidth
-                    InputLabelProps={{ shrink: true }}
-                    sx={modalFieldSx}
-                  />
-                  <TextField
-                    label="Expected Discharge Time"
-                    type="time"
-                    value={bookingForm.checkOutTime}
-                    onChange={(event) =>
-                      setBookingForm((previous) =>
-                        previous
-                          ? {
-                              ...previous,
-                              checkOutTime: event.target.value,
-                            }
-                          : previous
-                      )
-                    }
-                    size="small"
-                    fullWidth
-                    InputLabelProps={{ shrink: true }}
-                    sx={modalFieldSx}
-                  />
-                </Stack>
-              )}
-
-              {bookingForm?.type === "occupied" && (
-                <>
-                  <Typography
-                    sx={modalSectionTitleSx}
-                  >
-                    COVERAGE CATEGORY
-                  </Typography>
-                  <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mb: 1.8 }}>
-                    {PATIENT_TYPES.map((patientType) => {
-                      const active = bookingForm.patientType === patientType;
-                      return (
-                        <Button
-                          key={patientType}
-                          fullWidth
-                          variant={active ? "contained" : "outlined"}
-                          onClick={() =>
-                            setBookingForm((previous) =>
-                              previous
-                                ? {
-                                    ...previous,
-                                    patientType,
-                                  }
-                                : previous
-                            )
-                          }
-                          sx={{
-                            textTransform: "none",
-                            borderRadius: "10px",
-                            fontWeight: 600,
-                            fontSize: "0.73rem",
-                            lineHeight: 1.2,
-                          }}
-                        >
-                          {PATIENT_TYPE_LABEL[patientType]}
-                        </Button>
-                      );
-                    })}
-                  </Stack>
-                </>
-              )}
-
-              <TextField
-                label={bookingForm?.type === "occupied" ? "Clinical Notes" : "Work Notes"}
-                value={bookingForm?.notes || ""}
-                onChange={(event) =>
-                  setBookingForm((previous) =>
-                    previous
-                      ? {
-                          ...previous,
-                          notes: event.target.value,
-                        }
-                      : previous
-                  )
-                }
-                size="small"
-                multiline
-                minRows={2}
-                fullWidth
-                sx={{ ...modalFieldSx, mb: 2.1 }}
-              />
-
-              <Box
-                sx={{
-                  border: "1px solid #ECECEC",
-                  borderRadius: "12px",
-                  p: 1.8,
-                  mb: 1.8,
-                  backgroundColor: "#F9FAFB",
-                }}
-              >
-                <Typography sx={{ ...modalSectionTitleSx, fontSize: "0.9rem", mb: 1 }}>
-                  PRICE BREAKDOWN
-                </Typography>
-                <Stack spacing={0.55}>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography sx={{ fontSize: "0.78rem", color: "#344054" }}>Room Rate</Typography>
-                    <Typography sx={{ fontSize: "0.78rem", color: "#344054" }}>
-                      PHP {bookingRoom?.ratePerDay.toLocaleString() || "0"}/day
-                    </Typography>
-                  </Stack>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography sx={{ fontSize: "0.78rem", color: "#344054" }}>Stay Days</Typography>
-                    <Typography sx={{ fontSize: "0.78rem", color: "#344054" }}>{stayDays}</Typography>
-                  </Stack>
-                  {bookingForm?.type === "occupied" && bookingPricing && (
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography sx={{ fontSize: "0.78rem", color: "#344054" }}>
-                        Coverage Discount
-                      </Typography>
-                      <Typography sx={{ fontSize: "0.78rem", color: "#16A34A" }}>
-                        -{bookingPricing.discount}%
-                      </Typography>
-                    </Stack>
-                  )}
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography sx={{ fontSize: "0.78rem", color: "#344054" }}>Subtotal</Typography>
-                    <Typography sx={{ fontSize: "0.78rem", color: "#344054" }}>
-                      PHP {totalBase.toLocaleString()}
-                    </Typography>
-                  </Stack>
-                  <Divider sx={{ my: 0.45 }} />
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography sx={{ fontSize: "0.84rem", fontWeight: 700, color: "#111827" }}>
-                      Estimated Total
-                    </Typography>
-                    <Typography sx={{ fontSize: "0.84rem", fontWeight: 700, color: "#111827" }}>
-                      PHP {(bookingForm?.type === "occupied" ? totalEstimated : 0).toLocaleString()}
-                    </Typography>
-                  </Stack>
-                </Stack>
-              </Box>
-
-              <Stack direction={{ xs: "column", sm: "row" }} spacing={1.1}>
-                <Button
-                  variant="outlined"
-                  onClick={closeBookingForm}
-                  fullWidth
-                  sx={{
-                    textTransform: "none",
-                    borderRadius: "10px",
-                    fontWeight: 600,
-                    borderColor: "#D0D5DD",
-                    color: "#1A1D1F",
-                    "&:hover": {
-                      borderColor: "#98A2B3",
-                      backgroundColor: "#F9FAFB",
-                    },
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={handleCreateBooking}
-                  fullWidth
-                  sx={{
-                    backgroundColor: "#4361EE !important",
-                    color: "#FFFFFF !important",
-                    textTransform: "none",
-                    borderRadius: "10px",
-                    fontWeight: 600,
-                    "&:hover": {
-                      backgroundColor: "#3A56D4 !important",
-                    },
-                  }}
-                >
-                  Save Room Schedule
-                </Button>
-              </Stack>
-            </Box>
-
-            <Box
-              sx={{
-                borderLeft: { xs: "none", md: "1px solid #EAECF0" },
-                borderTop: { xs: "1px solid #EAECF0", md: "none" },
-                backgroundColor: "#FCFCFD",
-                p: { xs: 2, md: 2.5 },
-              }}
-            >
-              <Typography
-                sx={{ ...modalSectionTitleSx, fontSize: "0.9rem", letterSpacing: "0.02em", mb: 0.5 }}
-              >
-                SCHEDULED ROOM CHANGES
-              </Typography>
-              <Typography sx={{ ...modalHelperTextSx, fontSize: "0.82rem", mb: 1.6 }}>
-                Upcoming occupancy and service windows for this room.
-              </Typography>
-
-              <Stack spacing={1}>
-                {selectedRoomSchedules.length === 0 && (
-                  <Box
-                    sx={{
-                      border: "1px dashed #D0D5DD",
-                      borderRadius: "10px",
-                      p: 1.6,
-                      backgroundColor: "#FFFFFF",
-                    }}
-                  >
-                    <Typography sx={{ fontSize: "0.76rem", color: "#667085" }}>
-                      No scheduled changes yet for this room.
-                    </Typography>
-                  </Box>
-                )}
-
-                {selectedRoomSchedules.map((schedule) => {
-                  const statusColor = getStatusColor(schedule.type);
-                  return (
-                    <Box
-                      key={schedule.scheduleId}
-                      sx={{
-                        border: "1px solid #D0D5DD",
-                        borderRadius: "10px",
-                        p: 1.2,
-                        backgroundColor: "#FFFFFF",
-                      }}
-                    >
-                      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={0.8}>
-                        <Chip
-                          label={`${STATUS_SHORT[schedule.type]}  ${STATUS_LABELS[schedule.type]}`}
-                          size="small"
-                          sx={{
-                            fontWeight: 700,
-                            fontSize: "0.62rem",
-                            color: statusColor,
-                            backgroundColor: alpha(statusColor, 0.12),
-                          }}
-                        />
-                        <Typography sx={{ fontSize: "0.66rem", color: "#667085" }}>
-                          {schedule.scheduleId}
-                        </Typography>
-                      </Stack>
-
-                      <Typography sx={{ fontSize: "0.73rem", color: "#344054" }}>
-                        {formatDateLabel(schedule.startDate)} - {formatDateLabel(schedule.endDate)}
-                      </Typography>
-
-                      {schedule.type === "occupied" && (
-                        <Typography sx={{ mt: 0.35, fontSize: "0.72rem", color: "#667085" }}>
-                          Admit {formatTimeLabel(schedule.checkInTime)} / Discharge{" "}
-                          {formatTimeLabel(schedule.checkOutTime)}
-                        </Typography>
-                      )}
-
-                      <Typography sx={{ mt: 0.35, fontSize: "0.72rem", color: "#667085" }}>
-                        {schedule.type === "occupied"
-                          ? `Patient: ${schedule.patientName || "--"}`
-                          : schedule.notes || "No additional notes"}
-                      </Typography>
-                    </Box>
-                  );
-                })}
-              </Stack>
-            </Box>
-          </Box>
-        </DialogContent>
-      </Dialog>
+        onSubmit={handleCreateBooking}
+        onFormChange={setBookingForm}
+        onTypeChange={updateBookingType}
+        onStartDateChange={updateStartDate}
+      />
     </TimelineContainer>
   );
 };

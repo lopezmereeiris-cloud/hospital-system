@@ -40,7 +40,7 @@ export const palette = {
     secondary: "#6F767E",
     disabled: "#9A9FA5",
   },
-  divider: "#EFEFEF",
+  divider: "#F0F2F5",
   grey: {
     50: "#FCFCFD",
     100: "#F2F4F7",

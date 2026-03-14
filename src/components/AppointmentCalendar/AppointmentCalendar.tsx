@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Appointment } from "@/components/AppointmentTable/interface";
 
+import { palette } from "@/theme/palette";
 interface AppointmentCalendarProps {
   appointments: Appointment[];
   onEventClick?: (appointment: Appointment) => void;
@@ -124,7 +125,7 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
     <Paper
       sx={{
         borderRadius: 2,
-        border: "1px solid #ECEFF3",
+        border: `1px solid ${palette.grey[200]}`,
         boxShadow: "none",
         overflow: "hidden",
       }}
@@ -133,15 +134,15 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
         sx={{
           px: 3,
           py: 2,
-          borderBottom: "1px solid #ECEFF3",
-          backgroundColor: "#FCFCFD",
+          borderBottom: `1px solid ${palette.grey[200]}`,
+          backgroundColor: "grey.50",
         }}
       >
         <Typography
           sx={{
             fontSize: "1rem",
             fontWeight: 700,
-            color: "#1A1D1F",
+            color: "text.primary",
           }}
         >
           Weekly Schedule
@@ -157,9 +158,9 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
       >
         <Box
           sx={{
-            borderRight: "1px solid #ECEFF3",
-            borderBottom: "1px solid #ECEFF3",
-            backgroundColor: "#FCFCFD",
+            borderRight: `1px solid ${palette.grey[200]}`,
+            borderBottom: `1px solid ${palette.grey[200]}`,
+            backgroundColor: "grey.50",
           }}
         />
 
@@ -169,9 +170,9 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
             sx={{
               px: 1.5,
               py: 1.25,
-              borderRight: index === 6 ? "none" : "1px solid #ECEFF3",
-              borderBottom: "1px solid #ECEFF3",
-              backgroundColor: "#FCFCFD",
+              borderRight: index === 6 ? "none" : `1px solid ${palette.grey[200]}`,
+              borderBottom: `1px solid ${palette.grey[200]}`,
+              backgroundColor: "grey.50",
               textAlign: "center",
             }}
           >
@@ -179,7 +180,7 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
               sx={{
                 fontSize: "0.72rem",
                 fontWeight: 700,
-                color: "#6B7280",
+                color: "grey.500",
                 textTransform: "uppercase",
                 letterSpacing: "0.06em",
               }}
@@ -191,7 +192,7 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
               sx={{
                 fontSize: "0.88rem",
                 fontWeight: 700,
-                color: "#1A1D1F",
+                color: "text.primary",
                 mt: 0.35,
               }}
             >
@@ -206,16 +207,16 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
               sx={{
                 px: 1.25,
                 py: 1.5,
-                borderRight: "1px solid #ECEFF3",
-                borderBottom: "1px solid #F2F4F7",
-                backgroundColor: "#FCFCFD",
+                borderRight: `1px solid ${palette.grey[200]}`,
+                borderBottom: `1px solid ${palette.grey[100]}`,
+                backgroundColor: "grey.50",
               }}
             >
               <Typography
                 sx={{
                   fontSize: "0.75rem",
                   fontWeight: 600,
-                  color: "#6B7280",
+                  color: "grey.500",
                 }}
               >
                 {slot}
@@ -238,9 +239,9 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
                   sx={{
                     minHeight: 92,
                     p: 1,
-                    borderRight: index === 6 ? "none" : "1px solid #F2F4F7",
-                    borderBottom: "1px solid #F2F4F7",
-                    backgroundColor: "#FFFFFF",
+                    borderRight: index === 6 ? "none" : `1px solid ${palette.grey[100]}`,
+                    borderBottom: `1px solid ${palette.grey[100]}`,
+                    backgroundColor: "background.paper",
                   }}
                 >
                   <Box sx={{ display: "flex", flexDirection: "column", gap: 0.75 }}>
@@ -274,7 +275,7 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
                             sx={{
                               fontSize: "0.76rem",
                               fontWeight: 700,
-                              color: "#1A1D1F",
+                              color: "text.primary",
                               mt: 0.35,
                               lineHeight: 1.3,
                             }}
@@ -285,7 +286,7 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
                           <Typography
                             sx={{
                               fontSize: "0.7rem",
-                              color: "#6B7280",
+                              color: "grey.500",
                               mt: 0.25,
                               lineHeight: 1.3,
                             }}

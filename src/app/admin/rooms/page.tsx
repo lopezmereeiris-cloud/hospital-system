@@ -29,6 +29,7 @@ import {
 import roomsData from "@/json/rooms.json";
 import roomTypesData from "@/json/roomTypes.json";
 import schedulesData from "@/json/roomSchedules.json";
+import { palette } from "@/theme/palette";
 
 type TabValue = "room-list" | "room-map" | "room-types";
 
@@ -190,7 +191,7 @@ export default function RoomsPage() {
             title="Total Rooms"
             value={rooms.length}
             icon={<MeetingRoomRoundedIcon />}
-            color="#4361EE"
+            color={palette.primary.main}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 2.4 }}>
@@ -198,7 +199,7 @@ export default function RoomsPage() {
             title="Available"
             value={available}
             icon={<CheckCircleRoundedIcon />}
-            color="#12B76A"
+            color={palette.success.main}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 2.4 }}>
@@ -206,7 +207,7 @@ export default function RoomsPage() {
             title="Occupied"
             value={occupied}
             icon={<BlockRoundedIcon />}
-            color="#F04438"
+            color={palette.error.main}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 2.4 }}>
@@ -214,7 +215,7 @@ export default function RoomsPage() {
             title="Maintenance"
             value={maintenance}
             icon={<BuildRoundedIcon />}
-            color="#F79009"
+            color={palette.warning.main}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 2.4 }}>
@@ -222,7 +223,7 @@ export default function RoomsPage() {
             title="Cleaning"
             value={cleaning}
             icon={<CleaningServicesRoundedIcon />}
-            color="#36BFFA"
+            color={palette.info.main}
           />
         </Grid>
       </Grid>

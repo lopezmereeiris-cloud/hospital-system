@@ -3,9 +3,9 @@
 import { styled, alpha } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 
-export const TypeManagerContainer = styled(Paper)(() => ({
+export const TypeManagerContainer = styled(Paper)(({ theme }) => ({
   borderRadius: 16,
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
   overflow: "hidden",
 }));
 
@@ -14,7 +14,7 @@ export const TypeManagerToolbar = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2.5, 3),
-  borderBottom: "1px solid #F0F2F5",
+  borderBottom: `1px solid ${theme.palette.divider}`,
   flexWrap: "wrap",
   gap: theme.spacing(1.5),
 }));
@@ -28,16 +28,16 @@ export const TypeGrid = styled("div")(({ theme }) => ({
 
 export const TypeCard = styled("div", {
   shouldForwardProp: (prop) => prop !== "typeColor",
-})<{ typeColor: string }>(({ typeColor }) => ({
+})<{ typeColor: string }>(({ typeColor, theme }) => ({
   borderRadius: 16,
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
   borderTop: `3px solid ${typeColor}`,
   padding: "18px 20px",
-  backgroundColor: "#FFFFFF",
+  backgroundColor: theme.palette.background.paper,
   transition: "all 0.22s ease",
   "&:hover": {
-    borderColor: alpha("#4361EE", 0.24),
-    boxShadow: `0 4px 20px ${alpha("#4361EE", 0.08)}`,
+    borderColor: alpha(theme.palette.primary.main, 0.24),
+    boxShadow: `0 4px 20px ${alpha(theme.palette.primary.main, 0.08)}`,
     transform: "translateY(-1px)",
   },
 }));
@@ -63,7 +63,7 @@ export const TypeCardMeta = styled("div")(({ theme }) => ({
   lineHeight: 1.5,
 }));
 
-export const AmenityList = styled("div")(() => ({
+export const AmenityList = styled("div")(({ theme }) => ({
   display: "flex",
   flexWrap: "wrap",
   gap: 6,
@@ -84,18 +84,18 @@ export const AmenityChip = styled("div", {
 
 export const ActiveBadge = styled("div", {
   shouldForwardProp: (prop) => prop !== "isActive",
-})<{ isActive: boolean }>(({ isActive }) => ({
+})<{ isActive: boolean }>(({ isActive, theme }) => ({
   display: "inline-flex",
   alignItems: "center",
   gap: 4,
   padding: "2px 8px",
   borderRadius: 999,
-  backgroundColor: isActive ? alpha("#12B76A", 0.12) : alpha("#F04438", 0.12),
-  color: isActive ? "#027A48" : "#B42318",
+  backgroundColor: isActive ? alpha(theme.palette.success.main, 0.12) : alpha(theme.palette.error.main, 0.12),
+  color: isActive ? theme.palette.success.dark : theme.palette.error.dark,
   fontSize: "0.64rem",
   fontWeight: 700,
   border: `1px solid ${
-    isActive ? alpha("#12B76A", 0.24) : alpha("#F04438", 0.24)
+    isActive ? alpha(theme.palette.success.main, 0.24) : alpha(theme.palette.error.main, 0.24)
   }`,
   textTransform: "uppercase",
   lineHeight: 1.4,
@@ -105,7 +105,7 @@ export const CreateTypeForm = styled("div")(({ theme }) => ({
   margin: theme.spacing(2.5, 3, 2.5),
   padding: theme.spacing(2.4),
   borderRadius: 14,
-  backgroundColor: "#FCFCFD",
+  backgroundColor: theme.palette.grey[50],
   border: "1px solid #ECECEC",
   display: "flex",
   flexDirection: "column",
@@ -136,22 +136,22 @@ export const FormLabel = styled("label")(({ theme }) => ({
 export const FormInput = styled("input")(({ theme }) => ({
   padding: "10px 12px",
   borderRadius: 10,
-  border: "1px solid #EAECF0",
+  border: `1px solid ${theme.palette.grey[200]}`,
   fontSize: "0.82rem",
   color: theme.palette.text.primary,
   fontFamily: "inherit",
   outline: "none",
-  backgroundColor: "#FFFFFF",
+  backgroundColor: theme.palette.background.paper,
   transition: "border-color 0.2s ease",
   "&:focus": {
-    borderColor: "#4361EE",
-    boxShadow: `0 0 0 3px ${alpha("#4361EE", 0.1)}`,
+    borderColor: theme.palette.primary.main,
+    boxShadow: `0 0 0 3px ${alpha(theme.palette.primary.main, 0.1)}`,
   },
 }));
 
-export const SmallButton = styled("button")(() => ({
+export const SmallButton = styled("button")(({ theme }) => ({
   background: "linear-gradient(135deg, #4D95B4 0%, #226E8E 100%)",
-  color: "#FFFFFF",
+  color: theme.palette.primary.contrastText,
   textTransform: "none",
   borderRadius: 12,
   border: "none",

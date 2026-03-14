@@ -4,50 +4,50 @@ import { styled, alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 
-export const Container = styled(Box)(() => ({
+export const Container = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: 24,
 }));
 
-export const PanelCard = styled(Box)(() => ({
+export const PanelCard = styled(Box)(({ theme }) => ({
   border: "1px solid #E8ECF2",
   borderRadius: 16,
   overflow: "hidden",
-  background: "#FFF",
+  background: theme.palette.background.paper,
 }));
 
-export const PanelHeader = styled(Box)(() => ({
+export const PanelHeader = styled(Box)(({ theme }) => ({
   padding: "16px 20px",
   borderBottom: "1px solid #EEF2F6",
-  background: "#FCFCFD",
+  background: theme.palette.grey[50],
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
 }));
 
-export const PanelTitleWrap = styled(Box)(() => ({
+export const PanelTitleWrap = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: 4,
 }));
 
-export const PanelTitle = styled("div")(() => ({
+export const PanelTitle = styled("div")(({ theme }) => ({
   fontSize: "1rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
 }));
 
-export const PanelSubtitle = styled("div")(() => ({
+export const PanelSubtitle = styled("div")(({ theme }) => ({
   fontSize: "0.82rem",
-  color: "#6F767E",
+  color: theme.palette.text.secondary,
 }));
 
-export const DetailBody = styled(Box)(() => ({
+export const DetailBody = styled(Box)(({ theme }) => ({
   padding: 20,
 }));
 
-export const DetailHeader = styled(Box)(() => ({
+export const DetailHeader = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
@@ -55,20 +55,20 @@ export const DetailHeader = styled(Box)(() => ({
   marginBottom: 20,
 }));
 
-export const PatientName = styled("div")(() => ({
+export const PatientName = styled("div")(({ theme }) => ({
   fontSize: "1.9rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   lineHeight: 1.15,
 }));
 
-export const PatientMeta = styled("div")(() => ({
+export const PatientMeta = styled("div")(({ theme }) => ({
   fontSize: "0.95rem",
   color: "#5F6B76",
   marginTop: 6,
 }));
 
-export const BadgeRow = styled(Box)(() => ({
+export const BadgeRow = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: 8,
   flexWrap: "wrap",
@@ -77,13 +77,13 @@ export const BadgeRow = styled(Box)(() => ({
 
 export const CoverageBadge = styled(Chip, {
   shouldForwardProp: (prop) => prop !== "active",
-})<{ active?: boolean }>(({ active }) => ({
+})<{ active?: boolean }>(({ active, theme }) => ({
   height: 30,
   borderRadius: 999,
   fontWeight: 600,
   fontSize: "0.78rem",
   background: active ? alpha("#0D8A3F", 0.08) : "#F8FAFC",
-  color: active ? "#0D8A3F" : "#667085",
+  color: active ? "#0D8A3F" : theme.palette.grey[500],
   border: `1px solid ${active ? alpha("#0D8A3F", 0.18) : "#D8E0EA"}`,
   "& .MuiChip-label": {
     paddingLeft: 12,
@@ -95,7 +95,7 @@ export const StatusBadge = styled("span", {
   shouldForwardProp: (prop) => prop !== "status",
 })<{
   status: "Paid" | "Partial" | "Unpaid";
-}>(({ status }) => {
+}>(({ status, theme }) => {
   const styles = {
     Paid: {
       background: alpha("#0D8A3F", 0.08),
@@ -103,14 +103,14 @@ export const StatusBadge = styled("span", {
       border: alpha("#0D8A3F", 0.18),
     },
     Partial: {
-      background: alpha("#F79009", 0.1),
+      background: alpha(theme.palette.warning.main, 0.1),
       color: "#B26A00",
-      border: alpha("#F79009", 0.2),
+      border: alpha(theme.palette.warning.main, 0.2),
     },
     Unpaid: {
-      background: alpha("#F04438", 0.08),
+      background: alpha(theme.palette.error.main, 0.08),
       color: "#D92D20",
-      border: alpha("#F04438", 0.18),
+      border: alpha(theme.palette.error.main, 0.18),
     },
   }[status];
 
@@ -139,42 +139,42 @@ export const MetaGrid = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const MetaCard = styled(Box)(() => ({
+export const MetaCard = styled(Box)(({ theme }) => ({
   border: "1px solid #E8ECF2",
   borderRadius: 14,
   padding: "14px 16px",
-  background: "#FFF",
+  background: theme.palette.background.paper,
 }));
 
-export const MetaLabel = styled("div")(() => ({
+export const MetaLabel = styled("div")(({ theme }) => ({
   fontSize: "0.74rem",
   fontWeight: 700,
   textTransform: "uppercase",
   letterSpacing: "0.06em",
-  color: "#98A2B3",
+  color: theme.palette.grey[400],
   marginBottom: 8,
 }));
 
-export const MetaValue = styled("div")(() => ({
+export const MetaValue = styled("div")(({ theme }) => ({
   fontSize: "0.98rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
 }));
 
-export const BreakdownCard = styled(Box)(() => ({
+export const BreakdownCard = styled(Box)(({ theme }) => ({
   border: "1px solid #E8ECF2",
   borderRadius: 16,
   overflow: "hidden",
   marginBottom: 20,
 }));
 
-export const BreakdownHeader = styled("div")(() => ({
+export const BreakdownHeader = styled("div")(({ theme }) => ({
   padding: "14px 16px",
   fontSize: "0.95rem",
   fontWeight: 800,
   textTransform: "uppercase",
   letterSpacing: "0.04em",
-  color: "#344054",
+  color: theme.palette.grey[700],
   background: "#F8FAFC",
   borderBottom: "1px solid #E8ECF2",
 }));
@@ -186,7 +186,7 @@ export const BreakdownRow = styled(Box, {
   positive?: boolean;
   total?: boolean;
   danger?: boolean;
-}>(({ positive, total, danger }) => ({
+}>(({ positive, total, danger, theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -194,28 +194,28 @@ export const BreakdownRow = styled(Box, {
   borderBottom: total ? "none" : "1px solid #EEF2F6",
   fontSize: total ? "1rem" : "0.95rem",
   fontWeight: total ? 800 : 500,
-  color: danger ? "#D92D20" : positive ? "#0D8A3F" : "#1D2939",
-  background: total ? "#FCFCFD" : "#FFF",
+  color: danger ? "#D92D20" : positive ? "#0D8A3F" : theme.palette.grey[800],
+  background: total ? theme.palette.grey[50] : theme.palette.background.paper,
 }));
 
-export const NotesCard = styled(Box)(() => ({
+export const NotesCard = styled(Box)(({ theme }) => ({
   border: "1px solid #E8ECF2",
   borderRadius: 16,
   padding: "16px 18px",
-  background: "#FFF",
+  background: theme.palette.background.paper,
 }));
 
-export const NotesLabel = styled("div")(() => ({
+export const NotesLabel = styled("div")(({ theme }) => ({
   fontSize: "0.74rem",
   fontWeight: 700,
   textTransform: "uppercase",
   letterSpacing: "0.06em",
-  color: "#98A2B3",
+  color: theme.palette.grey[400],
   marginBottom: 10,
 }));
 
-export const NotesValue = styled("div")(() => ({
+export const NotesValue = styled("div")(({ theme }) => ({
   fontSize: "0.92rem",
-  color: "#344054",
+  color: theme.palette.grey[700],
   lineHeight: 1.6,
 }));

@@ -6,6 +6,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import FiberManualRecordRoundedIcon from "@mui/icons-material/FiberManualRecordRounded";
 import { STATUS_COLORS } from "@/components/RoomTable/interface";
 import { RoomDetailModalProps } from "./interface";
+import { palette } from "@/theme/palette";
 import {
   ModalOverlay,
   ModalContent,
@@ -61,7 +62,7 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
               style={{
                 fontSize: "1.15rem",
                 fontWeight: 700,
-                color: "#1A1D1F",
+                color: "text.primary",
               }}
             >
               #{room.roomNumber} — {room.roomName}
@@ -69,7 +70,7 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
             <div
               style={{
                 fontSize: "0.78rem",
-                color: "#6F767E",
+                color: "text.secondary",
                 marginTop: 2,
               }}
             >
@@ -125,7 +126,7 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
               <DetailSectionTitle>Billing Summary</DetailSectionTitle>
               <div
                 style={{
-                  background: "#F9FAFB",
+                  background: palette.background.default,
                   borderRadius: 10,
                   padding: "14px 16px",
                   display: "flex",
@@ -138,7 +139,7 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
                     display: "flex",
                     justifyContent: "space-between",
                     fontSize: "0.78rem",
-                    color: "#475467",
+                    color: "grey.600",
                   }}
                 >
                   <span>Base Rate</span>
@@ -149,7 +150,7 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
                     display: "flex",
                     justifyContent: "space-between",
                     fontSize: "0.78rem",
-                    color: room.discountPercent > 0 ? "#12B76A" : "#475467",
+                    color: room.discountPercent > 0 ? palette.success.main : palette.grey[600],
                   }}
                 >
                   <span>
@@ -174,8 +175,8 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
                     fontWeight: 700,
                     color:
                       room.finalRate === 0
-                        ? "#12B76A"
-                        : "#1A1D1F",
+                        ? palette.success.main
+                        : palette.text.primary,
                   }}
                 >
                   <span>Final Rate</span>
@@ -211,7 +212,7 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
                               ? "#E3F2FD"
                               : room.patientType === "Indigent"
                                 ? "#FCE4EC"
-                                : "#F2F4F7",
+                                : palette.grey[100],
                       color:
                         room.patientType === "Senior Citizen"
                           ? "#B76E00"
@@ -221,7 +222,7 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
                               ? "#0D47A1"
                               : room.patientType === "Indigent"
                                 ? "#B71C1C"
-                                : "#475467",
+                                : palette.grey[600],
                     }}
                   >
                     {room.patientType}
@@ -239,7 +240,7 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
                     key={s.scheduleId}
                     style={{
                       fontSize: "0.75rem",
-                      color: "#6F767E",
+                      color: "text.secondary",
                       marginTop: 4,
                     }}
                   >
@@ -259,7 +260,7 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
           {/* Description */}
           <DetailSection>
             <DetailSectionTitle>Description</DetailSectionTitle>
-            <div style={{ fontSize: "0.8rem", color: "#475467", lineHeight: 1.6 }}>
+            <div style={{ fontSize: "0.8rem", color: "grey.600", lineHeight: 1.6 }}>
               {room.description}
             </div>
           </DetailSection>
@@ -288,7 +289,7 @@ const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
                 {roomSchedules.map((sch) => (
                   <ScheduleCard
                     key={sch.scheduleId}
-                    typeColor={scheduleTypeColors[sch.type] || "#667085"}
+                    typeColor={scheduleTypeColors[sch.type] || palette.grey[500]}
                   >
                     <ScheduleTitle>
                       {sch.type === "occupied"

@@ -75,7 +75,7 @@ const AddRoomModal: React.FC<AddRoomModalProps> = ({
     <ModalOverlay onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <ModalHeader>
-          <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#1A1D1F" }}>
+          <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "text.primary" }}>
             Add New Room
           </div>
           <IconButton onClick={onClose} size="small">

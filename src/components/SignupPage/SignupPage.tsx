@@ -44,7 +44,7 @@ import {
 } from "./elements";
 
 const HospitalIcon = ({ size = 22 }: { size?: number }) => (
-  <svg width={size} height={size} fill="none" viewBox="0 0 24 24" stroke="#fff" strokeWidth={2}>
+  <svg width={size} height={size} fill="none" viewBox="0 0 24 24" stroke="#FFFFFF" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 6v4m0 0v4m0-4h4m-4 0H8" />
   </svg>
 );

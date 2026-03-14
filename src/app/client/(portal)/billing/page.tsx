@@ -18,6 +18,7 @@ import PatientBillingStatement from "@/components/PatientBilling/PatientBillingS
 import { BillingRecord } from "@/components/PatientBilling/interface";
 import billingRecords from "@/json/billings.json";
 
+import { palette } from "@/theme/palette";
 const records = billingRecords as BillingRecord[];
 
 const moneyFormatter = new Intl.NumberFormat("en-PH", {
@@ -36,14 +37,14 @@ const formatDate = (date: string) =>
 const headerCellStyle = {
   fontSize: "0.72rem",
   fontWeight: 700,
-  color: "#98A2B3",
+  color: "grey.400",
   textTransform: "uppercase",
   letterSpacing: "0.06em",
 };
 
 const bodyCellStyle = {
   fontSize: "0.88rem",
-  color: "#1A1D1F",
+  color: "text.primary",
   display: "flex",
   alignItems: "center",
 };
@@ -109,7 +110,7 @@ const latestBillAmount = latestBill?.netAmount ?? 0;
       title="Outstanding Balance"
       value={moneyFormatter.format(outstandingBalance)}
       icon={<AccountBalanceWalletRoundedIcon />}
-      color="#F04438"
+      color={palette.error.main}
     />
   </Grid>
 
@@ -118,7 +119,7 @@ const latestBillAmount = latestBill?.netAmount ?? 0;
       title="Total Bills"
       value={totalBills}
       icon={<ReceiptLongRoundedIcon />}
-      color="#4361EE"
+      color={palette.primary.main}
     />
   </Grid>
 
@@ -128,7 +129,7 @@ const latestBillAmount = latestBill?.netAmount ?? 0;
       value={moneyFormatter.format(latestBillAmount)}
       subtitle={latestBill.billId}
       icon={<PaymentsRoundedIcon />}
-      color="#36BFFA"
+      color={palette.info.main}
     />
   </Grid>
 
@@ -137,7 +138,7 @@ const latestBillAmount = latestBill?.netAmount ?? 0;
       title="Paid Bills"
       value={paidBills}
       icon={<ScheduleRoundedIcon />}
-      color="#12B76A"
+      color={palette.success.main}
     />
   </Grid>
 
@@ -147,7 +148,7 @@ const latestBillAmount = latestBill?.netAmount ?? 0;
       value={pendingBills}
       subtitle="Needs payment"
       icon={<WarningAmberRoundedIcon />}
-      color="#F79009"
+      color={palette.warning.main}
     />
   </Grid>
 
@@ -166,16 +167,16 @@ const latestBillAmount = latestBill?.netAmount ?? 0;
             px: 2.5,
             py: 2,
             borderBottom: "1px solid #EEF2F6",
-            background: "#FCFCFD",
+            background: palette.grey[50],
           }}
         >
           <Typography
-            sx={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}
+            sx={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}
           >
             Billing History
           </Typography>
           <Typography
-            sx={{ fontSize: "0.82rem", color: "#6F767E", mt: 0.25 }}
+            sx={{ fontSize: "0.82rem", color: "text.secondary", mt: 0.25 }}
           >
             Select a bill to view its full statement of account.
           </Typography>
@@ -189,7 +190,7 @@ const latestBillAmount = latestBill?.netAmount ?? 0;
                 gridTemplateColumns: "1.3fr 2fr 1fr 1fr 1fr 1fr",
                 px: 2.5,
                 py: 1.5,
-                background: "#FCFCFD",
+                background: palette.grey[50],
                 borderBottom: "1px solid #EEF2F6",
               }}
             >
@@ -215,7 +216,7 @@ const latestBillAmount = latestBill?.netAmount ?? 0;
                   backgroundColor:
                     selectedBillId === bill.billId
                       ? "rgba(67, 97, 238, 0.04)"
-                      : "#FFF",
+                      : palette.background.paper,
                   "&:hover": {
                     backgroundColor:
                       selectedBillId === bill.billId
@@ -228,7 +229,7 @@ const latestBillAmount = latestBill?.netAmount ?? 0;
                   <Typography
                     sx={{
                       fontWeight: 700,
-                      color: "#1A1D1F",
+                      color: "text.primary",
                       fontSize: "0.88rem",
                     }}
                   >
@@ -240,14 +241,14 @@ const latestBillAmount = latestBill?.netAmount ?? 0;
                   <Typography
                     sx={{
                       fontWeight: 600,
-                      color: "#1A1D1F",
+                      color: "text.primary",
                       fontSize: "0.88rem",
                     }}
                   >
                     {bill.serviceLabel}
                   </Typography>
                   <Typography
-                    sx={{ fontSize: "0.78rem", color: "#98A2B3", mt: 0.35 }}
+                    sx={{ fontSize: "0.78rem", color: "grey.400", mt: 0.35 }}
                   >
                     {bill.serviceType}
                   </Typography>

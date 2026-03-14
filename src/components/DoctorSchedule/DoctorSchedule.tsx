@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
+import { palette } from "@/theme/palette";
 export interface ScheduleBlock {
   day: string;
   startTime: string;
@@ -43,8 +44,8 @@ const typeStyles: Record<ScheduleBlock["type"], { bg: string; border: string; co
   procedure: { bg: "#F4F0FF", border: "#DDD5F9", color: "#6941C6" },
   rounds: { bg: "#ECFDF3", border: "#B7E4C7", color: "#067647" },
   specialty: { bg: "#FFF1E7", border: "#FDDCB7", color: "#C4530A" },
-  admin: { bg: "#F2F4F7", border: "#D0D5DD", color: "#475467" },
-  break: { bg: "#FFFAEB", border: "#FEDF89", color: "#B54708" },
+  admin: { bg: palette.grey[100], border: palette.grey[300], color: "grey.600" },
+  break: { bg: "#FFFAEB", border: "#FEDF89", color: palette.warning.dark },
 };
 
 const parseToMinutes = (time: string) => {
@@ -66,7 +67,7 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
     <Paper
       sx={{
         borderRadius: 2,
-        border: "1px solid #ECEFF3",
+        border: `1px solid ${palette.grey[200]}`,
         boxShadow: "none",
         overflow: "hidden",
       }}
@@ -75,11 +76,11 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
         sx={{
           px: 3,
           py: 2,
-          borderBottom: "1px solid #ECEFF3",
-          backgroundColor: "#FCFCFD",
+          borderBottom: `1px solid ${palette.grey[200]}`,
+          backgroundColor: "grey.50",
         }}
       >
-        <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+        <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
           Weekly Schedule
         </Typography>
       </Box>
@@ -95,9 +96,9 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
           {/* Top-left blank cell */}
           <Box
             sx={{
-              borderRight: "1px solid #ECEFF3",
-              borderBottom: "1px solid #ECEFF3",
-              backgroundColor: "#FCFCFD",
+              borderRight: `1px solid ${palette.grey[200]}`,
+              borderBottom: `1px solid ${palette.grey[200]}`,
+              backgroundColor: "grey.50",
             }}
           />
 
@@ -108,9 +109,9 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
               sx={{
                 px: 1.5,
                 py: 1.25,
-                borderRight: index === 6 ? "none" : "1px solid #ECEFF3",
-                borderBottom: "1px solid #ECEFF3",
-                backgroundColor: "#FCFCFD",
+                borderRight: index === 6 ? "none" : `1px solid ${palette.grey[200]}`,
+                borderBottom: `1px solid ${palette.grey[200]}`,
+                backgroundColor: "grey.50",
                 textAlign: "center",
               }}
             >
@@ -118,7 +119,7 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
                 sx={{
                   fontSize: "0.72rem",
                   fontWeight: 700,
-                  color: "#6B7280",
+                  color: "grey.500",
                   textTransform: "uppercase",
                   letterSpacing: "0.06em",
                 }}
@@ -126,7 +127,7 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
                 {label}
               </Typography>
               <Typography
-                sx={{ fontSize: "0.88rem", fontWeight: 700, color: "#1A1D1F", mt: 0.35 }}
+                sx={{ fontSize: "0.88rem", fontWeight: 700, color: "text.primary", mt: 0.35 }}
               >
                 {WEEK_DAYS[index]}
               </Typography>
@@ -141,12 +142,12 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
                 sx={{
                   px: 1.25,
                   py: 1.5,
-                  borderRight: "1px solid #ECEFF3",
-                  borderBottom: "1px solid #F2F4F7",
-                  backgroundColor: "#FCFCFD",
+                  borderRight: `1px solid ${palette.grey[200]}`,
+                  borderBottom: `1px solid ${palette.grey[100]}`,
+                  backgroundColor: "grey.50",
                 }}
               >
-                <Typography sx={{ fontSize: "0.75rem", fontWeight: 600, color: "#6B7280" }}>
+                <Typography sx={{ fontSize: "0.75rem", fontWeight: 600, color: "grey.500" }}>
                   {TIME_LABELS[slot]}
                 </Typography>
               </Box>
@@ -165,9 +166,9 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
                     sx={{
                       minHeight: 92,
                       p: 1,
-                      borderRight: dayIdx === 6 ? "none" : "1px solid #F2F4F7",
-                      borderBottom: "1px solid #F2F4F7",
-                      backgroundColor: "#FFFFFF",
+                      borderRight: dayIdx === 6 ? "none" : `1px solid ${palette.grey[100]}`,
+                      borderBottom: `1px solid ${palette.grey[100]}`,
+                      backgroundColor: "background.paper",
                     }}
                   >
                     <Box sx={{ display: "flex", flexDirection: "column", gap: 0.75 }}>
@@ -202,7 +203,7 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
                               sx={{
                                 fontSize: "0.76rem",
                                 fontWeight: 700,
-                                color: "#1A1D1F",
+                                color: "text.primary",
                                 mt: 0.35,
                                 lineHeight: 1.3,
                               }}
@@ -226,8 +227,8 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
         sx={{
           px: 3,
           py: 1.5,
-          borderTop: "1px solid #ECEFF3",
-          backgroundColor: "#FCFCFD",
+          borderTop: `1px solid ${palette.grey[200]}`,
+          backgroundColor: "grey.50",
           display: "flex",
           flexWrap: "wrap",
           gap: 2,
@@ -249,7 +250,7 @@ const DoctorSchedule: React.FC<DoctorScheduleProps> = ({ schedule }) => {
                 sx={{
                   fontSize: "0.68rem",
                   fontWeight: 600,
-                  color: "#6B7280",
+                  color: "grey.500",
                   textTransform: "capitalize",
                 }}
               >

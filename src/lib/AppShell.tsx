@@ -11,6 +11,7 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { NavItem } from "@/components/Sidebar/interface";
 
+import { palette } from "@/theme/palette";
 const EXPANDED_WIDTH = 260;
 const COLLAPSED_WIDTH = 78;
 

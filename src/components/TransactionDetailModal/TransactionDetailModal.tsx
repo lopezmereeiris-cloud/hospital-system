@@ -22,6 +22,7 @@ import {
   BalanceValue,
 } from "./elements";
 import { TransactionDetailModalProps } from "./interface";
+import { palette } from "@/theme/palette";
 
 const peso = (v: number) => `₱${v.toLocaleString()}`;
 
@@ -61,11 +62,11 @@ export default function TransactionDetailModal({
             </ReceiptBadge>
             <div>
               <Typography
-                sx={{ fontSize: "1.1rem", fontWeight: 700, color: "#1A1D1F", lineHeight: 1.2 }}
+                sx={{ fontSize: "1.1rem", fontWeight: 700, color: "text.primary", lineHeight: 1.2 }}
               >
                 Transaction Details
               </Typography>
-              <Typography sx={{ fontSize: "0.78rem", color: "#6F767E", mt: 0.25 }}>
+              <Typography sx={{ fontSize: "0.78rem", color: "text.secondary", mt: 0.25 }}>
                 {fmtDate(transaction.date)}
               </Typography>
             </div>
@@ -74,8 +75,8 @@ export default function TransactionDetailModal({
             onClick={onClose}
             size="small"
             sx={{
-              color: "#98A2B3",
-              "&:hover": { color: "#1A1D1F", bgcolor: "#F2F4F7" },
+              color: "grey.400",
+              "&:hover": { color: "text.primary", bgcolor: "grey.100" },
             }}
           >
             <CloseRoundedIcon sx={{ fontSize: 20 }} />
@@ -136,10 +137,10 @@ export default function TransactionDetailModal({
         </BalanceRow>
         <div style={{ marginTop: 10 }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-            <Typography sx={{ fontSize: "0.72rem", color: "#98A2B3" }}>
+            <Typography sx={{ fontSize: "0.72rem", color: "grey.400" }}>
               {peso(annualBenefit - runningBalance)} used of {peso(annualBenefit)}
             </Typography>
-            <Typography sx={{ fontSize: "0.72rem", color: "#98A2B3", fontWeight: 600 }}>
+            <Typography sx={{ fontSize: "0.72rem", color: "grey.400", fontWeight: 600 }}>
               {balancePct}% left
             </Typography>
           </div>
@@ -149,15 +150,15 @@ export default function TransactionDetailModal({
             sx={{
               height: 6,
               borderRadius: 3,
-              bgcolor: "#F2F4F7",
+              bgcolor: "grey.100",
               "& .MuiLinearProgress-bar": {
                 borderRadius: 3,
                 background:
                   balancePct <= 10
-                    ? "linear-gradient(90deg, #F04438 0%, #D92D20 100%)"
+                    ? `linear-gradient(90deg, ${palette.error.main} 0%, #D92D20 100%)`
                     : balancePct <= 30
-                      ? "linear-gradient(90deg, #F79009 0%, #DC6803 100%)"
-                      : "linear-gradient(90deg, #12B76A 0%, #039855 100%)",
+                      ? `linear-gradient(90deg, ${palette.warning.main} 0%, #DC6803 100%)`
+                      : `linear-gradient(90deg, ${palette.success.main} 0%, #039855 100%)`,
               },
             }}
           />

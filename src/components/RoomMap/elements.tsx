@@ -3,9 +3,9 @@
 import { styled, alpha } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 
-export const MapContainer = styled(Paper)(() => ({
+export const MapContainer = styled(Paper)(({ theme }) => ({
   borderRadius: 16,
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
   overflow: "hidden",
 }));
 
@@ -14,15 +14,15 @@ export const MapToolbar = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2.5, 3),
-  borderBottom: "1px solid #F0F2F5",
+  borderBottom: `1px solid ${theme.palette.divider}`,
   flexWrap: "wrap",
   gap: theme.spacing(1.5),
 }));
 
 export const MapFilterArea = styled("div")(({ theme }) => ({
   padding: theme.spacing(1.8, 3, 2.2),
-  borderBottom: "1px solid #F0F2F5",
-  backgroundColor: "#FCFCFD",
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  backgroundColor: theme.palette.grey[50],
 }));
 
 export const FloorSection = styled("div")(({ theme }) => ({
@@ -44,7 +44,7 @@ export const FloorLabel = styled("div")(({ theme }) => ({
     content: '""',
     flex: 1,
     height: 1,
-    backgroundColor: "#F0F2F5",
+    backgroundColor: theme.palette.divider,
   },
 }));
 
@@ -58,15 +58,15 @@ export const RoomCard = styled("div", {
   shouldForwardProp: (prop) => prop !== "statusColor",
 })<{ statusColor: string }>(({ theme, statusColor }) => ({
   borderRadius: 16,
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
   borderTop: `3px solid ${statusColor}`,
   padding: theme.spacing(2.2),
   cursor: "pointer",
-  backgroundColor: "#FFFFFF",
+  backgroundColor: theme.palette.background.paper,
   transition: "all 0.22s ease",
   "&:hover": {
-    borderColor: alpha("#4361EE", 0.24),
-    boxShadow: `0 4px 20px ${alpha("#4361EE", 0.08)}`,
+    borderColor: alpha(theme.palette.primary.main, 0.24),
+    boxShadow: `0 4px 20px ${alpha(theme.palette.primary.main, 0.08)}`,
     transform: "translateY(-1px)",
   },
 }));
@@ -157,8 +157,8 @@ export const EmptyRoomsState = styled("div")(({ theme }) => ({
   margin: theme.spacing(2.5, 3, 3),
   padding: theme.spacing(2.4),
   borderRadius: 12,
-  border: "1px dashed #D0D5DD",
-  backgroundColor: "#FCFCFD",
+  border: `1px dashed ${theme.palette.grey[300]}`,
+  backgroundColor: theme.palette.grey[50],
   textAlign: "center",
   fontSize: "0.82rem",
   color: theme.palette.text.secondary,

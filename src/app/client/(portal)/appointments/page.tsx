@@ -36,6 +36,7 @@ import ClientAppointmentDetail from "@/components/ClientAppointmentDetail";
 import SetAppointmentModal from "@/components/SetAppointmentModal";
 import appointmentsData from "@/json/appointments.json";
 
+import { palette } from "@/theme/palette";
 const statusColorMap: Record<
   string,
   "warning" | "success" | "info" | "error" | "default"
@@ -81,7 +82,7 @@ const StatCard = ({
     sx={{
       p: 2.2,
       borderRadius: 1,
-      border: "1px solid #ECEFF3",
+      border: `1px solid ${palette.grey[200]}`,
       boxShadow: "none",
       height: "100%",
     }}
@@ -93,7 +94,7 @@ const StatCard = ({
           height: 36,
           borderRadius: "10px",
           backgroundColor: "#EEF4FF",
-          color: "#4361EE",
+          color: "primary.main",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -105,7 +106,7 @@ const StatCard = ({
         <Typography
           sx={{
             fontSize: "0.74rem",
-            color: "#026AA2",
+            color: palette.info.dark,
             fontWeight: 600,
             mb: 0.25,
           }}
@@ -116,7 +117,7 @@ const StatCard = ({
           sx={{
             fontSize: "1.45rem",
             fontWeight: 700,
-            color: "#1A1D1F",
+            color: "text.primary",
             lineHeight: 1.1,
           }}
         >
@@ -237,12 +238,12 @@ export default function ClientAppointmentsPage() {
             sx={{
               fontSize: "1.5rem",
               fontWeight: 700,
-              color: "#1A1D1F",
+              color: "text.primary",
             }}
           >
             Appointments
           </Typography>
-          <Typography sx={{ fontSize: "0.88rem", color: "#6F767E", mt: 0.4 }}>
+          <Typography sx={{ fontSize: "0.88rem", color: "text.secondary", mt: 0.4 }}>
             View your schedules and send appointment requests.
           </Typography>
         </Box>
@@ -252,7 +253,7 @@ export default function ClientAppointmentsPage() {
           startIcon={<AddRoundedIcon />}
           onClick={() => setSetApptOpen(true)}
           sx={{
-            backgroundColor: "#4361EE",
+            backgroundColor: "primary.main",
             textTransform: "none",
             borderRadius: "10px",
             fontWeight: 600,
@@ -308,8 +309,8 @@ export default function ClientAppointmentsPage() {
             fontSize: "0.88rem",
             minHeight: 40,
           },
-          "& .MuiTabs-indicator": { backgroundColor: "#4361EE", height: 2.5 },
-          "& .Mui-selected": { color: "#4361EE !important" },
+          "& .MuiTabs-indicator": { backgroundColor: "primary.main", height: 2.5 },
+          "& .Mui-selected": { color: `${palette.primary.main} !important` },
         }}
       >
         <Tab label="My Appointments" />
@@ -322,7 +323,7 @@ export default function ClientAppointmentsPage() {
             <Card
               sx={{
                 borderRadius: 1,
-                border: "1px solid #ECEFF3",
+                border: `1px solid ${palette.grey[200]}`,
                 boxShadow: "none",
                 overflow: "hidden",
               }}
@@ -333,12 +334,12 @@ export default function ClientAppointmentsPage() {
                   justifyContent: "space-between",
                   alignItems: "center",
                   p: { xs: 2, sm: 2.2 },
-                  borderBottom: "1px solid #ECEFF3",
+                  borderBottom: `1px solid ${palette.grey[200]}`,
                   gap: 1,
                   flexWrap: "wrap",
                 }}
               >
-                <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+                <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
                   My Appointments
                 </Typography>
 
@@ -371,17 +372,17 @@ export default function ClientAppointmentsPage() {
 
               {sortedMyAppointments.length === 0 ? (
                 <Box sx={{ p: 4.5, textAlign: "center" }}>
-                  <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+                  <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
                     No appointments yet
                   </Typography>
-                  <Typography sx={{ fontSize: "0.85rem", color: "#6F767E", mt: 0.6, mb: 2.4 }}>
+                  <Typography sx={{ fontSize: "0.85rem", color: "text.secondary", mt: 0.6, mb: 2.4 }}>
                     Create your first request to start scheduling with a doctor.
                   </Typography>
                   <Button
                     variant="contained"
                     onClick={() => setSetApptOpen(true)}
                     sx={{
-                      backgroundColor: "#4361EE",
+                      backgroundColor: "primary.main",
                       textTransform: "none",
                       borderRadius: "10px",
                       fontWeight: 600,
@@ -443,15 +444,15 @@ export default function ClientAppointmentsPage() {
               sx={{
                 p: 2.2,
                 borderRadius: 1,
-                border: "1px solid #ECEFF3",
+                border: `1px solid ${palette.grey[200]}`,
                 boxShadow: "none",
                 height: "100%",
               }}
             >
-              <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+              <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
                 Next Appointment
               </Typography>
-              <Typography sx={{ fontSize: "0.82rem", color: "#6F767E", mt: 0.4 }}>
+              <Typography sx={{ fontSize: "0.82rem", color: "text.secondary", mt: 0.4 }}>
                 Your nearest upcoming schedule.
               </Typography>
 
@@ -466,10 +467,10 @@ export default function ClientAppointmentsPage() {
                     sx={{ mb: 1.2 }}
                   />
 
-                  <Typography sx={{ fontSize: "0.94rem", fontWeight: 700, color: "#1A1D1F" }}>
+                  <Typography sx={{ fontSize: "0.94rem", fontWeight: 700, color: "text.primary" }}>
                     {nextAppointment.assignedDoctor}
                   </Typography>
-                  <Typography sx={{ fontSize: "0.84rem", color: "#6F767E", mt: 0.6 }}>
+                  <Typography sx={{ fontSize: "0.84rem", color: "text.secondary", mt: 0.6 }}>
                     {nextAppointment.date} at {nextAppointment.time}
                   </Typography>
 
@@ -494,7 +495,7 @@ export default function ClientAppointmentsPage() {
                   </Button>
                 </>
               ) : (
-                <Typography sx={{ fontSize: "0.85rem", color: "#6F767E" }}>
+                <Typography sx={{ fontSize: "0.85rem", color: "text.secondary" }}>
                   No upcoming appointment found.
                 </Typography>
               )}
@@ -510,30 +511,30 @@ export default function ClientAppointmentsPage() {
               sx={{
                 p: { xs: 2.2, sm: 2.6 },
                 borderRadius: 1,
-                border: "1px solid #ECEFF3",
+                border: `1px solid ${palette.grey[200]}`,
                 boxShadow: "none",
                 height: "100%",
               }}
             >
-              <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+              <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
                 New Appointment Request
               </Typography>
-              <Typography sx={{ fontSize: "0.85rem", color: "#6F767E", mt: 0.45 }}>
+              <Typography sx={{ fontSize: "0.85rem", color: "text.secondary", mt: 0.45 }}>
                 Use the multi-step flow to choose a doctor, schedule, visit reason,
                 and submit a valid ID.
               </Typography>
 
               <Box sx={{ mt: 2.2, display: "flex", flexDirection: "column", gap: 1.2 }}>
-                <Typography sx={{ fontSize: "0.84rem", color: "#475467" }}>
+                <Typography sx={{ fontSize: "0.84rem", color: "grey.600" }}>
                   1. Select doctor and available schedule
                 </Typography>
-                <Typography sx={{ fontSize: "0.84rem", color: "#475467" }}>
+                <Typography sx={{ fontSize: "0.84rem", color: "grey.600" }}>
                   2. Add reason for visit and notes
                 </Typography>
-                <Typography sx={{ fontSize: "0.84rem", color: "#475467" }}>
+                <Typography sx={{ fontSize: "0.84rem", color: "grey.600" }}>
                   3. Provide a valid ID for verification
                 </Typography>
-                <Typography sx={{ fontSize: "0.84rem", color: "#475467" }}>
+                <Typography sx={{ fontSize: "0.84rem", color: "grey.600" }}>
                   4. Submit request for admin confirmation
                 </Typography>
               </Box>
@@ -544,7 +545,7 @@ export default function ClientAppointmentsPage() {
                 onClick={() => setSetApptOpen(true)}
                 sx={{
                   mt: 2.4,
-                  backgroundColor: "#4361EE",
+                  backgroundColor: "primary.main",
                   textTransform: "none",
                   borderRadius: "10px",
                   fontWeight: 600,
@@ -564,27 +565,27 @@ export default function ClientAppointmentsPage() {
               sx={{
                 p: { xs: 2.2, sm: 2.6 },
                 borderRadius: 1,
-                border: "1px solid #ECEFF3",
+                border: `1px solid ${palette.grey[200]}`,
                 boxShadow: "none",
                 height: "100%",
               }}
             >
-              <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+              <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
                 Approval Workflow
               </Typography>
-              <Typography sx={{ fontSize: "0.85rem", color: "#6F767E", mt: 0.45 }}>
+              <Typography sx={{ fontSize: "0.85rem", color: "text.secondary", mt: 0.45 }}>
                 Submitted requests are reviewed by the admin team.
               </Typography>
 
               <Divider sx={{ my: 2 }} />
 
-              <Typography sx={{ fontSize: "0.84rem", color: "#475467", mb: 1.1 }}>
+              <Typography sx={{ fontSize: "0.84rem", color: "grey.600", mb: 1.1 }}>
                 1. Request is submitted by patient.
               </Typography>
-              <Typography sx={{ fontSize: "0.84rem", color: "#475467", mb: 1.1 }}>
+              <Typography sx={{ fontSize: "0.84rem", color: "grey.600", mb: 1.1 }}>
                 2. Admin validates doctor availability and provided ID.
               </Typography>
-              <Typography sx={{ fontSize: "0.84rem", color: "#475467" }}>
+              <Typography sx={{ fontSize: "0.84rem", color: "grey.600" }}>
                 3. Status is updated to confirmed once approved.
               </Typography>
             </Card>

@@ -2,7 +2,7 @@
 
 import { styled } from "@mui/material/styles";
 
-export const Overlay = styled("div")(() => ({
+export const Overlay = styled("div")(({ theme }) => ({
   position: "fixed",
   inset: 0,
   backgroundColor: "rgba(16, 24, 40, 0.55)",
@@ -15,7 +15,7 @@ export const Overlay = styled("div")(() => ({
 
 export const ModalPanel = styled("div")(({ theme }) => ({
   position: "relative",
-  backgroundColor: "#FFFFFF",
+  backgroundColor: theme.palette.background.paper,
   borderRadius: 16,
   width: "100%",
   maxWidth: 520,
@@ -25,14 +25,14 @@ export const ModalPanel = styled("div")(({ theme }) => ({
   boxShadow: "0 20px 60px rgba(0,0,0,0.12)",
 }));
 
-export const ModalHeader = styled("div")(() => ({
+export const ModalHeader = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
   marginBottom: 24,
 }));
 
-export const ReceiptBadge = styled("div")(() => ({
+export const ReceiptBadge = styled("div")(({ theme }) => ({
   width: 48,
   height: 48,
   borderRadius: 14,
@@ -44,10 +44,10 @@ export const ReceiptBadge = styled("div")(() => ({
   flexShrink: 0,
 }));
 
-export const SectionTitle = styled("div")(() => ({
+export const SectionTitle = styled("div")(({ theme }) => ({
   fontSize: "0.75rem",
   fontWeight: 700,
-  color: "#6F767E",
+  color: theme.palette.text.secondary,
   textTransform: "uppercase" as const,
   letterSpacing: "0.06em",
   marginBottom: 10,
@@ -68,47 +68,47 @@ export const DetailItem = styled("div")(({ theme }) => ({
   gap: 3,
   padding: theme.spacing(1.5, 2),
   borderRadius: 12,
-  backgroundColor: "#FCFCFD",
-  border: "1px solid #F0F2F5",
+  backgroundColor: theme.palette.grey[50],
+  border: `1px solid ${theme.palette.divider}`,
 }));
 
-export const DetailLabel = styled("span")(() => ({
+export const DetailLabel = styled("span")(({ theme }) => ({
   fontSize: "0.68rem",
   fontWeight: 700,
-  color: "#6F767E",
+  color: theme.palette.text.secondary,
   textTransform: "uppercase" as const,
   letterSpacing: "0.06em",
 }));
 
-export const DetailValue = styled("span")(() => ({
+export const DetailValue = styled("span")(({ theme }) => ({
   fontSize: "0.88rem",
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   fontWeight: 500,
 }));
 
 export const SectionDivider = styled("div")(({ theme }) => ({
-  borderTop: "1px solid #F0F2F5",
+  borderTop: `1px solid ${theme.palette.divider}`,
   margin: theme.spacing(2.5, 0),
 }));
 
-export const BalanceRow = styled("div")(() => ({
+export const BalanceRow = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   padding: "10px 16px",
   borderRadius: 10,
-  backgroundColor: "#F9FAFB",
-  border: "1px solid #F0F2F5",
+  backgroundColor: theme.palette.background.default,
+  border: `1px solid ${theme.palette.divider}`,
 }));
 
-export const BalanceLabel = styled("span")(() => ({
+export const BalanceLabel = styled("span")(({ theme }) => ({
   fontSize: "0.78rem",
-  color: "#6F767E",
+  color: theme.palette.text.secondary,
   fontWeight: 500,
 }));
 
-export const BalanceValue = styled("span")(() => ({
+export const BalanceValue = styled("span")(({ theme }) => ({
   fontSize: "0.92rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
 }));

@@ -13,6 +13,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { alpha } from "@mui/material/styles";
 import { Medicine } from "@/components/InventoryTable/interface";
 
+import { palette } from "@/theme/palette";
 interface MedicineCardProps {
   medicine: Medicine;
 }
@@ -26,21 +27,21 @@ type AlertInfo = {
 
 function getAlert(med: Medicine): AlertInfo {
   if (med.expiredFlag)
-    return { label: "Expired", color: "error", bg: "#FEF3F2", fg: "#F04438" };
+    return { label: "Expired", color: "error", bg: "#FEF3F2", fg: palette.error.main };
   if (med.nearExpiryFlag)
-    return { label: "Near Expiry", color: "warning", bg: "#FFFAEB", fg: "#F79009" };
+    return { label: "Near Expiry", color: "warning", bg: "#FFFAEB", fg: palette.warning.main };
   if (med.lowStockAlert)
-    return { label: "Low Stock", color: "warning", bg: "#FFFAEB", fg: "#F79009" };
+    return { label: "Low Stock", color: "warning", bg: "#FFFAEB", fg: palette.warning.main };
   if (med.overstockFlag)
-    return { label: "Overstock", color: "info", bg: "#EFF8FF", fg: "#36BFFA" };
-  return { label: "Normal", color: "success", bg: "#ECFDF3", fg: "#12B76A" };
+    return { label: "Overstock", color: "info", bg: "#EFF8FF", fg: palette.info.main };
+  return { label: "Normal", color: "success", bg: "#ECFDF3", fg: palette.success.main };
 }
 
 function getBarColor(alert: AlertInfo) {
   if (alert.label === "Expired" || alert.label === "Low Stock") return alert.fg;
-  if (alert.label === "Near Expiry") return "#F79009";
-  if (alert.label === "Overstock") return "#36BFFA";
-  return "#12B76A";
+  if (alert.label === "Near Expiry") return palette.warning.main;
+  if (alert.label === "Overstock") return palette.info.main;
+  return palette.success.main;
 }
 
 const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
@@ -57,19 +58,19 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
     <Card
       sx={{
         borderRadius: "12px",
-        border: "1px solid #EAECF0",
+        border: `1px solid ${palette.grey[200]}`,
         boxShadow:
           "0 1px 3px rgba(16,24,40,0.06), 0 1px 2px rgba(16,24,40,0.04)",
         display: "flex",
         flexDirection: "column",
         height: "100%",
-        background: "#FFFFFF",
+        background: "background.paper",
         transition: "all 0.2s ease",
         overflow: "hidden",
         "&:hover": {
           boxShadow:
             "0 4px 12px rgba(16,24,40,0.08), 0 2px 4px rgba(16,24,40,0.04)",
-          borderColor: "#D0D5DD",
+          borderColor: "grey.300",
         },
       }}
     >
@@ -88,7 +89,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
           sx={{
             fontSize: 12,
             fontWeight: 600,
-            color: "#667085",
+            color: "grey.500",
             letterSpacing: "0.04em",
           }}
         >
@@ -115,7 +116,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
           sx={{
             fontWeight: 700,
             fontSize: 16,
-            color: "#101828",
+            color: "grey.900",
             lineHeight: 1.4,
             mb: 0.5,
             overflow: "hidden",
@@ -128,7 +129,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
         <Typography
           sx={{
             fontSize: 13,
-            color: "#667085",
+            color: "grey.500",
             fontWeight: 500,
             mb: 1,
             lineHeight: 1.3,
@@ -145,8 +146,8 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
               height: 22,
               fontSize: 11,
               fontWeight: 600,
-              bgcolor: alpha("#4361EE", 0.08),
-              color: "#4361EE",
+              bgcolor: alpha(palette.primary.main, 0.08),
+              color: "primary.main",
               "& .MuiChip-label": { px: 1 },
             }}
           />
@@ -158,8 +159,8 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
               height: 22,
               fontSize: 11,
               fontWeight: 600,
-              borderColor: "#EAECF0",
-              color: "#344054",
+              borderColor: "grey.200",
+              color: "grey.700",
               "& .MuiChip-label": { px: 1 },
             }}
           />
@@ -167,7 +168,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
       </Box>
 
       {/* Divider */}
-      <Box sx={{ mx: 2.5, borderBottom: "1px solid #F2F4F7" }} />
+      <Box sx={{ mx: 2.5, borderBottom: `1px solid ${palette.grey[100]}` }} />
 
       {/* Details Grid */}
       <Box sx={{ px: 2.5, pt: 1.5, pb: 1, flex: 1 }}>
@@ -180,12 +181,12 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
             mb: 0.5,
           }}
         >
-          <Typography sx={{ fontSize: 12, fontWeight: 500, color: "#667085" }}>
+          <Typography sx={{ fontSize: 12, fontWeight: 500, color: "grey.500" }}>
             Stock
           </Typography>
-          <Typography sx={{ fontSize: 12, fontWeight: 700, color: "#344054" }}>
+          <Typography sx={{ fontSize: 12, fontWeight: 700, color: "grey.700" }}>
             {medicine.quantityOnHand}
-            <span style={{ fontWeight: 400, color: "#98A2B3" }}>
+            <span style={{ fontWeight: 400, color: "grey.400" }}>
               {" "}
               / {medicine.maximumStockLevel}
             </span>
@@ -197,7 +198,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
           sx={{
             height: 6,
             borderRadius: 3,
-            bgcolor: "#F2F4F7",
+            bgcolor: "grey.100",
             mb: 1.5,
             "& .MuiLinearProgress-bar": {
               borderRadius: 3,
@@ -228,7 +229,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
           justifyContent: "space-between",
           px: 2.5,
           py: 1.2,
-          borderTop: "1px solid #F2F4F7",
+          borderTop: `1px solid ${palette.grey[100]}`,
           bgcolor: "#FAFBFC",
         }}
       >
@@ -236,7 +237,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
           sx={{
             fontSize: 11,
             fontWeight: 500,
-            color: "#98A2B3",
+            color: "grey.400",
             maxWidth: 160,
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -250,10 +251,10 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
             <IconButton
               size="small"
               sx={{
-                color: "#667085",
+                color: "grey.500",
                 "&:hover": {
-                  color: "#4361EE",
-                  bgcolor: alpha("#4361EE", 0.08),
+                  color: "primary.main",
+                  bgcolor: alpha(palette.primary.main, 0.08),
                 },
               }}
             >
@@ -264,10 +265,10 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
             <IconButton
               size="small"
               sx={{
-                color: "#667085",
+                color: "grey.500",
                 "&:hover": {
-                  color: "#4361EE",
-                  bgcolor: alpha("#4361EE", 0.08),
+                  color: "primary.main",
+                  bgcolor: alpha(palette.primary.main, 0.08),
                 },
               }}
             >
@@ -298,14 +299,14 @@ function DetailRow({
         mb: 0.6,
       }}
     >
-      <Typography sx={{ fontSize: 12, fontWeight: 500, color: "#667085" }}>
+      <Typography sx={{ fontSize: 12, fontWeight: 500, color: "grey.500" }}>
         {label}
       </Typography>
       <Typography
         sx={{
           fontSize: 12,
           fontWeight: 600,
-          color: highlight ? "#F04438" : "#344054",
+          color: highlight ? palette.error.main : palette.grey[700],
           maxWidth: 160,
           overflow: "hidden",
           textOverflow: "ellipsis",

@@ -21,6 +21,7 @@ import {
   SectionDivider,
 } from "@/components/TransactionDetailModal/elements";
 import { ConfirmActionModalProps } from "./interface";
+import { palette } from "@/theme/palette";
 
 const fmtDate = (iso: string) => {
   const d = new Date(iso);
@@ -73,11 +74,11 @@ export default function ConfirmActionModal({
             </div>
             <div>
               <Typography
-                sx={{ fontSize: "1.05rem", fontWeight: 700, color: "#1A1D1F", lineHeight: 1.2 }}
+                sx={{ fontSize: "1.05rem", fontWeight: 700, color: "text.primary", lineHeight: 1.2 }}
               >
                 {isApprove ? "Approve Appointment" : "Reject Appointment"}
               </Typography>
-              <Typography sx={{ fontSize: "0.78rem", color: "#6F767E", mt: 0.25 }}>
+              <Typography sx={{ fontSize: "0.78rem", color: "text.secondary", mt: 0.25 }}>
                 {isApprove
                   ? "This will confirm the appointment and notify the patient."
                   : "This action cannot be undone."}
@@ -87,7 +88,7 @@ export default function ConfirmActionModal({
           <IconButton
             onClick={onClose}
             size="small"
-            sx={{ color: "#98A2B3", "&:hover": { color: "#1A1D1F", bgcolor: "#F2F4F7" } }}
+            sx={{ color: "grey.400", "&:hover": { color: "text.primary", bgcolor: "grey.100" } }}
           >
             <CloseRoundedIcon sx={{ fontSize: 20 }} />
           </IconButton>
@@ -125,9 +126,9 @@ export default function ConfirmActionModal({
               textTransform: "none",
               fontWeight: 600,
               borderRadius: "10px",
-              borderColor: "#D0D5DD",
-              color: "#344054",
-              "&:hover": { borderColor: "#98A2B3", bgcolor: "#F9FAFB" },
+              borderColor: "grey.300",
+              color: "grey.700",
+              "&:hover": { borderColor: "grey.400", bgcolor: palette.background.default },
             }}
           >
             Cancel
@@ -147,9 +148,9 @@ export default function ConfirmActionModal({
               fontWeight: 600,
               borderRadius: "10px",
               boxShadow: "none",
-              bgcolor: isApprove ? "#12B76A" : "#D92D20",
+              bgcolor: isApprove ? palette.success.main : "#D92D20",
               "&:hover": {
-                bgcolor: isApprove ? "#039855" : "#B42318",
+                bgcolor: isApprove ? "#039855" : palette.error.dark,
                 boxShadow: "none",
               },
             }}

@@ -36,6 +36,7 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import HourglassTopRoundedIcon from "@mui/icons-material/HourglassTopRounded";
 import BookAppointmentModal from "@/components/BookAppointmentModal";
 
+import { palette } from "@/theme/palette";
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState<Appointment[]>(
     appointmentsData as Appointment[]
@@ -128,7 +129,7 @@ export default function AppointmentsPage() {
       sx={{
         p: 2.2,
         borderRadius: 1,
-        border: "1px solid #ECEFF3",
+        border: `1px solid ${palette.grey[200]}`,
         boxShadow: "none",
         height: "100%",
       }}
@@ -136,7 +137,7 @@ export default function AppointmentsPage() {
       <Typography
         sx={{
           fontSize: "0.75rem",
-          color: "#026AA2",
+          color: palette.info.dark,
           fontWeight: 600,
           mb: 0.5,
         }}
@@ -148,7 +149,7 @@ export default function AppointmentsPage() {
         sx={{
           fontSize: "1.6rem",
           fontWeight: 700,
-          color: "#1A1D1F",
+          color: "text.primary",
           lineHeight: 1.2,
         }}
       >
@@ -164,7 +165,7 @@ export default function AppointmentsPage() {
           sx={{
             fontSize: "1.3rem",
             fontWeight: 700,
-            color: "#1A1D1F",
+            color: "text.primary",
           }}
         >
           March 12, 2026
@@ -232,7 +233,7 @@ export default function AppointmentsPage() {
                     fontSize: "0.7rem",
                     fontWeight: 700,
                     bgcolor: "#FEF3F2",
-                    color: "#B42318",
+                    color: palette.error.dark,
                     "& .MuiChip-label": { px: 0.6 },
                   }}
                 />
@@ -286,7 +287,7 @@ export default function AppointmentsPage() {
               variant="contained"
               onClick={() => setBookModalOpen(true)}
               sx={{
-                backgroundColor: "#4361EE",
+                backgroundColor: "primary.main",
                 textTransform: "none",
                 borderRadius: "10px",
                 fontWeight: 600,
@@ -326,18 +327,18 @@ export default function AppointmentsPage() {
               sx={{
                 p: 5,
                 borderRadius: 1,
-                border: "1px solid #ECEFF3",
+                border: `1px solid ${palette.grey[200]}`,
                 boxShadow: "none",
                 textAlign: "center",
               }}
             >
               <CheckCircleOutlineRoundedIcon
-                sx={{ fontSize: 48, color: "#D0D5DD", mb: 1.5 }}
+                sx={{ fontSize: 48, color: "grey.300", mb: 1.5 }}
               />
-              <Typography sx={{ fontSize: "1rem", fontWeight: 600, color: "#1A1D1F", mb: 0.5 }}>
+              <Typography sx={{ fontSize: "1rem", fontWeight: 600, color: "text.primary", mb: 0.5 }}>
                 No Pending Requests
               </Typography>
-              <Typography sx={{ fontSize: "0.85rem", color: "#6F767E" }}>
+              <Typography sx={{ fontSize: "0.85rem", color: "text.secondary" }}>
                 All appointment requests have been processed.
               </Typography>
             </Card>
@@ -345,7 +346,7 @@ export default function AppointmentsPage() {
             <Card
               sx={{
                 borderRadius: 1,
-                border: "1px solid #ECEFF3",
+                border: `1px solid ${palette.grey[200]}`,
                 boxShadow: "none",
                 overflow: "hidden",
               }}
@@ -367,41 +368,41 @@ export default function AppointmentsPage() {
                       <StyledTableRow key={appt.id} onClick={() => handleRowClick(appt)}>
                         <StyledBodyCell>
                           <Box>
-                            <Typography sx={{ fontSize: "0.84rem", fontWeight: 600, color: "#1A1D1F" }}>
+                            <Typography sx={{ fontSize: "0.84rem", fontWeight: 600, color: "text.primary" }}>
                               {appt.patientName}
                             </Typography>
-                            <Typography sx={{ fontSize: "0.72rem", color: "#6F767E" }}>
+                            <Typography sx={{ fontSize: "0.72rem", color: "text.secondary" }}>
                               {appt.contact}
                             </Typography>
                           </Box>
                         </StyledBodyCell>
                         <StyledBodyCell>
-                          <Typography sx={{ fontSize: "0.84rem", color: "#344054" }}>
+                          <Typography sx={{ fontSize: "0.84rem", color: "grey.700" }}>
                             {appt.assignedDoctor}
                           </Typography>
                         </StyledBodyCell>
                         <StyledBodyCell>
-                          <Typography sx={{ fontSize: "0.84rem", color: "#344054" }}>
+                          <Typography sx={{ fontSize: "0.84rem", color: "grey.700" }}>
                             {fmtDate(appt.date)}
                           </Typography>
                         </StyledBodyCell>
                         <StyledBodyCell>
-                          <Typography sx={{ fontSize: "0.84rem", color: "#344054" }}>
+                          <Typography sx={{ fontSize: "0.84rem", color: "grey.700" }}>
                             {appt.time}
                           </Typography>
                         </StyledBodyCell>
                         <StyledBodyCell>
                           {appt.verificationIdType ? (
                             <Box>
-                              <Typography sx={{ fontSize: "0.78rem", fontWeight: 500, color: "#344054" }}>
+                              <Typography sx={{ fontSize: "0.78rem", fontWeight: 500, color: "grey.700" }}>
                                 {appt.verificationIdType}
                               </Typography>
-                              <Typography sx={{ fontSize: "0.72rem", color: "#6F767E" }}>
+                              <Typography sx={{ fontSize: "0.72rem", color: "text.secondary" }}>
                                 {appt.verificationIdNumber}
                               </Typography>
                             </Box>
                           ) : (
-                            <Typography sx={{ fontSize: "0.78rem", color: "#98A2B3", fontStyle: "italic" }}>
+                            <Typography sx={{ fontSize: "0.78rem", color: "grey.400", fontStyle: "italic" }}>
                               Not provided
                             </Typography>
                           )}
@@ -417,7 +418,7 @@ export default function AppointmentsPage() {
                               startIcon={<CheckCircleOutlineRoundedIcon sx={{ fontSize: 16 }} />}
                               onClick={() => openConfirm("approve", appt.id)}
                               sx={{
-                                bgcolor: "#12B76A",
+                                bgcolor: "success.main",
                                 textTransform: "none",
                                 fontWeight: 600,
                                 fontSize: "0.75rem",
@@ -437,7 +438,7 @@ export default function AppointmentsPage() {
                               onClick={() => openConfirm("reject", appt.id)}
                               sx={{
                                 color: "#D92D20",
-                                borderColor: "#FDA29B",
+                                borderColor: palette.error.light,
                                 textTransform: "none",
                                 fontWeight: 600,
                                 fontSize: "0.75rem",

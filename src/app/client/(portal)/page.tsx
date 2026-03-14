@@ -15,6 +15,7 @@ import TaskAltRoundedIcon from "@mui/icons-material/TaskAltRounded";
 import appointmentsData from "@/json/appointments.json";
 import billingRecords from "@/json/billings.json";
 import yakapData from "@/json/yakap.json";
+import { palette } from "@/theme/palette";
 import {
   ActivityAmount,
   ActivityItem,
@@ -334,7 +335,7 @@ export default function ClientDashboardPage() {
                 : "Go to Appointments to request one"
             }
             icon={<CalendarMonthRoundedIcon />}
-            color="#4361EE"
+            color={palette.primary.main}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
@@ -347,7 +348,7 @@ export default function ClientDashboardPage() {
                 : "No unpaid balance at the moment"
             }
             icon={<AccountBalanceWalletRoundedIcon />}
-            color="#F79009"
+            color={palette.warning.main}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>

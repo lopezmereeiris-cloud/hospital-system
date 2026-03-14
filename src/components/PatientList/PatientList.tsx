@@ -1,4 +1,5 @@
 "use client";
+import { palette } from "@/theme/palette";
 
 import React, { useState } from "react";
 import Table from "@mui/material/Table";
@@ -41,7 +42,7 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
           style={{
             fontSize: "18px",
             fontWeight: 700,
-            color: "#1A1D1F",
+            color: "text.primary",
           }}
         >
           Patient List
@@ -51,8 +52,8 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
   variant="contained"
   onClick={() => setOpen(true)}
   style={{
-    backgroundColor: "#4361EE",
-    color: "#FFFFFF",
+    backgroundColor: "primary.main",
+    color: palette.background.paper,
     textTransform: "none",
     borderRadius: "10px",
     fontWeight: 600,

@@ -13,6 +13,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import VerifiedUserRoundedIcon from "@mui/icons-material/VerifiedUserRounded";
 import { Appointment } from "@/components/AppointmentTable/interface";
 
+import { palette } from "@/theme/palette";
 interface ClientAppointmentDetailProps {
   open: boolean;
   onClose: () => void;
@@ -50,15 +51,15 @@ const InfoCard = ({
     sx={{
       p: 2,
       borderRadius: "12px",
-      border: "1px solid #ECEFF3",
-      backgroundColor: "#FCFCFD",
+      border: `1px solid ${palette.grey[200]}`,
+      backgroundColor: "grey.50",
     }}
   >
     <Typography
       sx={{
         fontSize: "0.68rem",
         fontWeight: 700,
-        color: "#6F767E",
+        color: "text.secondary",
         textTransform: "uppercase",
         letterSpacing: "0.06em",
         mb: 0.55,
@@ -66,7 +67,7 @@ const InfoCard = ({
     >
       {label}
     </Typography>
-    <Typography sx={{ fontSize: "0.9rem", fontWeight: 600, color: "#1A1D1F" }}>
+    <Typography sx={{ fontSize: "0.9rem", fontWeight: 600, color: "text.primary" }}>
       {value || "-"}
     </Typography>
   </Box>
@@ -96,10 +97,10 @@ const ClientAppointmentDetail: React.FC<ClientAppointmentDetailProps> = ({
           }}
         >
           <Box>
-            <Typography sx={{ fontSize: "1.25rem", fontWeight: 700, color: "#1A1D1F" }}>
+            <Typography sx={{ fontSize: "1.25rem", fontWeight: 700, color: "text.primary" }}>
               Appointment Details
             </Typography>
-            <Typography sx={{ fontSize: "0.84rem", color: "#6F767E", mt: 0.45 }}>
+            <Typography sx={{ fontSize: "0.84rem", color: "text.secondary", mt: 0.45 }}>
               Review your schedule and verification details.
             </Typography>
           </Box>
@@ -144,13 +145,13 @@ const ClientAppointmentDetail: React.FC<ClientAppointmentDetailProps> = ({
           sx={{
             p: 2,
             borderRadius: "12px",
-            border: "1px solid #ECEFF3",
-            backgroundColor: "#FCFCFD",
+            border: `1px solid ${palette.grey[200]}`,
+            backgroundColor: "grey.50",
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.2 }}>
-            <VerifiedUserRoundedIcon sx={{ fontSize: 18, color: "#4361EE" }} />
-            <Typography sx={{ fontSize: "0.88rem", fontWeight: 700, color: "#1A1D1F" }}>
+            <VerifiedUserRoundedIcon sx={{ fontSize: 18, color: "primary.main" }} />
+            <Typography sx={{ fontSize: "0.88rem", fontWeight: 700, color: "text.primary" }}>
               Verification ID
             </Typography>
           </Box>
@@ -186,7 +187,7 @@ const ClientAppointmentDetail: React.FC<ClientAppointmentDetailProps> = ({
               sx={{
                 fontSize: "0.8rem",
                 fontWeight: 700,
-                color: "#6F767E",
+                color: "text.secondary",
                 textTransform: "uppercase",
                 letterSpacing: "0.06em",
                 mb: 0.8,

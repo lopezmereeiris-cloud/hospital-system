@@ -8,16 +8,16 @@ import TableRow from "@mui/material/TableRow";
 /* PhilHealth palette */
 const PH_GREEN = "#0D8A3F";
 
-export const BeneficiaryContainer = styled(Paper)(() => ({
+export const BeneficiaryContainer = styled(Paper)(({ theme }) => ({
   borderRadius: 16,
   overflow: "hidden",
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
 }));
 
 export const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
   fontWeight: 700,
   fontSize: "0.7rem",
-  color: "#667085",
+  color: theme.palette.grey[500],
   backgroundColor: "#F0FFF4",
   borderBottom: "1px solid #D1FAE5",
   padding: theme.spacing(1.4, 1.5),
@@ -33,7 +33,7 @@ export const StyledBodyCell = styled(TableCell)(({ theme }) => ({
   borderBottom: "1px solid #F8F9FA",
 }));
 
-export const StyledRow = styled(TableRow)(() => ({
+export const StyledRow = styled(TableRow)(({ theme }) => ({
   transition: "background-color 0.18s ease",
   "&:hover": {
     backgroundColor: alpha(PH_GREEN, 0.03),

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "MedAdmin - Hospital Administration Dashboard",
-  description: "Hospital administration dashboard for managing patients, appointments, and medicine inventory",
+  title: "MedAdmin - Hospital Portal",
+  description: "Hospital portal for patients and administrators",
 };
 
 export default function RootLayout({

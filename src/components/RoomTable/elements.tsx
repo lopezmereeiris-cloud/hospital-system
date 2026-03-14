@@ -8,15 +8,15 @@ import TableRow from "@mui/material/TableRow";
 export const RoomContainer = styled(Paper)(({ theme }) => ({
   borderRadius: 16,
   overflow: "hidden",
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
 }));
 
 export const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
   fontWeight: 700,
   fontSize: "0.7rem",
   color: theme.palette.text.secondary,
-  backgroundColor: "#FCFCFD",
-  borderBottom: "1px solid #F0F2F5",
+  backgroundColor: theme.palette.grey[50],
+  borderBottom: `1px solid ${theme.palette.divider}`,
   padding: theme.spacing(1.4, 1.5),
   whiteSpace: "nowrap",
   textTransform: "uppercase",
@@ -33,7 +33,7 @@ export const StyledBodyCell = styled(TableCell)(({ theme }) => ({
 export const StyledRow = styled(TableRow)(({ theme }) => ({
   transition: "background-color 0.18s ease",
   "&:hover": {
-    backgroundColor: alpha("#4361EE", 0.02),
+    backgroundColor: alpha(theme.palette.primary.main, 0.02),
   },
   "&:last-child td": {
     borderBottom: 0,

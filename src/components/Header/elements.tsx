@@ -7,10 +7,10 @@ import Toolbar from "@mui/material/Toolbar";
 export const StyledAppBar = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== "sidebarWidth",
 })<{ sidebarWidth?: number }>(({ theme, sidebarWidth = 260 }) => ({
-  backgroundColor: "#FFFFFF",
+  backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   boxShadow: "none",
-  borderBottom: "1px solid #F0F2F5",
+  borderBottom: `1px solid ${theme.palette.divider}`,
   zIndex: theme.zIndex.drawer - 1,
   transition:
     "width 0.28s cubic-bezier(0.4,0,0.2,1), margin-left 0.28s cubic-bezier(0.4,0,0.2,1)",
@@ -35,7 +35,7 @@ export const HeaderLeft = styled("div")(({ theme }) => ({
   flex: "0 0 auto",
 }));
 
-export const HeaderCenter = styled("div")(() => ({
+export const HeaderCenter = styled("div")(({ theme }) => ({
   flex: 1,
   display: "flex",
   justifyContent: "center",
@@ -48,7 +48,7 @@ export const HeaderRight = styled("div")(({ theme }) => ({
   flex: "0 0 auto",
 }));
 
-export const PageTitle = styled("h1")(() => ({
+export const PageTitle = styled("h1")(({ theme }) => ({
   fontSize: "1.2rem",
   fontWeight: 700,
   margin: 0,
@@ -83,7 +83,7 @@ export const SearchShortcut = styled("span")(({ theme }) => ({
   fontSize: "0.7rem",
   fontWeight: 600,
   color: theme.palette.text.disabled,
-  backgroundColor: "#FFFFFF",
+  backgroundColor: theme.palette.background.paper,
   border: `1px solid ${theme.palette.grey[200]}`,
   borderRadius: 6,
   padding: "2px 8px",

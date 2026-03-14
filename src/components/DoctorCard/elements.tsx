@@ -11,13 +11,13 @@ export const DoctorGrid = styled("div")(({ theme }) => ({
 
 export const DoctorCardContainer = styled(Paper)(({ theme }) => ({
   borderRadius: 16,
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
   padding: theme.spacing(3),
   transition: "all 0.22s ease",
   cursor: "pointer",
   "&:hover": {
-    borderColor: alpha("#4361EE", 0.2),
-    boxShadow: `0 4px 20px ${alpha("#4361EE", 0.08)}`,
+    borderColor: alpha(theme.palette.primary.main, 0.2),
+    boxShadow: `0 4px 20px ${alpha(theme.palette.primary.main, 0.08)}`,
   },
 }));
 
@@ -28,7 +28,7 @@ export const DoctorHeader = styled("div")(({ theme }) => ({
   marginBottom: theme.spacing(2),
 }));
 
-export const DoctorInfo = styled("div")(() => ({
+export const DoctorInfo = styled("div")(({ theme }) => ({
   flex: 1,
   minWidth: 0,
 }));
@@ -42,7 +42,7 @@ export const DoctorName = styled("div")(({ theme }) => ({
 
 export const DoctorSpecialization = styled("div")(({ theme }) => ({
   fontSize: "0.78rem",
-  color: "#4361EE",
+  color: theme.palette.primary.main,
   fontWeight: 600,
   marginTop: 2,
 }));

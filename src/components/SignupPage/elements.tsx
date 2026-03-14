@@ -284,7 +284,7 @@ export const HeroTextBlock = styled("div")({
 export const HeroHeading = styled("h2")(({ theme }) => ({
   ...theme.typography.h1,
   fontSize: 42,
-  color: "#fff",
+  color: theme.palette.background.paper,
   lineHeight: 1.1,
   letterSpacing: "-0.02em",
   marginBottom: 16,
@@ -327,7 +327,7 @@ export const StepNumber = styled("div", {
   minWidth: 26,
   borderRadius: "50%",
   background: $done ? theme.palette.background.paper : "rgba(255,255,255,0.12)",
-  color: $done ? theme.palette.primary.main : "#fff",
+  color: $done ? theme.palette.primary.main : theme.palette.background.paper,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -339,11 +339,11 @@ export const StepContent = styled("div")({
   flex: 1,
 });
 
-export const StepTitle = styled("div")({
+export const StepTitle = styled("div")(({ theme }) => ({
   fontSize: "0.75rem",
   fontWeight: 500,
-  color: "#fff",
-});
+  color: theme.palette.background.paper,
+}));
 
 export const StepSub = styled("div")({
   fontSize: "0.6875rem",

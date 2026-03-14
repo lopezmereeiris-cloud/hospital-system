@@ -9,6 +9,7 @@ import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
 import PremiumFilter from "@/components/PremiumFilter";
 import { DoctorCardProps } from "./interface";
+import { palette } from "@/theme/palette";
 import {
   DoctorGrid,
   DoctorCardContainer,
@@ -32,12 +33,12 @@ function getInitials(first: string, last: string) {
 }
 
 const avatarColors = [
-  "linear-gradient(135deg, #4361EE, #6C83F6)",
+  `linear-gradient(135deg, ${palette.primary.main}, #6C83F6)`,
   "linear-gradient(135deg, #7C3AED, #A78BFA)",
-  "linear-gradient(135deg, #12B76A, #6CE9A6)",
-  "linear-gradient(135deg, #F79009, #FEC84B)",
-  "linear-gradient(135deg, #F04438, #FDA29B)",
-  "linear-gradient(135deg, #36BFFA, #7DD3FC)",
+  `linear-gradient(135deg, ${palette.success.main}, #6CE9A6)`,
+  `linear-gradient(135deg, ${palette.warning.main}, #FEC84B)`,
+  `linear-gradient(135deg, ${palette.error.main}, #FDA29B)`,
+  `linear-gradient(135deg, ${palette.info.main}, #7DD3FC)`,
 ];
 
 const DoctorCards: React.FC<DoctorCardProps> = ({ doctors, onDoctorClick }) => {
@@ -59,7 +60,7 @@ const DoctorCards: React.FC<DoctorCardProps> = ({ doctors, onDoctorClick }) => {
   return (
     <div>
       <DoctorToolbar>
-        <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+        <div style={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
           Doctor Directory
         </div>
         <PremiumFilter

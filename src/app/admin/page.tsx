@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import { alpha } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -27,6 +28,7 @@ import LocalPharmacyRoundedIcon from "@mui/icons-material/LocalPharmacyRounded";
 import DashboardCard from "@/components/DashboardCard";
 import dashboardData from "@/json/dashboard.json";
 
+import { palette } from "@/theme/palette";
 const alertTypeConfig: Record<
   string,
   { label: string; color: "error" | "warning" | "info" }
@@ -40,10 +42,10 @@ const thStyle = {
   fontWeight: 700,
   fontSize: "0.7rem",
   color: "text.secondary",
-  bgcolor: "#FCFCFD",
+  bgcolor: "grey.50",
   textTransform: "uppercase" as const,
   letterSpacing: "0.06em",
-  borderBottom: "1px solid #F0F2F5",
+  borderBottom: `1px solid ${palette.divider}`,
 };
 
 export default function DashboardPage() {
@@ -95,7 +97,7 @@ export default function DashboardPage() {
             fontSize: "1.5rem",
             fontWeight: 700,
             margin: "0 0 4px 0",
-            color: "#1A1D1F",
+            color: "text.primary",
           }}
         >
           Welcome back, Admin
@@ -103,7 +105,7 @@ export default function DashboardPage() {
         <p
           style={{
             fontSize: "0.88rem",
-            color: "#6F767E",
+            color: "text.secondary",
             margin: 0,
           }}
         >
@@ -119,7 +121,7 @@ export default function DashboardPage() {
             value={totalPatients.toLocaleString()}
             subtitle="+4.5% from last month"
             icon={<PeopleAltRoundedIcon />}
-            color="#4361EE"
+            color={palette.primary.main}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
@@ -128,7 +130,7 @@ export default function DashboardPage() {
             value={availableRooms.total}
             subtitle={`${availableRooms.general} General, ${availableRooms.icu} ICU`}
             icon={<MeetingRoomRoundedIcon />}
-            color="#12B76A"
+            color={palette.success.main}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
@@ -137,7 +139,7 @@ export default function DashboardPage() {
             value={`${bedOccupancy.occupancyRate}%`}
             subtitle={`${bedOccupancy.occupiedBeds}/${bedOccupancy.totalBeds} beds`}
             icon={<HotelRoundedIcon />}
-            color="#F79009"
+            color={palette.warning.main}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
@@ -146,7 +148,7 @@ export default function DashboardPage() {
             value={lowInventoryAlerts}
             subtitle="Items need attention"
             icon={<WarningAmberRoundedIcon />}
-            color="#F04438"
+            color={palette.error.main}
           />
         </Grid>
       </Grid>
@@ -159,7 +161,7 @@ export default function DashboardPage() {
             value="48"
             subtitle="12 remaining"
             icon={<CalendarMonthRoundedIcon />}
-            color="#7C3AED"
+            color={palette.secondary.main}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
@@ -168,7 +170,7 @@ export default function DashboardPage() {
             value="2,847"
             subtitle="98% availability"
             icon={<LocalPharmacyRoundedIcon />}
-            color="#36BFFA"
+            color={palette.info.main}
           />
         </Grid>
       </Grid>
@@ -186,10 +188,10 @@ export default function DashboardPage() {
               }}
             >
               <div>
-                <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#1A1D1F", marginBottom: 2 }}>
+                <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "text.primary", marginBottom: 2 }}>
                   Bed Occupancy Trend
                 </div>
-                <div style={{ fontSize: "0.78rem", color: "#6F767E" }}>
+                <div style={{ fontSize: "0.78rem", color: "text.secondary" }}>
                   Monthly occupancy rate across all wards
                 </div>
               </div>
@@ -211,7 +213,7 @@ export default function DashboardPage() {
                 {
                   data: dashboardData.occupancyByMonth.map((d) => d.rate),
                   label: "Occupancy Rate (%)",
-                  color: "#4361EE",
+                  color: palette.primary.main,
                   area: true,
                 },
               ]}
@@ -220,6 +222,8 @@ export default function DashboardPage() {
                 ".MuiAreaElement-root": { fillOpacity: 0.08 },
                 ".MuiLineElement-root": { strokeWidth: 2.5 },
                 ".MuiMarkElement-root": { display: "none" },
+                ".MuiChartsAxis-line, .MuiChartsAxis-tick": { stroke: palette.divider },
+                ".MuiChartsAxis-tickLabel, .MuiChartsLegend-label": { fill: palette.text.secondary },
               }}
             />
           </Card>
@@ -227,10 +231,10 @@ export default function DashboardPage() {
         <Grid size={{ xs: 12, lg: 4 }}>
           <Card sx={{ p: 3, height: "100%" }}>
             <div style={{ marginBottom: 8 }}>
-              <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#1A1D1F", marginBottom: 2 }}>
+              <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "text.primary", marginBottom: 2 }}>
                 Room Availability
               </div>
-              <div style={{ fontSize: "0.78rem", color: "#6F767E" }}>
+              <div style={{ fontSize: "0.78rem", color: "text.secondary" }}>
                 Current room status by type
               </div>
             </div>
@@ -245,17 +249,19 @@ export default function DashboardPage() {
                 {
                   data: dashboardData.roomAvailability.map((r) => r.available),
                   label: "Available",
-                  color: "#12B76A",
+                  color: palette.success.main,
                 },
                 {
                   data: dashboardData.roomAvailability.map((r) => r.occupied),
                   label: "Occupied",
-                  color: "#4361EE",
+                  color: palette.primary.main,
                 },
               ]}
               height={280}
               sx={{
                 ".MuiBarElement-root": { rx: 4, ry: 4 },
+                ".MuiChartsAxis-line, .MuiChartsAxis-tick": { stroke: palette.divider },
+                ".MuiChartsAxis-tickLabel, .MuiChartsLegend-label": { fill: palette.text.secondary },
               }}
             />
           </Card>
@@ -273,10 +279,10 @@ export default function DashboardPage() {
           }}
         >
           <div>
-            <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#1A1D1F", marginBottom: 2 }}>
+            <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "text.primary", marginBottom: 2 }}>
               Medicine Inventory Alerts
             </div>
-            <div style={{ fontSize: "0.78rem", color: "#6F767E" }}>
+            <div style={{ fontSize: "0.78rem", color: "text.secondary" }}>
               {dashboardData.inventoryAlerts.length} items flagged for review
             </div>
           </div>
@@ -313,24 +319,29 @@ export default function DashboardPage() {
                     : null;
                 const barColor =
                   cfg.color === "error"
-                    ? "#F04438"
+                    ? palette.error.main
                     : cfg.color === "warning"
-                    ? "#F79009"
-                    : "#36BFFA";
+                    ? palette.warning.main
+                    : palette.info.main;
                 return (
                   <TableRow
                     key={alert.id}
                     sx={{
-                      "&:hover": { bgcolor: "rgba(67,97,238,0.02)" },
+                      "&:hover": { bgcolor: alpha(palette.primary.main, 0.02) },
                       "&:last-child td": { borderBottom: 0 },
                     }}
                   >
                     <TableCell
-                      sx={{ fontSize: "0.83rem", fontWeight: 600, pl: 3.5, borderBottom: "1px solid #F8F9FA" }}
+                      sx={{
+                        fontSize: "0.83rem",
+                        fontWeight: 600,
+                        pl: 3.5,
+                        borderBottom: `1px solid ${palette.grey[100]}`,
+                      }}
                     >
                       {alert.medicine}
                     </TableCell>
-                    <TableCell sx={{ borderBottom: "1px solid #F8F9FA" }}>
+                    <TableCell sx={{ borderBottom: `1px solid ${palette.grey[100]}` }}>
                       <Chip label={cfg.label} color={cfg.color} size="small" />
                     </TableCell>
                     <TableCell
@@ -338,13 +349,13 @@ export default function DashboardPage() {
                       sx={{
                         fontSize: "0.83rem",
                         fontWeight: 700,
-                        borderBottom: "1px solid #F8F9FA",
-                        color: cfg.color === "error" ? "#F04438" : "text.primary",
+                        borderBottom: `1px solid ${palette.grey[100]}`,
+                        color: cfg.color === "error" ? palette.error.main : "text.primary",
                       }}
                     >
                       {alert.quantity}
                     </TableCell>
-                    <TableCell sx={{ borderBottom: "1px solid #F8F9FA", minWidth: 120 }}>
+                    <TableCell sx={{ borderBottom: `1px solid ${palette.grey[100]}`, minWidth: 120 }}>
                       {stockPct !== null ? (
                         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                           <LinearProgress
@@ -354,27 +365,33 @@ export default function DashboardPage() {
                               flex: 1,
                               height: 6,
                               borderRadius: 3,
-                              bgcolor: "rgba(0,0,0,0.04)",
+                              bgcolor: alpha(palette.text.primary, 0.04),
                               "& .MuiLinearProgress-bar": {
                                 borderRadius: 3,
                                 bgcolor: barColor,
                               },
                             }}
                           />
-                          <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "#6F767E", minWidth: 30 }}>
+                          <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "text.secondary", minWidth: 30 }}>
                             {stockPct}%
                           </span>
                         </div>
                       ) : (
-                        <span style={{ fontSize: "0.75rem", color: "#9A9FA5" }}>—</span>
+                        <span style={{ fontSize: "0.75rem", color: "text.disabled" }}>—</span>
                       )}
                     </TableCell>
-                    <TableCell sx={{ fontSize: "0.78rem", color: "text.secondary", borderBottom: "1px solid #F8F9FA" }}>
+                    <TableCell
+                      sx={{
+                        fontSize: "0.78rem",
+                        color: "text.secondary",
+                        borderBottom: `1px solid ${palette.grey[100]}`,
+                      }}
+                    >
                       {alert.type === "low_stock"
                         ? `Reorder at ${alert.reorderLevel}`
                         : `Expires ${alert.expiryDate}`}
                     </TableCell>
-                    <TableCell align="center" sx={{ pr: 3.5, borderBottom: "1px solid #F8F9FA" }}>
+                    <TableCell align="center" sx={{ pr: 3.5, borderBottom: `1px solid ${palette.grey[100]}` }}>
                       <Chip
                         label={alert.type === "low_stock" ? "Reorder" : "Review"}
                         size="small"
@@ -382,9 +399,9 @@ export default function DashboardPage() {
                           cursor: "pointer",
                           fontSize: "0.72rem",
                           fontWeight: 600,
-                          bgcolor: "rgba(67,97,238,0.08)",
-                          color: "#4361EE",
-                          "&:hover": { bgcolor: "rgba(67,97,238,0.16)" },
+                          bgcolor: alpha(palette.primary.main, 0.08),
+                          color: "primary.main",
+                          "&:hover": { bgcolor: alpha(palette.primary.main, 0.16) },
                         }}
                         onClick={() => handleAction(alert)}
                       />

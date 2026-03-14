@@ -14,7 +14,7 @@ export const ModalOverlay = styled("div")({
 });
 
 export const ModalContent = styled("div")(({ theme }) => ({
-  backgroundColor: "#FFFFFF",
+  backgroundColor: theme.palette.background.paper,
   borderRadius: 16,
   width: "100%",
   maxWidth: 560,
@@ -25,14 +25,14 @@ export const ModalContent = styled("div")(({ theme }) => ({
 
 export const ModalHeader = styled("div", {
   shouldForwardProp: (prop) => prop !== "statusColor",
-})<{ statusColor?: string }>(({ statusColor }) => ({
+})<{ statusColor?: string }>(({ statusColor, theme }) => ({
   padding: "24px 28px 16px",
-  borderBottom: "1px solid #F0F2F5",
+  borderBottom: `1px solid ${theme.palette.divider}`,
   display: "flex",
   alignItems: "flex-start",
   justifyContent: "space-between",
   gap: 16,
-  borderTop: `4px solid ${statusColor || "#4361EE"}`,
+  borderTop: `4px solid ${statusColor || theme.palette.primary.main}`,
   borderRadius: "16px 16px 0 0",
 }));
 

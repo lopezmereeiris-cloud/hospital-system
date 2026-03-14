@@ -1,3 +1,5 @@
+import { palette } from "@/theme/palette";
+
 export type RoomStatus = "Available" | "Occupied" | "Maintenance" | "Cleaning";
 
 export type PatientType =
@@ -59,10 +61,10 @@ export interface RoomSchedule {
 }
 
 export const STATUS_COLORS: Record<RoomStatus, string> = {
-  Available: "#12B76A",
-  Occupied: "#F04438",
-  Maintenance: "#F79009",
-  Cleaning: "#36BFFA",
+  Available: palette.success.main,
+  Occupied: palette.error.main,
+  Maintenance: palette.warning.main,
+  Cleaning: palette.info.main,
 };
 
 export interface RoomTableProps {

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { RoomTypeManagerProps } from "./interface";
+import { palette } from "@/theme/palette";
 import {
   TypeManagerContainer,
   TypeManagerToolbar,
@@ -28,7 +29,7 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
     label: "",
     defaultCapacity: "",
     amenities: "",
-    color: "#4361EE",
+    color: "primary.main",
   });
 
   const handleChange =
@@ -40,7 +41,7 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
   return (
     <TypeManagerContainer elevation={0}>
       <TypeManagerToolbar>
-        <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+        <div style={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
           Room Type Directory
         </div>
         <SmallButton onClick={() => setShowForm(!showForm)}>
@@ -54,7 +55,7 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
             style={{
               fontSize: "0.95rem",
               fontWeight: 700,
-              color: "#1A1D1F",
+              color: "text.primary",
               marginBottom: 6,
             }}
           >
@@ -111,13 +112,13 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
                 style={{
                   width: 36,
                   height: 36,
-                  border: "1px solid #EAECF0",
+                  border: `1px solid ${palette.grey[200]}`,
                   borderRadius: 8,
                   cursor: "pointer",
                   padding: 2,
                 }}
               />
-              <span style={{ fontSize: "0.75rem", color: "#6F767E" }}>{form.color}</span>
+              <span style={{ fontSize: "0.75rem", color: "text.secondary" }}>{form.color}</span>
             </div>
           </FormField>
 
@@ -129,7 +130,7 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
                 label: "",
                 defaultCapacity: "",
                 amenities: "",
-                color: "#4361EE",
+                color: "primary.main",
               });
             }}
           >

@@ -11,6 +11,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
 import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
+import { palette } from "@/theme/palette";
 import {
   ModalHeader,
   HeaderInfo,
@@ -110,7 +111,7 @@ const RegisterPatientModal: React.FC<RegisterPatientModalProps> = ({
           <Button
             variant="contained"
             sx={{
-              backgroundColor: "#4361EE !important",
+              backgroundColor: `${palette.primary.main} !important`,
               color: "#FFFFFF !important",
               textTransform: "none",
               borderRadius: "10px",

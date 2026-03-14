@@ -24,6 +24,7 @@ import MedicineCard from "@/components/MedicineCard";
 import { Medicine } from "@/components/InventoryTable/interface";
 import inventoryData from "@/json/inventory.json";
 
+import { palette } from "@/theme/palette";
 type FilterKey = "all" | "low_stock" | "near_expiry" | "expired";
 
 export default function InventoryPage() {
@@ -67,7 +68,7 @@ export default function InventoryPage() {
             title="Total Items"
             value={medicines.length}
             icon={<MedicationRoundedIcon />}
-            color="#4361EE"
+            color={palette.primary.main}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
@@ -76,7 +77,7 @@ export default function InventoryPage() {
             value={lowStock}
             subtitle="Need reorder"
             icon={<WarningAmberRoundedIcon />}
-            color="#F79009"
+            color={palette.warning.main}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
@@ -84,7 +85,7 @@ export default function InventoryPage() {
             title="Near Expiry"
             value={nearExpiry}
             icon={<ScheduleRoundedIcon />}
-            color="#36BFFA"
+            color={palette.info.main}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
@@ -92,7 +93,7 @@ export default function InventoryPage() {
             title="Expired"
             value={expired}
             icon={<DoNotDisturbRoundedIcon />}
-            color="#F04438"
+            color={palette.error.main}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 4, lg: 2.4 }}>
@@ -100,7 +101,7 @@ export default function InventoryPage() {
             title="Total Value"
             value={`₱${totalValue.toLocaleString()}`}
             icon={<AccountBalanceWalletRoundedIcon />}
-            color="#12B76A"
+            color={palette.success.main}
           />
         </Grid>
       </Grid>
@@ -111,7 +112,7 @@ export default function InventoryPage() {
           p: "12px 16px",
           mb: 2.5,
           borderRadius: "12px",
-          border: "1px solid #EAECF0",
+          border: `1px solid ${palette.grey[200]}`,
           boxShadow: "none",
         }}
       >
@@ -123,21 +124,21 @@ export default function InventoryPage() {
               display: "flex",
               alignItems: "center",
               flex: 1,
-              bgcolor: "#F9FAFB",
+              bgcolor: palette.background.default,
               borderRadius: "8px",
-              border: "1px solid #EAECF0",
+              border: `1px solid ${palette.grey[200]}`,
               px: 1.5,
               py: 0.25,
               transition: "border-color 0.2s",
-              "&:focus-within": { borderColor: "#4361EE" },
+              "&:focus-within": { borderColor: "primary.main" },
             }}
           >
-            <SearchRoundedIcon sx={{ color: "#98A2B3", fontSize: 20, mr: 1 }} />
+            <SearchRoundedIcon sx={{ color: "grey.400", fontSize: 20, mr: 1 }} />
             <InputBase
               placeholder="Search medicines…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              sx={{ flex: 1, fontSize: 14, fontWeight: 500, color: "#344054" }}
+              sx={{ flex: 1, fontSize: 14, fontWeight: 500, color: "grey.700" }}
               inputProps={{ "aria-label": "search medicines" }}
             />
           </Box>
@@ -147,9 +148,9 @@ export default function InventoryPage() {
             sx={{
               display: "flex",
               flexShrink: 0,
-              bgcolor: "#F9FAFB",
+              bgcolor: palette.background.default,
               borderRadius: "8px",
-              border: "1px solid #EAECF0",
+              border: `1px solid ${palette.grey[200]}`,
               p: "3px",
               gap: "2px",
             }}
@@ -161,11 +162,11 @@ export default function InventoryPage() {
                 sx={{
                   borderRadius: "6px",
                   px: 1.5,
-                  bgcolor: view === "list" ? "#fff" : "transparent",
+                  bgcolor: view === "list" ? palette.background.paper : "transparent",
                   boxShadow: view === "list" ? "0 1px 3px rgba(16,24,40,0.10)" : "none",
-                  color: view === "list" ? "#4361EE" : "#98A2B3",
+                  color: view === "list" ? palette.primary.main : palette.grey[400],
                   transition: "all 0.15s ease",
-                  "&:hover": { bgcolor: view === "list" ? "#fff" : alpha("#4361EE", 0.06) },
+                  "&:hover": { bgcolor: view === "list" ? palette.background.paper : alpha(palette.primary.main, 0.06) },
                 }}
               >
                 <ViewListRoundedIcon sx={{ fontSize: 20 }} />
@@ -178,11 +179,11 @@ export default function InventoryPage() {
                 sx={{
                   borderRadius: "6px",
                   px: 1.5,
-                  bgcolor: view === "card" ? "#fff" : "transparent",
+                  bgcolor: view === "card" ? palette.background.paper : "transparent",
                   boxShadow: view === "card" ? "0 1px 3px rgba(16,24,40,0.10)" : "none",
-                  color: view === "card" ? "#4361EE" : "#98A2B3",
+                  color: view === "card" ? palette.primary.main : palette.grey[400],
                   transition: "all 0.15s ease",
-                  "&:hover": { bgcolor: view === "card" ? "#fff" : alpha("#4361EE", 0.06) },
+                  "&:hover": { bgcolor: view === "card" ? palette.background.paper : alpha(palette.primary.main, 0.06) },
                 }}
               >
                 <GridViewRoundedIcon sx={{ fontSize: 20 }} />
@@ -206,15 +207,15 @@ export default function InventoryPage() {
                   fontWeight: 600,
                   fontSize: 13,
                   borderRadius: "8px",
-                  bgcolor: active ? alpha("#4361EE", 0.1) : "#F9FAFB",
-                  color: active ? "#4361EE" : "#667085",
+                  bgcolor: active ? alpha(palette.primary.main, 0.1) : palette.background.default,
+                  color: active ? palette.primary.main : palette.grey[500],
                   border: active
-                    ? `1px solid ${alpha("#4361EE", 0.3)}`
-                    : "1px solid #EAECF0",
+                    ? `1px solid ${alpha(palette.primary.main, 0.3)}`
+                    : `1px solid ${palette.grey[200]}`,
                   cursor: "pointer",
                   transition: "all 0.15s ease",
                   "&:hover": {
-                    bgcolor: active ? alpha("#4361EE", 0.14) : "#F2F4F7",
+                    bgcolor: active ? alpha(palette.primary.main, 0.14) : palette.grey[100],
                   },
                 }}
               />
@@ -224,8 +225,8 @@ export default function InventoryPage() {
       </Paper>
 
       {/* ── Results count ── */}
-      <Typography sx={{ fontSize: 13, fontWeight: 500, color: "#98A2B3", mb: 2 }}>
-        Showing <span style={{ fontWeight: 700, color: "#344054" }}>{filteredMeds.length}</span> of {medicines.length} medicines
+      <Typography sx={{ fontSize: 13, fontWeight: 500, color: "grey.400", mb: 2 }}>
+        Showing <span style={{ fontWeight: 700, color: "grey.700" }}>{filteredMeds.length}</span> of {medicines.length} medicines
       </Typography>
 
       {/* ── Content ── */}
@@ -236,7 +237,7 @@ export default function InventoryPage() {
           sx={{
             textAlign: "center",
             py: 8,
-            color: "#98A2B3",
+            color: "grey.400",
             fontSize: 15,
             fontWeight: 600,
           }}

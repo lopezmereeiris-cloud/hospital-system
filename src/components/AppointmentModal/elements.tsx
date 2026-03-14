@@ -25,8 +25,8 @@ export const DetailItem = styled("div")(({ theme }) => ({
   gap: 4,
   padding: theme.spacing(1.5, 2),
   borderRadius: 12,
-  backgroundColor: "#FCFCFD",
-  border: "1px solid #F0F2F5",
+  backgroundColor: theme.palette.grey[50],
+  border: `1px solid ${theme.palette.divider}`,
 }));
 
 export const DetailLabel = styled("span")(({ theme }) => ({
@@ -44,7 +44,7 @@ export const DetailValue = styled("span")(({ theme }) => ({
 }));
 
 export const SectionDivider = styled("div")(({ theme }) => ({
-  borderTop: "1px solid #F0F2F5",
+  borderTop: `1px solid ${theme.palette.divider}`,
   margin: theme.spacing(2.5, 0),
 }));
 

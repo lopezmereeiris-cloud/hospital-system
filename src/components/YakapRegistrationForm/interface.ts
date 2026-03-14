@@ -36,3 +36,5 @@ export interface RegistrationFormData {
 export interface YakapRegistrationFormProps {
   onSubmit: (data: RegistrationFormData) => void;
 }
+
+export type StringField = Exclude<keyof RegistrationFormData, "validIdImage" | "emergencyContacts">;

@@ -33,7 +33,7 @@ const theme = createTheme({
           boxShadow:
             "0 1px 3px 0 rgba(0,0,0,0.04), 0 1px 2px -1px rgba(0,0,0,0.03)",
           borderRadius: 16,
-          border: "1px solid #F0F2F5",
+          border: `1px solid ${palette.divider}`,
           backgroundImage: "none",
         },
       },
@@ -69,30 +69,30 @@ const theme = createTheme({
           fontSize: "0.75rem",
         },
         colorWarning: {
-          backgroundColor: alpha("#FFA726", 0.12),
-          color: "#B76E00",
+          backgroundColor: alpha(palette.warning.main, 0.12),
+          color: palette.warning.dark,
           border: "none",
         },
         colorError: {
-          backgroundColor: alpha("#EF5350", 0.1),
-          color: "#B71D18",
+          backgroundColor: alpha(palette.error.main, 0.1),
+          color: palette.error.dark,
           border: "none",
         },
         colorSuccess: {
-          backgroundColor: alpha("#66BB6A", 0.12),
-          color: "#1B806A",
+          backgroundColor: alpha(palette.success.main, 0.12),
+          color: palette.success.dark,
           border: "none",
         },
         colorInfo: {
-          backgroundColor: alpha("#42A5F5", 0.12),
-          color: "#006C9C",
+          backgroundColor: alpha(palette.info.main, 0.12),
+          color: palette.info.dark,
           border: "none",
         },
       },
     },
     MuiTableCell: {
       styleOverrides: {
-        root: { borderBottom: "1px solid #F0F2F5" },
+        root: { borderBottom: `1px solid ${palette.divider}` },
       },
     },
     MuiDialog: {

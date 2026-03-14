@@ -220,7 +220,7 @@ export const HeroTextBlock = styled("div")({
 export const HeroHeading = styled("h2")(({ theme }) => ({
   ...theme.typography.h1,
   fontSize: 46,
-  color: "#fff",
+  color: theme.palette.background.paper,
   lineHeight: 1.1,
   letterSpacing: "-0.02em",
   marginBottom: 10,

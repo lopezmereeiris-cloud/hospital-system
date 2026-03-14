@@ -2,30 +2,30 @@
 
 import { styled } from "@mui/material/styles";
 
-export const ModalHeader = styled("div")(() => ({
+export const ModalHeader = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
   marginBottom: 24,
 }));
 
-export const HeaderInfo = styled("div")(() => ({
+export const HeaderInfo = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: 16,
 }));
 
-export const DoctorNameLarge = styled("h3")(() => ({
+export const DoctorNameLarge = styled("h3")(({ theme }) => ({
   fontSize: "1.25rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   margin: 0,
   lineHeight: 1.3,
 }));
 
-export const Subtitle = styled("span")(() => ({
+export const Subtitle = styled("span")(({ theme }) => ({
   fontSize: "0.82rem",
-  color: "#4361EE",
+  color: theme.palette.primary.main,
   fontWeight: 600,
 }));
 
@@ -45,33 +45,33 @@ export const DetailItem = styled("div")(({ theme }) => ({
   gap: 3,
   padding: theme.spacing(1.5, 2),
   borderRadius: 12,
-  backgroundColor: "#FCFCFD",
-  border: "1px solid #F0F2F5",
+  backgroundColor: theme.palette.grey[50],
+  border: `1px solid ${theme.palette.divider}`,
 }));
 
-export const DetailLabel = styled("span")(() => ({
+export const DetailLabel = styled("span")(({ theme }) => ({
   fontSize: "0.68rem",
   fontWeight: 700,
-  color: "#6F767E",
+  color: theme.palette.text.secondary,
   textTransform: "uppercase" as const,
   letterSpacing: "0.06em",
 }));
 
-export const DetailValue = styled("span")(() => ({
+export const DetailValue = styled("span")(({ theme }) => ({
   fontSize: "0.88rem",
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   fontWeight: 500,
 }));
 
 export const SectionDivider = styled("div")(({ theme }) => ({
-  borderTop: "1px solid #F0F2F5",
+  borderTop: `1px solid ${theme.palette.divider}`,
   margin: theme.spacing(2.5, 0),
 }));
 
 export const SectionTitle = styled("div")(({ theme }) => ({
   fontSize: "0.82rem",
   fontWeight: 700,
-  color: "#4361EE",
+  color: theme.palette.primary.main,
   marginBottom: 12,
   display: "flex",
   alignItems: "center",

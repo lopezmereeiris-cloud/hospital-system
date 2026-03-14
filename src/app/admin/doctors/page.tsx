@@ -13,6 +13,7 @@ import { Doctor } from "@/components/DoctorCard/interface";
 import { ScheduleBlock } from "@/components/DoctorSchedule";
 import doctorsData from "@/json/doctors.json";
 import doctorSchedulesData from "@/json/doctorSchedules.json";
+import { palette } from "@/theme/palette";
 
 const scheduleMap = doctorSchedulesData as Record<string, ScheduleBlock[]>;
 
@@ -38,7 +39,7 @@ export default function DoctorsPage() {
             title="Total Doctors"
             value={doctors.length}
             icon={<GroupsRoundedIcon />}
-            color="#4361EE"
+            color={palette.primary.main}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
@@ -46,7 +47,7 @@ export default function DoctorsPage() {
             title="Active"
             value={active}
             icon={<CheckCircleRoundedIcon />}
-            color="#12B76A"
+            color={palette.success.main}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
@@ -54,7 +55,7 @@ export default function DoctorsPage() {
             title="On Leave"
             value={onLeave}
             icon={<EventBusyRoundedIcon />}
-            color="#F79009"
+            color={palette.warning.main}
           />
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>

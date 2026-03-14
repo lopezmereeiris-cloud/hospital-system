@@ -12,16 +12,16 @@ export const SoaContainer = styled("div")(({ theme }) => ({
   gap: theme.spacing(2),
 }));
 
-export const TabsCard = styled(Paper)(() => ({
+export const TabsCard = styled(Paper)(({ theme }) => ({
   borderRadius: 14,
-  border: "1px solid #EAECF0",
+  border: `1px solid ${theme.palette.grey[200]}`,
   padding: 10,
   boxShadow: "none",
 }));
 
 export const FilterCard = styled(Paper)(({ theme }) => ({
   borderRadius: 14,
-  border: "1px solid #EAECF0",
+  border: `1px solid ${theme.palette.grey[200]}`,
   padding: theme.spacing(1.6),
   boxShadow: "none",
 }));
@@ -35,9 +35,9 @@ export const MainGrid = styled("div")(({ theme }) => ({
   },
 }));
 
-export const PanelCard = styled(Paper)(() => ({
+export const PanelCard = styled(Paper)(({ theme }) => ({
   borderRadius: 16,
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
   boxShadow: "none",
   overflow: "hidden",
 }));
@@ -48,29 +48,29 @@ export const PanelHeader = styled("div")(({ theme }) => ({
   justifyContent: "space-between",
   gap: theme.spacing(1.5),
   padding: theme.spacing(2.2, 2.6),
-  borderBottom: "1px solid #F0F2F5",
-  backgroundColor: "#FCFCFD",
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  backgroundColor: theme.palette.grey[50],
 }));
 
 export const PanelTitleWrap = styled("div")({
   minWidth: 0,
 });
 
-export const PanelTitle = styled("h3")({
+export const PanelTitle = styled("h3")(({ theme }) => ({
   margin: 0,
   fontSize: "1rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   lineHeight: 1.3,
-});
+}));
 
-export const PanelSubtitle = styled("p")({
+export const PanelSubtitle = styled("p")(({ theme }) => ({
   margin: "4px 0 0",
   fontSize: "0.8rem",
-  color: "#667085",
+  color: theme.palette.grey[500],
   fontWeight: 500,
   lineHeight: 1.4,
-});
+}));
 
 export const TableWrap = styled("div")({
   overflowX: "auto",
@@ -80,8 +80,8 @@ export const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
   fontWeight: 700,
   fontSize: "0.7rem",
   color: theme.palette.text.secondary,
-  backgroundColor: "#FCFCFD",
-  borderBottom: "1px solid #F0F2F5",
+  backgroundColor: theme.palette.grey[50],
+  borderBottom: `1px solid ${theme.palette.divider}`,
   padding: theme.spacing(1.4, 1.5),
   whiteSpace: "nowrap",
   textTransform: "uppercase",
@@ -96,22 +96,22 @@ export const StyledBodyCell = styled(TableCell)(({ theme }) => ({
   verticalAlign: "top",
 }));
 
-export const StyledRow = styled(TableRow)(() => ({
+export const StyledRow = styled(TableRow)(({ theme }) => ({
   transition: "background-color 0.18s ease",
   "&:hover": {
-    backgroundColor: alpha("#4361EE", 0.03),
+    backgroundColor: alpha(theme.palette.primary.main, 0.03),
   },
   "&:last-child td": {
     borderBottom: 0,
   },
 }));
 
-export const BillIdButton = styled("button")(() => ({
+export const BillIdButton = styled("button")(({ theme }) => ({
   border: "none",
   padding: 0,
   margin: 0,
   background: "transparent",
-  color: "#344054",
+  color: theme.palette.grey[700],
   fontSize: "0.8rem",
   fontWeight: 700,
   cursor: "pointer",
@@ -127,16 +127,16 @@ export const ValueStrong = styled("span")({
   fontSize: "0.8rem",
 });
 
-export const SubtleText = styled("div")({
-  color: "#667085",
+export const SubtleText = styled("div")(({ theme }) => ({
+  color: theme.palette.grey[500],
   fontWeight: 500,
   fontSize: "0.74rem",
   marginTop: 3,
-});
+}));
 
 export const StatusBadge = styled("span", {
   shouldForwardProp: (prop) => prop !== "status",
-})<{ status: "Pending" | "Partial" | "Paid" }>(({ status }) => ({
+})<{ status: "Pending" | "Partial" | "Paid" }>(({ status, theme }) => ({
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
@@ -147,25 +147,25 @@ export const StatusBadge = styled("span", {
   lineHeight: 1.25,
   border:
     status === "Paid"
-      ? `1px solid ${alpha("#12B76A", 0.3)}`
+      ? `1px solid ${alpha(theme.palette.success.main, 0.3)}`
       : status === "Partial"
-        ? `1px solid ${alpha("#F79009", 0.3)}`
-        : `1px solid ${alpha("#F04438", 0.3)}`,
-  color: status === "Paid" ? "#027A48" : status === "Partial" ? "#B54708" : "#B42318",
+        ? `1px solid ${alpha(theme.palette.warning.main, 0.3)}`
+        : `1px solid ${alpha(theme.palette.error.main, 0.3)}`,
+  color: status === "Paid" ? theme.palette.success.dark : status === "Partial" ? theme.palette.warning.dark : theme.palette.error.dark,
   backgroundColor:
-    status === "Paid" ? alpha("#12B76A", 0.1) : status === "Partial" ? alpha("#F79009", 0.1) : alpha("#F04438", 0.1),
+    status === "Paid" ? alpha(theme.palette.success.main, 0.1) : status === "Partial" ? alpha(theme.palette.warning.main, 0.1) : alpha(theme.palette.error.main, 0.1),
 }));
 
 export const CoverageBadge = styled("span", {
   shouldForwardProp: (prop) => prop !== "active",
-})<{ active?: boolean }>(({ active }) => ({
+})<{ active?: boolean }>(({ active, theme }) => ({
   display: "inline-flex",
   alignItems: "center",
   padding: "2px 8px",
   borderRadius: 999,
-  border: `1px solid ${active ? alpha("#1570EF", 0.3) : "#D0D5DD"}`,
-  backgroundColor: active ? alpha("#1570EF", 0.08) : "#FFFFFF",
-  color: active ? "#175CD3" : "#667085",
+  border: `1px solid ${active ? alpha("#1570EF", 0.3) : theme.palette.grey[300]}`,
+  backgroundColor: active ? alpha("#1570EF", 0.08) : theme.palette.background.paper,
+  color: active ? "#175CD3" : theme.palette.grey[500],
   fontSize: "0.66rem",
   fontWeight: 600,
   lineHeight: 1.3,
@@ -186,20 +186,20 @@ export const DetailHeader = styled("div")(({ theme }) => ({
   flexWrap: "wrap",
 }));
 
-export const PatientName = styled("div")({
+export const PatientName = styled("div")(({ theme }) => ({
   fontSize: "1.1rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   lineHeight: 1.25,
-});
+}));
 
-export const PatientMeta = styled("div")({
+export const PatientMeta = styled("div")(({ theme }) => ({
   marginTop: 4,
   fontSize: "0.78rem",
   fontWeight: 500,
-  color: "#667085",
+  color: theme.palette.grey[500],
   lineHeight: 1.45,
-});
+}));
 
 export const BadgeRow = styled("div")({
   display: "flex",
@@ -218,21 +218,21 @@ export const MetaGrid = styled("div")(({ theme }) => ({
   },
 }));
 
-export const MetaCard = styled("div")({
-  border: "1px solid #EAECF0",
+export const MetaCard = styled("div")(({ theme }) => ({
+  border: `1px solid ${theme.palette.grey[200]}`,
   borderRadius: 10,
-  backgroundColor: "#FFFFFF",
+  backgroundColor: theme.palette.background.paper,
   padding: "9px 10px",
-});
+}));
 
-export const MetaLabel = styled("div")({
+export const MetaLabel = styled("div")(({ theme }) => ({
   fontSize: "0.68rem",
   textTransform: "uppercase",
   letterSpacing: "0.06em",
   fontWeight: 700,
-  color: "#98A2B3",
+  color: theme.palette.grey[400],
   lineHeight: 1.25,
-});
+}));
 
 export const MetaValue = styled("div")({
   marginTop: 5,
@@ -242,60 +242,60 @@ export const MetaValue = styled("div")({
   lineHeight: 1.35,
 });
 
-export const BreakdownCard = styled("div")({
+export const BreakdownCard = styled("div")(({ theme }) => ({
   border: "1px solid #E4E7EC",
   borderRadius: 12,
   overflow: "hidden",
-  backgroundColor: "#FFFFFF",
-});
+  backgroundColor: theme.palette.background.paper,
+}));
 
-export const BreakdownHeader = styled("div")({
+export const BreakdownHeader = styled("div")(({ theme }) => ({
   padding: "10px 12px",
-  borderBottom: "1px solid #EAECF0",
-  backgroundColor: "#FCFCFD",
+  borderBottom: `1px solid ${theme.palette.grey[200]}`,
+  backgroundColor: theme.palette.grey[50],
   fontSize: "0.76rem",
   fontWeight: 700,
-  color: "#344054",
+  color: theme.palette.grey[700],
   letterSpacing: "0.06em",
   textTransform: "uppercase",
-});
+}));
 
 export const BreakdownRow = styled("div", {
   shouldForwardProp: (prop) => !["total", "danger", "positive"].includes(String(prop)),
-})<{ total?: boolean; danger?: boolean; positive?: boolean }>(({ total, danger, positive }) => ({
+})<{ total?: boolean; danger?: boolean; positive?: boolean }>(({ total, danger, positive, theme }) => ({
   display: "grid",
   gridTemplateColumns: "minmax(0, 1fr) auto",
   gap: 12,
   padding: "8px 12px",
-  borderTop: "1px solid #F2F4F7",
+  borderTop: `1px solid ${theme.palette.grey[100]}`,
   fontSize: total ? "0.95rem" : "0.8rem",
   fontWeight: total ? 700 : 500,
-  color: danger ? "#B42318" : positive ? "#027A48" : "#344054",
-  backgroundColor: total ? "#F9FAFB" : "#FFFFFF",
+  color: danger ? theme.palette.error.dark : positive ? theme.palette.success.dark : theme.palette.grey[700],
+  backgroundColor: total ? theme.palette.background.default : theme.palette.background.paper,
 }));
 
-export const NotesCard = styled("div")({
-  border: "1px solid #EAECF0",
+export const NotesCard = styled("div")(({ theme }) => ({
+  border: `1px solid ${theme.palette.grey[200]}`,
   borderRadius: 10,
-  backgroundColor: "#FCFCFD",
+  backgroundColor: theme.palette.grey[50],
   padding: "10px 12px",
-});
+}));
 
-export const NotesLabel = styled("div")({
+export const NotesLabel = styled("div")(({ theme }) => ({
   fontSize: "0.7rem",
   textTransform: "uppercase",
   letterSpacing: "0.06em",
   fontWeight: 700,
-  color: "#98A2B3",
-});
+  color: theme.palette.grey[400],
+}));
 
-export const NotesValue = styled("p")({
+export const NotesValue = styled("p")(({ theme }) => ({
   margin: "6px 0 0",
   fontSize: "0.8rem",
-  color: "#475467",
+  color: theme.palette.grey[600],
   lineHeight: 1.5,
   fontWeight: 500,
-});
+}));
 
 export const ActionRow = styled("div")(({ theme }) => ({
   display: "flex",
@@ -304,7 +304,7 @@ export const ActionRow = styled("div")(({ theme }) => ({
   flexWrap: "wrap",
 }));
 
-export const PrimaryActionButton = styled(Button)(() => ({
+export const PrimaryActionButton = styled(Button)(({ theme }) => ({
   borderRadius: 10,
   fontWeight: 700,
   fontSize: "0.8rem",
@@ -319,18 +319,18 @@ export const PrimaryActionButton = styled(Button)(() => ({
   },
 }));
 
-export const SecondaryActionButton = styled(Button)(() => ({
+export const SecondaryActionButton = styled(Button)(({ theme }) => ({
   borderRadius: 10,
   fontWeight: 700,
   fontSize: "0.8rem",
   textTransform: "none",
   boxShadow: "none !important",
   padding: "8px 16px",
-  borderColor: "#D0D5DD !important",
-  color: "#344054 !important",
+  borderColor: `${theme.palette.grey[300]} !important`,
+  color: `${theme.palette.grey[700]} !important`,
   "&:hover": {
-    borderColor: "#98A2B3 !important",
-    backgroundColor: "#F9FAFB",
+    borderColor: `${theme.palette.grey[400]} !important`,
+    backgroundColor: theme.palette.background.default,
     boxShadow: "none !important",
   },
 }));
@@ -339,10 +339,10 @@ export const EmptyState = styled("div")(({ theme }) => ({
   margin: theme.spacing(2),
   padding: theme.spacing(2.8),
   borderRadius: 12,
-  border: "1px dashed #D0D5DD",
-  backgroundColor: "#FCFCFD",
+  border: `1px dashed ${theme.palette.grey[300]}`,
+  backgroundColor: theme.palette.grey[50],
   textAlign: "center",
-  color: "#667085",
+  color: theme.palette.grey[500],
   fontSize: "0.82rem",
   fontWeight: 500,
 }));

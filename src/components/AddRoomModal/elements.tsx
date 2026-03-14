@@ -13,23 +13,23 @@ export const ModalOverlay = styled("div")({
   padding: 24,
 });
 
-export const ModalContent = styled("div")({
-  backgroundColor: "#FFFFFF",
+export const ModalContent = styled("div")(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
   borderRadius: 16,
   width: "100%",
   maxWidth: 520,
   maxHeight: "85vh",
   overflowY: "auto",
   boxShadow: "0 20px 60px -12px rgba(0,0,0,0.15)",
-});
+}));
 
-export const ModalHeader = styled("div")({
+export const ModalHeader = styled("div")(({ theme }) => ({
   padding: "24px 28px 16px",
-  borderBottom: "1px solid #F0F2F5",
+  borderBottom: `1px solid ${theme.palette.divider}`,
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-});
+}));
 
 export const ModalBody = styled("div")({
   padding: "20px 28px 28px",
@@ -53,15 +53,15 @@ export const FormLabel = styled("label")(({ theme }) => ({
 export const FormInput = styled("input")(({ theme }) => ({
   padding: "10px 14px",
   borderRadius: 10,
-  border: "1px solid #EAECF0",
+  border: `1px solid ${theme.palette.grey[200]}`,
   fontSize: "0.82rem",
   color: theme.palette.text.primary,
   fontFamily: "inherit",
   outline: "none",
   transition: "border-color 0.2s ease",
   "&:focus": {
-    borderColor: "#4361EE",
-    boxShadow: `0 0 0 3px ${alpha("#4361EE", 0.1)}`,
+    borderColor: theme.palette.primary.main,
+    boxShadow: `0 0 0 3px ${alpha(theme.palette.primary.main, 0.1)}`,
   },
   "&::placeholder": {
     color: theme.palette.text.disabled,
@@ -71,17 +71,17 @@ export const FormInput = styled("input")(({ theme }) => ({
 export const FormSelect = styled("select")(({ theme }) => ({
   padding: "10px 14px",
   borderRadius: 10,
-  border: "1px solid #EAECF0",
+  border: `1px solid ${theme.palette.grey[200]}`,
   fontSize: "0.82rem",
   color: theme.palette.text.primary,
   fontFamily: "inherit",
   outline: "none",
-  backgroundColor: "#FFFFFF",
+  backgroundColor: theme.palette.background.paper,
   cursor: "pointer",
   transition: "border-color 0.2s ease",
   "&:focus": {
-    borderColor: "#4361EE",
-    boxShadow: `0 0 0 3px ${alpha("#4361EE", 0.1)}`,
+    borderColor: theme.palette.primary.main,
+    boxShadow: `0 0 0 3px ${alpha(theme.palette.primary.main, 0.1)}`,
   },
 }));
 
@@ -98,12 +98,12 @@ export const ButtonRow = styled("div")({
   paddingTop: 8,
 });
 
-export const PrimaryButton = styled("button")({
+export const PrimaryButton = styled("button")(({ theme }) => ({
   padding: "10px 24px",
   borderRadius: 10,
   border: "none",
-  backgroundColor: "#4361EE",
-  color: "#FFFFFF",
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
   fontSize: "0.82rem",
   fontWeight: 600,
   fontFamily: "inherit",
@@ -112,13 +112,13 @@ export const PrimaryButton = styled("button")({
   "&:hover": {
     backgroundColor: "#3A56D4",
   },
-});
+}));
 
 export const SecondaryButton = styled("button")(({ theme }) => ({
   padding: "10px 24px",
   borderRadius: 10,
-  border: "1px solid #EAECF0",
-  backgroundColor: "#FFFFFF",
+  border: `1px solid ${theme.palette.grey[200]}`,
+  backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   fontSize: "0.82rem",
   fontWeight: 600,

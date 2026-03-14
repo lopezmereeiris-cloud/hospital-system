@@ -26,6 +26,7 @@ import Divider from "@mui/material/Divider";
 import CloseIcon from "@mui/icons-material/Close";
 import ViewColumnOutlinedIcon from "@mui/icons-material/ViewColumnOutlined";
 
+import { palette } from "@/theme/palette";
 // Column definitions for filtering
 const COLUMN_OPTIONS = [
   { key: "medicineId", label: "Medicine ID" },
@@ -143,7 +144,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
   return (
     <InventoryContainer>
       <InventoryToolbar>
-        <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+        <div style={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
           Medicine Inventory
         </div>
         <PremiumFilter
@@ -160,12 +161,12 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
             textTransform: "none",
             fontWeight: 600,
             fontSize: "0.8125rem",
-            borderColor: "#D0D5DD",
-            color: "#344054",
+            borderColor: "grey.300",
+            color: "grey.700",
             borderRadius: "8px",
             px: 1.5,
             gap: 0.5,
-            "&:hover": { borderColor: "#4361EE", color: "#4361EE", background: "#F5F7FF" },
+            "&:hover": { borderColor: "primary.main", color: "primary.main", background: "#F5F7FF" },
           }}
         >
           Filters
@@ -173,8 +174,8 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "#4361EE",
-            color: "#fff",
+            background: palette.primary.main,
+            color: palette.background.paper,
             borderRadius: "999px",
             fontSize: "0.65rem",
             fontWeight: 700,
@@ -203,12 +204,12 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
           {/* Header */}
           <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", padding: "22px 24px 14px 24px" }}>
             <div>
-              <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#101828", letterSpacing: "-0.01em" }}>Manage Columns</div>
-              <div style={{ fontSize: "0.78rem", color: "#667085", marginTop: 3 }}>
+              <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "grey.900", letterSpacing: "-0.01em" }}>Manage Columns</div>
+              <div style={{ fontSize: "0.78rem", color: "grey.500", marginTop: 3 }}>
                 {pendingColumns.length} of {COLUMN_OPTIONS.length} columns selected
               </div>
             </div>
-            <IconButton onClick={handleCloseModal} size="small" sx={{ color: "#98A2B3", mt: "-4px", "&:hover": { color: "#344054", background: "#F2F4F7" } }}>
+            <IconButton onClick={handleCloseModal} size="small" sx={{ color: "grey.400", mt: "-4px", "&:hover": { color: "grey.700", background: palette.grey[100] } }}>
               <CloseIcon fontSize="small" />
             </IconButton>
           </div>
@@ -218,7 +219,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
           <DialogContent sx={{ px: 3, py: 2.5 }}>
             {/* Select All toggle */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-              <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "#98A2B3", textTransform: "uppercase", letterSpacing: "0.06em" }}>Columns</span>
+              <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "grey.400", textTransform: "uppercase", letterSpacing: "0.06em" }}>Columns</span>
               <button
                 onClick={allSelected ? handleClearColumns : handleSelectAll}
                 style={{
@@ -227,7 +228,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
                   cursor: "pointer",
                   fontSize: "0.78rem",
                   fontWeight: 600,
-                  color: "#4361EE",
+                  color: "primary.main",
                   padding: 0,
                 }}
               >
@@ -254,8 +255,8 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
                       cursor: "pointer",
                       padding: "9px 12px",
                       borderRadius: 10,
-                      border: checked ? "1.5px solid #4361EE" : "1.5px solid #E4E7EC",
-                      background: checked ? "#F5F7FF" : "#FCFCFD",
+                      border: checked ? `1.5px solid ${palette.primary.main}` : "1.5px solid #E4E7EC",
+                      background: checked ? "#F5F7FF" : palette.grey[50],
                       transition: "all 0.15s",
                       userSelect: "none",
                     }}
@@ -266,11 +267,11 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
                       size="small"
                       sx={{
                         p: 0,
-                        color: "#D0D5DD",
-                        "&.Mui-checked": { color: "#4361EE" },
+                        color: "grey.300",
+                        "&.Mui-checked": { color: "primary.main" },
                       }}
                     />
-                    <span style={{ fontSize: "0.8rem", fontWeight: checked ? 600 : 400, color: checked ? "#1D2939" : "#475467", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <span style={{ fontSize: "0.8rem", fontWeight: checked ? 600 : 400, color: checked ? palette.grey[800] : palette.grey[600], whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                       {col.label}
                     </span>
                   </label>
@@ -289,11 +290,11 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
               sx={{
                 textTransform: "none",
                 fontWeight: 600,
-                color: "#667085",
+                color: "grey.500",
                 fontSize: "0.85rem",
                 mr: "auto",
-                "&:hover": { background: "#F9FAFB", color: "#344054" },
-                "&.Mui-disabled": { color: "#D0D5DD" },
+                "&:hover": { background: palette.background.default, color: "grey.700" },
+                "&.Mui-disabled": { color: "grey.300" },
               }}
             >
               Clear All
@@ -305,11 +306,11 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
                 textTransform: "none",
                 fontWeight: 600,
                 fontSize: "0.85rem",
-                borderColor: "#D0D5DD",
-                color: "#344054",
+                borderColor: "grey.300",
+                color: "grey.700",
                 borderRadius: "8px",
                 px: 2.5,
-                "&:hover": { borderColor: "#98A2B3", background: "#F9FAFB" },
+                "&:hover": { borderColor: "grey.400", background: palette.background.default },
               }}
             >
               Cancel
@@ -321,7 +322,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
                 textTransform: "none",
                 fontWeight: 700,
                 fontSize: "0.85rem",
-                background: "#4361EE",
+                background: palette.primary.main,
                 borderRadius: "8px",
                 px: 2.5,
                 boxShadow: "none",
@@ -349,12 +350,12 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
                 ? Math.min(Math.round((med.quantityOnHand / med.maximumStockLevel) * 100), 100)
                 : 0;
               const barColor = med.expiredFlag
-                ? "#F04438"
+                ? palette.error.main
                 : med.lowStockAlert
-                ? "#F79009"
+                ? palette.warning.main
                 : med.overstockFlag
-                ? "#36BFFA"
-                : "#12B76A";
+                ? palette.info.main
+                : palette.success.main;
 
               return (
                 <StyledRow key={med.id}>

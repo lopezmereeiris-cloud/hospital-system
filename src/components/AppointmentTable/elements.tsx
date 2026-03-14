@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 export const TableContainer = styled(Paper)(({ theme }) => ({
   borderRadius: 16,
   overflow: "hidden",
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
 }));
 
 export const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -26,8 +26,8 @@ export const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
   fontWeight: 700,
   fontSize: "0.72rem",
   color: theme.palette.text.secondary,
-  backgroundColor: "#FCFCFD",
-  borderBottom: "1px solid #F0F2F5",
+  backgroundColor: theme.palette.grey[50],
+  borderBottom: `1px solid ${theme.palette.divider}`,
   padding: theme.spacing(1.6, 2.5),
   textTransform: "uppercase",
   letterSpacing: "0.06em",

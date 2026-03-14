@@ -41,7 +41,7 @@ const RoomTable: React.FC<RoomTableProps> = ({ rooms }) => {
   return (
     <RoomContainer>
       <RoomToolbar>
-        <div style={{ fontSize: "1rem", fontWeight: 700, color: "#1A1D1F" }}>
+        <div style={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
           Room Directory
         </div>
         <PremiumFilter

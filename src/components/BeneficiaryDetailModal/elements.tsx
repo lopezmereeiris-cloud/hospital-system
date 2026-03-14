@@ -4,23 +4,23 @@ import { styled, alpha } from "@mui/material/styles";
 
 const PH_GREEN = "#0D8A3F";
 
-export const ModalHeader = styled("div")(() => ({
+export const ModalHeader = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
   marginBottom: 24,
 }));
 
-export const HeaderInfo = styled("div")(() => ({
+export const HeaderInfo = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column" as const,
   gap: 6,
 }));
 
-export const BeneficiaryName = styled("h3")(() => ({
+export const BeneficiaryName = styled("h3")(({ theme }) => ({
   fontSize: "1.25rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   margin: 0,
 }));
 
@@ -44,17 +44,17 @@ export const DetailItem = styled("div")(({ theme }) => ({
   border: "1px solid #D1FAE5",
 }));
 
-export const DetailLabel = styled("span")(() => ({
+export const DetailLabel = styled("span")(({ theme }) => ({
   fontSize: "0.68rem",
   fontWeight: 700,
-  color: "#6F767E",
+  color: theme.palette.text.secondary,
   textTransform: "uppercase" as const,
   letterSpacing: "0.06em",
 }));
 
-export const DetailValue = styled("span")(() => ({
+export const DetailValue = styled("span")(({ theme }) => ({
   fontSize: "0.88rem",
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   fontWeight: 500,
 }));
 
@@ -63,7 +63,7 @@ export const SectionDivider = styled("div")(({ theme }) => ({
   margin: theme.spacing(2.5, 0),
 }));
 
-export const SectionTitle = styled("div")(() => ({
+export const SectionTitle = styled("div")(({ theme }) => ({
   fontSize: "0.82rem",
   fontWeight: 700,
   color: PH_GREEN,
@@ -73,7 +73,7 @@ export const SectionTitle = styled("div")(() => ({
   gap: 8,
 }));
 
-export const BalanceBar = styled("div")(() => ({
+export const BalanceBar = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: 16,
@@ -84,57 +84,57 @@ export const BalanceBar = styled("div")(() => ({
   marginBottom: 20,
 }));
 
-export const BalanceAmount = styled("div")(() => ({
+export const BalanceAmount = styled("div")(({ theme }) => ({
   fontSize: "1.5rem",
   fontWeight: 700,
   color: PH_GREEN,
   lineHeight: 1.1,
 }));
 
-export const BalanceLabel = styled("div")(() => ({
+export const BalanceLabel = styled("div")(({ theme }) => ({
   fontSize: "0.72rem",
   fontWeight: 600,
-  color: "#6F767E",
+  color: theme.palette.text.secondary,
   textTransform: "uppercase" as const,
   letterSpacing: "0.04em",
 }));
 
-export const TransactionRow = styled("div")(() => ({
+export const TransactionRow = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   padding: "10px 0",
-  borderBottom: "1px solid #F2F4F7",
+  borderBottom: `1px solid ${theme.palette.grey[100]}`,
   "&:last-child": {
     borderBottom: "none",
   },
 }));
 
-export const TransactionDate = styled("span")(() => ({
+export const TransactionDate = styled("span")(({ theme }) => ({
   fontSize: "0.75rem",
   fontWeight: 600,
-  color: "#6F767E",
+  color: theme.palette.text.secondary,
   minWidth: 90,
 }));
 
 //jhkjhkjh
 
-export const TransactionDesc = styled("span")(() => ({
+export const TransactionDesc = styled("span")(({ theme }) => ({
   fontSize: "0.82rem",
   fontWeight: 500,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   flex: 1,
   paddingLeft: 12,
 }));
 
-export const TransactionAmount = styled("span")(() => ({
+export const TransactionAmount = styled("span")(({ theme }) => ({
   fontSize: "0.82rem",
   fontWeight: 700,
-  color: "#F04438",
+  color: theme.palette.error.main,
   whiteSpace: "nowrap" as const,
 }));
 
-export const EmptyTransactions = styled("div")(() => ({
+export const EmptyTransactions = styled("div")(({ theme }) => ({
   textAlign: "center" as const,
   padding: "24px 16px",
   color: "#9CA3AF",

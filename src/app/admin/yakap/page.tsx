@@ -19,6 +19,7 @@ import BeneficiaryTable from "@/components/BeneficiaryTable";
 import { Beneficiary } from "@/components/BeneficiaryTable/interface";
 import yakapData from "@/json/yakap.json";
 
+import { palette } from "@/theme/palette";
 /* PhilHealth-inspired palette */
 const PH = {
   green: "#0D8A3F",
@@ -69,12 +70,12 @@ export default function YakapPage() {
               fontSize: "1.5rem",
               fontWeight: 700,
               margin: "0 0 4px 0",
-              color: "#1A1D1F",
+              color: "text.primary",
             }}
           >
             YAKAP Program
           </h2>
-          <p style={{ fontSize: "0.85rem", color: "#6F767E", margin: 0 }}>
+          <p style={{ fontSize: "0.85rem", color: "text.secondary", margin: 0 }}>
             PhilHealth beneficiary management — ₱20,000 annual medicine benefit
           </p>
         </div>
@@ -93,7 +94,7 @@ export default function YakapPage() {
               fontSize: "0.85rem",
               fontFamily: "inherit",
               cursor: "pointer",
-              color: "#FFFFFF",
+              color: palette.background.paper,
               background: `linear-gradient(135deg, ${PH.green} 0%, ${PH.greenLight} 100%)`,
               transition: "all 0.2s ease",
               "&:hover": {
@@ -142,7 +143,7 @@ export default function YakapPage() {
             value={lowBalance}
             subtitle="≤ ₱3,000 remaining"
             icon={<WarningAmberRoundedIcon />}
-            color="#F79009"
+            color={palette.warning.main}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 4, lg: 2.4 }}>
@@ -162,7 +163,7 @@ export default function YakapPage() {
           p: "12px 16px",
           mb: 2.5,
           borderRadius: "12px",
-          border: "1px solid #EAECF0",
+          border: `1px solid ${palette.grey[200]}`,
           boxShadow: "none",
         }}
       >
@@ -172,21 +173,21 @@ export default function YakapPage() {
               display: "flex",
               alignItems: "center",
               flex: 1,
-              bgcolor: "#F9FAFB",
+              bgcolor: palette.background.default,
               borderRadius: "8px",
-              border: "1px solid #EAECF0",
+              border: `1px solid ${palette.grey[200]}`,
               px: 1.5,
               py: 0.25,
               transition: "border-color 0.2s",
               "&:focus-within": { borderColor: PH.green },
             }}
           >
-            <SearchRoundedIcon sx={{ color: "#98A2B3", fontSize: 20, mr: 1 }} />
+            <SearchRoundedIcon sx={{ color: "grey.400", fontSize: 20, mr: 1 }} />
             <InputBase
               placeholder="Search beneficiaries by name, ID, or PhilHealth #…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              sx={{ flex: 1, fontSize: 14, fontWeight: 500, color: "#344054" }}
+              sx={{ flex: 1, fontSize: 14, fontWeight: 500, color: "grey.700" }}
               inputProps={{ "aria-label": "search beneficiaries" }}
             />
           </Box>

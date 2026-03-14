@@ -3,9 +3,9 @@
 import { styled, alpha } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 
-export const TimelineContainer = styled(Paper)(() => ({
+export const TimelineContainer = styled(Paper)(({ theme }) => ({
   borderRadius: 16,
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
   overflow: "hidden",
 }));
 
@@ -30,44 +30,44 @@ export const TimelineGrid = styled("div")({
   minWidth: "fit-content",
 });
 
-export const TimelineHeaderRow = styled("div")({
+export const TimelineHeaderRow = styled("div")(({ theme }) => ({
   display: "flex",
   position: "sticky",
   top: 0,
   zIndex: 2,
-  backgroundColor: "#FCFCFD",
-  borderBottom: "1px solid #F0F2F5",
-});
+  backgroundColor: theme.palette.grey[50],
+  borderBottom: `1px solid ${theme.palette.divider}`,
+}));
 
 export const TimelineHeaderCell = styled("div", {
   shouldForwardProp: (prop) => prop !== "isToday",
-})<{ isToday?: boolean }>(({ isToday }) => ({
+})<{ isToday?: boolean }>(({ isToday, theme }) => ({
   width: 80,
   minWidth: 80,
   padding: "10px 4px",
   textAlign: "center",
   fontSize: "0.68rem",
   fontWeight: 600,
-  color: isToday ? "#4361EE" : "#6F767E",
-  backgroundColor: isToday ? alpha("#4361EE", 0.04) : "transparent",
-  borderRight: "1px solid #F0F2F5",
+  color: isToday ? theme.palette.primary.main : theme.palette.text.secondary,
+  backgroundColor: isToday ? alpha(theme.palette.primary.main, 0.04) : "transparent",
+  borderRight: `1px solid ${theme.palette.divider}`,
   flexShrink: 0,
 }));
 
-export const TimelineRoomLabel = styled("div")({
+export const TimelineRoomLabel = styled("div")(({ theme }) => ({
   width: 180,
   minWidth: 180,
   padding: "10px 16px",
   position: "sticky",
   left: 0,
   zIndex: 1,
-  backgroundColor: "#FFFFFF",
-  borderRight: "2px solid #F0F2F5",
+  backgroundColor: theme.palette.background.paper,
+  borderRight: `2px solid ${theme.palette.divider}`,
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   flexShrink: 0,
-});
+}));
 
 export const TimelineRoomName = styled("div")(({ theme }) => ({
   fontSize: "0.78rem",
@@ -84,12 +84,12 @@ export const TimelineRoomNumber = styled("div")(({ theme }) => ({
   fontWeight: 500,
 }));
 
-export const TimelineRow = styled("div")(() => ({
+export const TimelineRow = styled("div")(({ theme }) => ({
   display: "flex",
   borderBottom: "1px solid #F8F9FA",
   minHeight: 48,
   "&:hover": {
-    backgroundColor: alpha("#4361EE", 0.01),
+    backgroundColor: alpha(theme.palette.primary.main, 0.01),
   },
 }));
 
@@ -100,17 +100,17 @@ export const TimelineCell = styled("div", {
     prop !== "hasEvent" &&
     prop !== "eventType",
 })<{ statusColor?: string; isToday?: boolean; hasEvent?: boolean; eventType?: string }>(
-  ({ statusColor, isToday, hasEvent, eventType }) => ({
+  ({ statusColor, isToday, hasEvent, eventType, theme }) => ({
     width: 80,
     minWidth: 80,
     height: 48,
     borderRight: "1px solid #F8F9FA",
     backgroundColor: hasEvent
       ? eventType === "occupied"
-        ? alpha(statusColor || "#F04438", 0.24)
-        : alpha(statusColor || "#667085", 0.18)
+        ? alpha(statusColor || theme.palette.error.main, 0.24)
+        : alpha(statusColor || theme.palette.grey[500], 0.18)
       : isToday
-        ? alpha("#4361EE", 0.03)
+        ? alpha(theme.palette.primary.main, 0.03)
         : "transparent",
     cursor: "pointer",
     display: "flex",
@@ -119,40 +119,40 @@ export const TimelineCell = styled("div", {
     transition: "background-color 0.15s ease",
     flexShrink: 0,
     position: "relative",
-    boxShadow: isToday ? `inset 0 0 0 1px ${alpha("#4361EE", 0.26)}` : "none",
+    boxShadow: isToday ? `inset 0 0 0 1px ${alpha(theme.palette.primary.main, 0.26)}` : "none",
     "&:hover": {
       backgroundColor: hasEvent
         ? eventType === "occupied"
-          ? alpha(statusColor || "#F04438", 0.32)
-          : alpha(statusColor || "#667085", 0.24)
-        : alpha("#12B76A", 0.08),
+          ? alpha(statusColor || theme.palette.error.main, 0.32)
+          : alpha(statusColor || theme.palette.grey[500], 0.24)
+        : alpha(theme.palette.success.main, 0.08),
     },
   })
 );
 
 export const CellLabel = styled("div", {
   shouldForwardProp: (prop) => prop !== "variant",
-})<{ variant?: string }>(({ variant }) => {
+})<{ variant?: string }>(({ variant, theme }) => {
   const variantStyles: Record<string, { color: string; backgroundColor: string; borderColor: string }> = {
     occupied: {
-      color: "#FFFFFF",
+      color: theme.palette.primary.contrastText,
       backgroundColor: "#D92D20",
-      borderColor: "#B42318",
+      borderColor: theme.palette.error.dark,
     },
     maintenance: {
       color: "#7A2E0B",
       backgroundColor: "#FDEAD7",
-      borderColor: "#F79009",
+      borderColor: theme.palette.warning.main,
     },
     cleaning: {
       color: "#0C4A6E",
       backgroundColor: "#DFF4FF",
-      borderColor: "#36BFFA",
+      borderColor: theme.palette.info.main,
     },
     default: {
-      color: "#475467",
-      backgroundColor: "#FFFFFF",
-      borderColor: "#D0D5DD",
+      color: theme.palette.grey[600],
+      backgroundColor: theme.palette.background.paper,
+      borderColor: theme.palette.grey[300],
     },
   };
 
@@ -172,21 +172,21 @@ export const CellLabel = styled("div", {
 };
 });
 
-export const TimelineHeaderLabel = styled("div")({
+export const TimelineHeaderLabel = styled("div")(({ theme }) => ({
   width: 180,
   minWidth: 180,
   padding: "10px 16px",
   position: "sticky",
   left: 0,
   zIndex: 3,
-  backgroundColor: "#FCFCFD",
-  borderRight: "2px solid #F0F2F5",
+  backgroundColor: theme.palette.grey[50],
+  borderRight: `2px solid ${theme.palette.divider}`,
   display: "flex",
   alignItems: "center",
   fontSize: "0.7rem",
   fontWeight: 700,
-  color: "#6F767E",
+  color: theme.palette.text.secondary,
   textTransform: "uppercase",
   letterSpacing: "0.06em",
   flexShrink: 0,
-});
+}));

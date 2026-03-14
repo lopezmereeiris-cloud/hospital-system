@@ -12,9 +12,9 @@ export const SidebarDrawer = styled(Drawer, {
 })<{ collapsed?: boolean }>(({ theme, collapsed }) => ({
   "& .MuiDrawer-paper": {
     width: collapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH,
-    background: "#FFFFFF",
+    background: theme.palette.background.paper,
     color: theme.palette.text.primary,
-    borderRight: "1px solid #F0F2F5",
+    borderRight: `1px solid ${theme.palette.divider}`,
     padding: theme.spacing(1, 0, 0, 0),
     transition: "width 0.28s cubic-bezier(0.4, 0, 0.2, 1)",
     overflowX: "hidden",
@@ -34,11 +34,11 @@ export const LogoContainer = styled("div", {
   minHeight: 64,
 }));
 
-export const LogoText = styled("div")(() => ({
+export const LogoText = styled("div")(({ theme }) => ({
   fontWeight: 800,
   fontSize: "1.4rem",
   letterSpacing: "-0.02em",
-  color: "#4361EE",
+  color: theme.palette.primary.main,
   whiteSpace: "nowrap",
 }));
 
@@ -50,16 +50,16 @@ export const NavItemButton = styled(ListItemButton, {
   padding: collapsed ? theme.spacing(1.2) : theme.spacing(1.1, 2),
   justifyContent: collapsed ? "center" : "flex-start",
   minHeight: 44,
-  color: active ? "#FFFFFF" : theme.palette.text.secondary,
-  backgroundColor: active ? "#4361EE" : "transparent",
+  color: active ? theme.palette.primary.contrastText : theme.palette.text.secondary,
+  backgroundColor: active ? theme.palette.primary.main : "transparent",
   "&:hover": {
-    backgroundColor: active ? "#3A56D4" : alpha("#4361EE", 0.06),
-    color: active ? "#FFFFFF" : theme.palette.text.primary,
+    backgroundColor: active ? theme.palette.primary.dark : alpha(theme.palette.primary.main, 0.06),
+    color: active ? theme.palette.primary.contrastText : theme.palette.text.primary,
   },
   transition: "all 0.2s ease",
 }));
 
-export const NavLabel = styled("span")(() => ({
+export const NavLabel = styled("span")(({ theme }) => ({
   fontSize: "0.875rem",
   fontWeight: 500,
   marginLeft: 14,
@@ -93,7 +93,7 @@ export const CollapseToggle = styled("button", {
   padding: collapsed ? theme.spacing(1.8, 0) : theme.spacing(1.8, 2.5),
   margin: 0,
   border: "none",
-  borderTop: "1px solid #F0F2F5",
+  borderTop: `1px solid ${theme.palette.divider}`,
   background: "none",
   color: theme.palette.text.secondary,
   cursor: "pointer",
@@ -106,7 +106,7 @@ export const CollapseToggle = styled("button", {
   },
 }));
 
-export const CollapseLabel = styled("span")(() => ({
+export const CollapseLabel = styled("span")(({ theme }) => ({
   fontSize: "0.82rem",
   fontWeight: 500,
   whiteSpace: "nowrap",

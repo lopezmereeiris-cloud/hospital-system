@@ -63,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) =>
               sx={{
                 width: 36,
                 height: 36,
-                bgcolor: "#4361EE",
+                bgcolor: "primary.main",
                 fontSize: "0.82rem",
                 fontWeight: 700,
               }}

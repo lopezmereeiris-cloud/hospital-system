@@ -130,7 +130,7 @@ const BookAppointmentModal: React.FC<BookAppointmentModalProps> = ({
           <Button
             variant="contained"
             sx={{
-              backgroundColor: "#4361EE",
+              backgroundColor: "primary.main",
               textTransform: "none",
               borderRadius: "10px",
               px: 2.5,

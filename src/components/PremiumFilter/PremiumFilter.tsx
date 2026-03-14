@@ -3,6 +3,7 @@
 import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 
+import { palette } from "@/theme/palette";
 /* ─── Premium Segmented Filter Control ─── */
 
 interface PremiumFilterProps<T extends string> {
@@ -16,7 +17,7 @@ const FilterContainer = styled("div")(({ theme }) => ({
   alignItems: "center",
   gap: 4,
   padding: 4,
-  backgroundColor: theme.palette.grey[100],
+  backgroundColor: palette.grey[100],
   borderRadius: 10,
   flexWrap: "wrap",
 }));
@@ -34,13 +35,13 @@ const FilterButton = styled("button", {
   fontSize: "0.8rem",
   fontWeight: active ? 600 : 500,
   fontFamily: "inherit",
-  color: active ? "#FFFFFF" : theme.palette.text.secondary,
-  backgroundColor: active ? "#4361EE" : "transparent",
+  color: active ? palette.background.paper : palette.text.secondary,
+  backgroundColor: active ? palette.primary.main : "transparent",
   transition: "all 0.2s ease",
   whiteSpace: "nowrap",
   "&:hover": {
-    backgroundColor: active ? "#3A56D4" : alpha("#4361EE", 0.08),
-    color: active ? "#FFFFFF" : theme.palette.text.primary,
+    backgroundColor: active ? "#3A56D4" : alpha(palette.primary.main, 0.08),
+    color: active ? palette.background.paper : palette.text.primary,
   },
 }));
 
@@ -52,7 +53,7 @@ const FilterCount = styled("span", {
   padding: "1px 6px",
   borderRadius: 6,
   backgroundColor: active ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.06)",
-  color: active ? "#FFFFFF" : "inherit",
+  color: active ? palette.background.paper : "inherit",
   lineHeight: 1.5,
 }));
 

@@ -182,7 +182,7 @@ export default function PatientBillingStatement({ billing }: Props) {
     startIcon={<PrintRoundedIcon />}
     onClick={handlePrint}
     sx={{
-      backgroundColor: "#4361EE",
+      backgroundColor: "primary.main",
       textTransform: "none",
       borderRadius: "10px",
       fontWeight: 600,

@@ -11,6 +11,7 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
 import { BeneficiaryDetailModalProps } from "./interface";
+import { palette } from "@/theme/palette";
 import {
   ModalHeader,
   HeaderInfo,
@@ -49,9 +50,9 @@ const BeneficiaryDetailModal: React.FC<BeneficiaryDetailModalProps> = ({
   const usedPct = Math.round((b.benefitUsed / b.annualBenefit) * 100);
   const barColor =
     b.benefitBalance === 0
-      ? "#F04438"
+      ? palette.error.main
       : b.benefitBalance <= 3000
-      ? "#F79009"
+      ? palette.warning.main
       : PH.green;
 
   const fullAddress = [
@@ -121,7 +122,7 @@ const BeneficiaryDetailModal: React.FC<BeneficiaryDetailModalProps> = ({
                 style={{
                   fontSize: "0.72rem",
                   fontWeight: 700,
-                  color: "#6F767E",
+                  color: "text.secondary",
                 }}
               >
                 ₱{b.benefitUsed.toLocaleString()} / ₱

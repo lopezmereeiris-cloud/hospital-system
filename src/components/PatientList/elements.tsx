@@ -6,8 +6,8 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 
-export const RegisterPatientButton = styled(Button)(() => ({
-  backgroundColor: "#4361EE !important",
+export const RegisterPatientButton = styled(Button)(({ theme }) => ({
+  backgroundColor: `${theme.palette.primary.main} !important`,
   color: "#FFFFFF !important",
   textTransform: "none",
   borderRadius: 10,
@@ -23,7 +23,7 @@ export const RegisterPatientButton = styled(Button)(() => ({
 export const PatientContainer = styled(Paper)(({ theme }) => ({
   borderRadius: 16,
   overflow: "hidden",
-  border: "1px solid #F0F2F5",
+  border: `1px solid ${theme.palette.divider}`,
   boxShadow: "none",
 }));
 
@@ -36,19 +36,19 @@ export const PatientHeader = styled("div")(({ theme }) => ({
   gap: theme.spacing(2),
 }));
 
-export const PatientHeaderTitle = styled("div")({
+export const PatientHeaderTitle = styled("div")(({ theme }) => ({
   fontSize: "1.05rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   lineHeight: 1.2,
-});
+}));
 
 export const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
   fontWeight: 700,
   fontSize: "0.7rem",
   color: theme.palette.text.secondary,
-  backgroundColor: "#FCFCFD",
-  borderBottom: "1px solid #F0F2F5",
+  backgroundColor: theme.palette.grey[50],
+  borderBottom: `1px solid ${theme.palette.divider}`,
   padding: theme.spacing(1.4, 1.5),
   whiteSpace: "nowrap",
   textTransform: "uppercase",
@@ -65,7 +65,7 @@ export const StyledBodyCell = styled(TableCell)(({ theme }) => ({
 export const StyledRow = styled(TableRow)(({ theme }) => ({
   transition: "background-color 0.18s ease",
   "&:hover": {
-    backgroundColor: alpha("#4361EE", 0.02),
+    backgroundColor: alpha(theme.palette.primary.main, 0.02),
   },
   "&:last-child td": {
     borderBottom: 0,
@@ -74,7 +74,7 @@ export const StyledRow = styled(TableRow)(({ theme }) => ({
 
 /* MODAL */
 
-export const ModalHeader = styled("div")(() => ({
+export const ModalHeader = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
@@ -85,21 +85,21 @@ export const ModalHeader = styled("div")(() => ({
   border: "1px solid rgba(13, 138, 63, 0.12)",
 }));
 
-export const HeaderInfo = styled("div")(() => ({
+export const HeaderInfo = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: 8,
 }));
 
-export const ModalTitle = styled("h3")(() => ({
+export const ModalTitle = styled("h3")(({ theme }) => ({
   fontSize: "1.4rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   margin: 0,
   lineHeight: 1.2,
 }));
 
-export const ModalSubtitle = styled("span")(() => ({
+export const ModalSubtitle = styled("span")(({ theme }) => ({
   fontSize: "0.9rem",
   color: "#5F6B76",
   fontWeight: 500,
@@ -119,7 +119,7 @@ export const SectionTitle = styled("div")(({ theme }) => ({
   gap: theme.spacing(1),
   fontSize: "0.95rem",
   fontWeight: 700,
-  color: "#1A1D1F",
+  color: theme.palette.text.primary,
   marginBottom: theme.spacing(2),
 }));
 
