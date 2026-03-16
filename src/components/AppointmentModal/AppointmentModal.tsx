@@ -39,6 +39,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   onClose,
   appointment,
   onStatusChange,
+  readOnly = false,
 }) => {
   if (!appointment) return null;
 
@@ -116,24 +117,28 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           {appointment.specialNotes}
         </Typography>
 
-        <SectionDivider />
+        {!readOnly && onStatusChange && (
+          <>
+            <SectionDivider />
 
-        <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-          Update Status
-        </Typography>
-        <ModalActions>
-          {statuses.map((s) => (
-            <Button
-              key={s}
-              variant={appointment.status === s ? "contained" : "outlined"}
-              color={statusColorMap[s]}
-              size="small"
-              onClick={() => onStatusChange(appointment.id, s)}
-            >
-              {s}
-            </Button>
-          ))}
-        </ModalActions>
+            <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+              Update Status
+            </Typography>
+            <ModalActions>
+              {statuses.map((s) => (
+                <Button
+                  key={s}
+                  variant={appointment.status === s ? "contained" : "outlined"}
+                  color={statusColorMap[s]}
+                  size="small"
+                  onClick={() => onStatusChange(appointment.id, s)}
+                >
+                  {s}
+                </Button>
+              ))}
+            </ModalActions>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );

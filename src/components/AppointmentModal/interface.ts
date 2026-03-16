@@ -4,5 +4,6 @@ export interface AppointmentModalProps {
   open: boolean;
   onClose: () => void;
   appointment: Appointment | null;
-  onStatusChange: (id: number, status: Appointment["status"]) => void;
+  onStatusChange?: (id: number, status: Appointment["status"]) => void;
+  readOnly?: boolean;
 }

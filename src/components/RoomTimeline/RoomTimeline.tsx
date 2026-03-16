@@ -43,6 +43,7 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
   roomTypes,
   onCellClick,
   onCreateBooking,
+  readOnly = false,
 }) => {
   const [range, setRange] = useState<(typeof RANGE_OPTIONS)[number]["value"]>("14d");
   const [bookingForm, setBookingForm] = useState<BookingForm | null>(null);
@@ -113,11 +114,19 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
       return;
     }
 
+    if (readOnly) {
+      return;
+    }
+
     openBookingForm(room, dateKey);
   };
 
   const handleCreateBooking = () => {
     if (!bookingForm) {
+      return;
+    }
+
+    if (!onCreateBooking) {
       return;
     }
 
@@ -268,20 +277,22 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
               </div>
             ))}
 
-            <Button
-              variant="contained"
-              size="small"
-              onClick={handleQuickCreate}
-              sx={{
-                textTransform: "none",
-                borderRadius: "8px",
-                fontWeight: 600,
-                boxShadow: "none",
-                "&:hover": { boxShadow: "none" },
-              }}
-            >
-              Create Booking
-            </Button>
+            {!readOnly && (
+              <Button
+                variant="contained"
+                size="small"
+                onClick={handleQuickCreate}
+                sx={{
+                  textTransform: "none",
+                  borderRadius: "8px",
+                  fontWeight: 600,
+                  boxShadow: "none",
+                  "&:hover": { boxShadow: "none" },
+                }}
+              >
+                Create Booking
+              </Button>
+            )}
           </div>
         </div>
       </TimelineToolbar>
@@ -368,18 +379,20 @@ const RoomTimeline: React.FC<RoomTimelineProps> = ({
         ))}
       </TimelineScrollArea>
 
-      <BookingModal
-        bookingForm={bookingForm}
-        bookingError={bookingError}
-        rooms={rooms}
-        roomTypes={roomTypes}
-        schedules={schedules}
-        onClose={closeBookingForm}
-        onSubmit={handleCreateBooking}
-        onFormChange={setBookingForm}
-        onTypeChange={updateBookingType}
-        onStartDateChange={updateStartDate}
-      />
+      {!readOnly && (
+        <BookingModal
+          bookingForm={bookingForm}
+          bookingError={bookingError}
+          rooms={rooms}
+          roomTypes={roomTypes}
+          schedules={schedules}
+          onClose={closeBookingForm}
+          onSubmit={handleCreateBooking}
+          onFormChange={setBookingForm}
+          onTypeChange={updateBookingType}
+          onStartDateChange={updateStartDate}
+        />
+      )}
     </TimelineContainer>
   );
 };

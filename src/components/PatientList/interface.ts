@@ -12,4 +12,6 @@ export interface Patient {
 
 export interface PatientListProps {
   patients: Patient[];
+  basePath?: string;
+  showRegisterAction?: boolean;
 }

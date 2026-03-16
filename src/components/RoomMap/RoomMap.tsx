@@ -32,6 +32,7 @@ const RoomMap: React.FC<RoomMapProps> = ({
   roomTypes,
   onRoomClick,
   onAddRoom,
+  readOnly = false,
 }) => {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -104,27 +105,29 @@ const RoomMap: React.FC<RoomMapProps> = ({
             </LegendItem>
           ))}
         </StatusLegend>
-        <Button
-          variant="contained"
-          startIcon={<AddRoundedIcon />}
-          onClick={onAddRoom}
-          sx={{
-            background: "linear-gradient(135deg, #4D95B4 0%, #226E8E 100%) !important",
-            color: "#FFFFFF !important",
-            textTransform: "none",
-            borderRadius: "12px",
-            fontWeight: 600,
-            fontSize: "0.8rem",
-            px: 2.5,
-            boxShadow: "none !important",
-            "&:hover": {
-              background: "linear-gradient(135deg, #4588A6 0%, #1F6785 100%) !important",
+        {!readOnly && onAddRoom && (
+          <Button
+            variant="contained"
+            startIcon={<AddRoundedIcon />}
+            onClick={onAddRoom}
+            sx={{
+              background: "linear-gradient(135deg, #4D95B4 0%, #226E8E 100%) !important",
+              color: "#FFFFFF !important",
+              textTransform: "none",
+              borderRadius: "12px",
+              fontWeight: 600,
+              fontSize: "0.8rem",
+              px: 2.5,
               boxShadow: "none !important",
-            },
-          }}
-        >
-          Add Room
-        </Button>
+              "&:hover": {
+                background: "linear-gradient(135deg, #4588A6 0%, #1F6785 100%) !important",
+                boxShadow: "none !important",
+              },
+            }}
+          >
+            Add Room
+          </Button>
+        )}
       </MapToolbar>
 
       <MapFilterArea>

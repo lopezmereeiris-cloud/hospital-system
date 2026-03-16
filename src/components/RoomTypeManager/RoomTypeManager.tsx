@@ -22,7 +22,7 @@ import {
   SmallButton,
 } from "./elements";
 
-const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
+const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes, readOnly = false }) => {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({
     key: "",
@@ -44,12 +44,14 @@ const RoomTypeManager: React.FC<RoomTypeManagerProps> = ({ roomTypes }) => {
         <div style={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
           Room Type Directory
         </div>
-        <SmallButton onClick={() => setShowForm(!showForm)}>
-          {showForm ? "Close Form" : "+ Create Type"}
-        </SmallButton>
+        {!readOnly && (
+          <SmallButton onClick={() => setShowForm(!showForm)}>
+            {showForm ? "Close Form" : "+ Create Type"}
+          </SmallButton>
+        )}
       </TypeManagerToolbar>
 
-      {showForm && (
+      {!readOnly && showForm && (
         <CreateTypeForm>
           <div
             style={{
