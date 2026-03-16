@@ -1,16 +1,20 @@
+// Remove the RegisterPatientModal import and useState for open
+
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { palette } from "@/theme/palette";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableHead from "@mui/material/TableHead";
 import TableContainer from "@mui/material/TableContainer";
 import Chip from "@mui/material/Chip";
-import Button from "@mui/material/Button";
-import RegisterPatientModal from "./RegisterPatientModal";
+import PersonAddRoundedIcon from "@mui/icons-material/PersonAddRounded";
+import { alpha } from "@mui/material/styles";
 import PatientDetailModal from "@/components/PatientModal/PatientDetailModal";
 import { Patient, PatientListProps } from "./interface";
+import { Box } from "@mui/material";
 import {
   PatientContainer,
   StyledHeaderCell,
@@ -25,7 +29,6 @@ const statusColor: Record<string, "success" | "error" | "warning"> = {
 };
 
 const PatientList: React.FC<PatientListProps> = ({ patients }) => {
-  const [open, setOpen] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
 
@@ -50,26 +53,35 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
           Patient List
         </div>
 
-        <Button
-          variant="contained"
-          onClick={() => setOpen(true)}
-          sx={{
-            backgroundColor: "primary.main",
-            color: palette.background.paper,
-            textTransform: "none",
-            borderRadius: "10px",
-            fontWeight: 600,
-            px: 2.5,
-            py: 1,
-            boxShadow: "none",
-            "&:hover": {
-              backgroundColor: "#3A56D4",
-              boxShadow: "none",
-            },
-          }}
-        >
-          Register Patient
-        </Button>
+        <Link href="/admin/registration/register" style={{ textDecoration: "none" }}>
+          <Box
+            component="button"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              px: 2.5,
+              py: 1.2,
+              borderRadius: "10px",
+              border: "none",
+              fontWeight: 600,
+              fontSize: "0.85rem",
+              fontFamily: "inherit",
+              cursor: "pointer",
+              color: palette.background.paper,
+              background: "#4361EE",
+              transition: "all 0.2s ease",
+              "&:hover": {
+                background: "#4361EE",
+                transform: "translateY(-1px)",
+                boxShadow: `0 4px 12px ${alpha(palette.success.main, 0.3)}`,
+              },
+            }}
+          >
+            <PersonAddRoundedIcon sx={{ fontSize: 20 }} />
+            Register Patient
+          </Box>
+        </Link>
       </div>
 
       <TableContainer>
@@ -114,8 +126,6 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <RegisterPatientModal open={open} onClose={() => setOpen(false)} />
 
       <PatientDetailModal
         open={detailOpen}
