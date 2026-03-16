@@ -6,9 +6,40 @@
     "gender": "Male",
     "philhealth_number": "77-403350711-9",
     "contact_number": "09441493381",
-    "address": "La Trinidad, Benguet",
+    "email": "juan.delacruz@email.com",
+    "address": {
+      "street": "123 Asin Road",
+      "barangay": "Poblacion",
+      "city": "La Trinidad",
+      "province": "Benguet",
+      "zip_code": "2601"
+    },
     "status": "Admitted",
-    "last_visit": "2025-08-11"
+    "last_visit": "2025-08-11",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Farmer",
+    "civil_status": "Married",
+    "date_of_birth": "1983-04-15",
+    "blood_type": "O+",
+    "height": "165",
+    "weight": "68",
+    "smoking_status": "Former smoker",
+    "alcohol_use": "Occasional",
+    "allergies": "Penicillin, Shellfish",
+    "existing_conditions": "Hypertension, Diabetes Type 2",
+    "current_medications": "Amlodipine, Metformin",
+    "sss_number": "33-1234567-8",
+    "tin_number": "123-456-789-000",
+    "valid_id_type": "National ID",
+    "valid_id_number": "1234-5678-9012-3456",
+    "emergency_contacts": [
+      {
+        "name": "Maria Dela Cruz",
+        "relationship": "Spouse",
+        "contactNumber": "09171234567"
+      }
+    ]
   },
   {
     "patient_id": "P-002",
@@ -17,9 +48,40 @@
     "gender": "Female",
     "philhealth_number": "15-529267240-6",
     "contact_number": "09185594280",
-    "address": "Itogon, Benguet",
+    "email": "maria.santos@email.com",
+    "address": {
+      "street": "45 Loakan Road",
+      "barangay": "Lucnab",
+      "city": "Itogon",
+      "province": "Benguet",
+      "zip_code": "2604"
+    },
     "status": "Active",
-    "last_visit": "2025-10-05"
+    "last_visit": "2025-10-05",
+    "nationality": "Filipino",
+    "religion": "Born Again Christian",
+    "occupation": "Teacher",
+    "civil_status": "Married",
+    "date_of_birth": "1977-02-20",
+    "blood_type": "A+",
+    "height": "158",
+    "weight": "55",
+    "smoking_status": "Non-smoker",
+    "alcohol_use": "None",
+    "allergies": "Sulfa drugs, Pollen",
+    "existing_conditions": "Asthma, Thyroid Disorder",
+    "current_medications": "Montelukast, Levothyroxine",
+    "sss_number": "33-9876543-2",
+    "tin_number": "987-654-321-000",
+    "valid_id_type": "Driver's License",
+    "valid_id_number": "N01-23-456789",
+    "emergency_contacts": [
+      {
+        "name": "Roberto Santos",
+        "relationship": "Spouse",
+        "contactNumber": "09281234567"
+      }
+    ]
   },
   {
     "patient_id": "P-003",
@@ -28,9 +90,40 @@
     "gender": "Male",
     "philhealth_number": "69-339631997-5",
     "contact_number": "09293262363",
-    "address": "Itogon, Benguet",
+    "email": "",
+    "address": {
+      "street": "78 Mines View Road",
+      "barangay": "Tuding",
+      "city": "Itogon",
+      "province": "Benguet",
+      "zip_code": "2604"
+    },
     "status": "Discharged",
-    "last_visit": "2025-03-29"
+    "last_visit": "2025-03-29",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Miner",
+    "civil_status": "Married",
+    "date_of_birth": "1975-07-10",
+    "blood_type": "B+",
+    "height": "170",
+    "weight": "75",
+    "smoking_status": "Current smoker",
+    "alcohol_use": "Moderate",
+    "allergies": "None",
+    "existing_conditions": "Tuberculosis (TB), COPD",
+    "current_medications": "Cotrimoxazole, Salbutamol (inhaler)",
+    "sss_number": "33-1122334-5",
+    "tin_number": "",
+    "valid_id_type": "Voter's ID",
+    "valid_id_number": "VID-2019-0034567",
+    "emergency_contacts": [
+      {
+        "name": "Rosario Reyes",
+        "relationship": "Spouse",
+        "contactNumber": "09391234567"
+      }
+    ]
   },
   {
     "patient_id": "P-004",
@@ -39,9 +132,40 @@
     "gender": "Female",
     "philhealth_number": "53-706511560-7",
     "contact_number": "09156698849",
-    "address": "Baguio City, Benguet",
+    "email": "ana.garcia@gmail.com",
+    "address": {
+      "street": "12 Session Road",
+      "barangay": "Barangay I",
+      "city": "Baguio City",
+      "province": "Benguet",
+      "zip_code": "2600"
+    },
     "status": "Active",
-    "last_visit": "2025-07-26"
+    "last_visit": "2025-07-26",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Retired",
+    "civil_status": "Widowed",
+    "date_of_birth": "1959-11-03",
+    "blood_type": "AB+",
+    "height": "152",
+    "weight": "60",
+    "smoking_status": "Non-smoker",
+    "alcohol_use": "None",
+    "allergies": "Ibuprofen, Aspirin",
+    "existing_conditions": "Hypertension, Arthritis, Anemia",
+    "current_medications": "Amlodipine, Losartan, Ferrous Sulfate",
+    "sss_number": "33-5566778-9",
+    "tin_number": "456-789-012-000",
+    "valid_id_type": "Senior Citizen ID",
+    "valid_id_number": "SC-BGO-2020-001234",
+    "emergency_contacts": [
+      {
+        "name": "Jose Garcia Jr.",
+        "relationship": "Child",
+        "contactNumber": "09171239999"
+      }
+    ]
   },
   {
     "patient_id": "P-005",
@@ -50,9 +174,40 @@
     "gender": "Male",
     "philhealth_number": "24-779238437-3",
     "contact_number": "09678146960",
-    "address": "Baguio City, Benguet",
+    "email": "cmendoza@yahoo.com",
+    "address": {
+      "street": "56 Magsaysay Avenue",
+      "barangay": "Barangay III",
+      "city": "Baguio City",
+      "province": "Benguet",
+      "zip_code": "2600"
+    },
     "status": "Active",
-    "last_visit": "2025-03-01"
+    "last_visit": "2025-03-01",
+    "nationality": "Filipino",
+    "religion": "Iglesia ni Cristo",
+    "occupation": "Businessman",
+    "civil_status": "Married",
+    "date_of_birth": "1974-06-22",
+    "blood_type": "O-",
+    "height": "172",
+    "weight": "82",
+    "smoking_status": "Former smoker",
+    "alcohol_use": "Occasional",
+    "allergies": "None",
+    "existing_conditions": "Diabetes Type 2, Heart Disease",
+    "current_medications": "Metformin, Atorvastatin, Aspirin",
+    "sss_number": "33-7788990-1",
+    "tin_number": "321-654-987-000",
+    "valid_id_type": "Passport",
+    "valid_id_number": "P1234567A",
+    "emergency_contacts": [
+      {
+        "name": "Luz Mendoza",
+        "relationship": "Spouse",
+        "contactNumber": "09481234567"
+      }
+    ]
   },
   {
     "patient_id": "P-006",
@@ -61,9 +216,40 @@
     "gender": "Female",
     "philhealth_number": "53-879463853-8",
     "contact_number": "09167883199",
-    "address": "Baguio City, Benguet",
+    "email": "liza.ramos@email.com",
+    "address": {
+      "street": "89 Leonard Wood Road",
+      "barangay": "Barangay V",
+      "city": "Baguio City",
+      "province": "Benguet",
+      "zip_code": "2600"
+    },
     "status": "Active",
-    "last_visit": "2025-07-18"
+    "last_visit": "2025-07-18",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Nurse",
+    "civil_status": "Single",
+    "date_of_birth": "1978-09-14",
+    "blood_type": "A-",
+    "height": "160",
+    "weight": "52",
+    "smoking_status": "Non-smoker",
+    "alcohol_use": "None",
+    "allergies": "Latex, Animal dander",
+    "existing_conditions": "Anxiety, Depression",
+    "current_medications": "Sertraline, Vitamin D",
+    "sss_number": "33-2233445-6",
+    "tin_number": "654-321-098-000",
+    "valid_id_type": "UMID",
+    "valid_id_number": "0012-3456789-0",
+    "emergency_contacts": [
+      {
+        "name": "Carmen Ramos",
+        "relationship": "Parent",
+        "contactNumber": "09221234567"
+      }
+    ]
   },
   {
     "patient_id": "P-007",
@@ -72,9 +258,40 @@
     "gender": "Male",
     "philhealth_number": "59-922039404-5",
     "contact_number": "09842636644",
-    "address": "Itogon, Benguet",
+    "email": "",
+    "address": {
+      "street": "34 Kennon Road",
+      "barangay": "Virac",
+      "city": "Itogon",
+      "province": "Benguet",
+      "zip_code": "2604"
+    },
     "status": "Active",
-    "last_visit": "2025-05-04"
+    "last_visit": "2025-05-04",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Driver",
+    "civil_status": "Married",
+    "date_of_birth": "1980-12-30",
+    "blood_type": "B-",
+    "height": "168",
+    "weight": "73",
+    "smoking_status": "Current smoker",
+    "alcohol_use": "Heavy",
+    "allergies": "None",
+    "existing_conditions": "Hypertension",
+    "current_medications": "Losartan",
+    "sss_number": "33-3344556-7",
+    "tin_number": "",
+    "valid_id_type": "Driver's License",
+    "valid_id_number": "D01-80-123456",
+    "emergency_contacts": [
+      {
+        "name": "Susan Lopez",
+        "relationship": "Spouse",
+        "contactNumber": "09561234567"
+      }
+    ]
   },
   {
     "patient_id": "P-008",
@@ -83,9 +300,40 @@
     "gender": "Female",
     "philhealth_number": "60-496202736-0",
     "contact_number": "09430025391",
-    "address": "Baguio City, Benguet",
+    "email": "joy.castillo@gmail.com",
+    "address": {
+      "street": "101 Harrison Road",
+      "barangay": "Barangay VI",
+      "city": "Baguio City",
+      "province": "Benguet",
+      "zip_code": "2600"
+    },
     "status": "Discharged",
-    "last_visit": "2026-02-19"
+    "last_visit": "2026-02-19",
+    "nationality": "Filipino",
+    "religion": "Born Again Christian",
+    "occupation": "Accountant",
+    "civil_status": "Married",
+    "date_of_birth": "1969-03-08",
+    "blood_type": "O+",
+    "height": "155",
+    "weight": "63",
+    "smoking_status": "Non-smoker",
+    "alcohol_use": "None",
+    "allergies": "Iodine / Contrast dye",
+    "existing_conditions": "Kidney Disease, Hypertension",
+    "current_medications": "Amlodipine, Calcium, Vitamin D",
+    "sss_number": "33-4455667-8",
+    "tin_number": "789-012-345-000",
+    "valid_id_type": "PhilHealth ID",
+    "valid_id_number": "60-496202736-0",
+    "emergency_contacts": [
+      {
+        "name": "Ramon Castillo",
+        "relationship": "Spouse",
+        "contactNumber": "09661234567"
+      }
+    ]
   },
   {
     "patient_id": "P-009",
@@ -94,9 +342,40 @@
     "gender": "Male",
     "philhealth_number": "34-783899074-6",
     "contact_number": "09750925951",
-    "address": "Baguio City, Benguet",
+    "email": "",
+    "address": {
+      "street": "22 Outlook Drive",
+      "barangay": "Barangay II",
+      "city": "Baguio City",
+      "province": "Benguet",
+      "zip_code": "2600"
+    },
     "status": "Active",
-    "last_visit": "2025-03-12"
+    "last_visit": "2025-03-12",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Student",
+    "civil_status": "Single",
+    "date_of_birth": "2007-01-18",
+    "blood_type": "A+",
+    "height": "175",
+    "weight": "65",
+    "smoking_status": "Non-smoker",
+    "alcohol_use": "None",
+    "allergies": "Peanuts, Tree nuts",
+    "existing_conditions": "Asthma",
+    "current_medications": "Salbutamol (inhaler), Budesonide (inhaler)",
+    "sss_number": "",
+    "tin_number": "",
+    "valid_id_type": "National ID",
+    "valid_id_number": "9012-3456-7890-1234",
+    "emergency_contacts": [
+      {
+        "name": "Fidel Bautista",
+        "relationship": "Parent",
+        "contactNumber": "09171239876"
+      }
+    ]
   },
   {
     "patient_id": "P-010",
@@ -105,9 +384,40 @@
     "gender": "Female",
     "philhealth_number": "91-510756537-3",
     "contact_number": "09747297714",
-    "address": "Tuba, Benguet",
+    "email": "ella.flores@email.com",
+    "address": {
+      "street": "5 Naguilian Road",
+      "barangay": "Poblacion",
+      "city": "Tuba",
+      "province": "Benguet",
+      "zip_code": "2603"
+    },
     "status": "Discharged",
-    "last_visit": "2025-05-03"
+    "last_visit": "2025-05-03",
+    "nationality": "Filipino",
+    "religion": "Seventh-day Adventist",
+    "occupation": "Teacher",
+    "civil_status": "Married",
+    "date_of_birth": "1971-08-25",
+    "blood_type": "AB-",
+    "height": "157",
+    "weight": "58",
+    "smoking_status": "Non-smoker",
+    "alcohol_use": "None",
+    "allergies": "Sulfa drugs",
+    "existing_conditions": "Liver Disease, Anemia",
+    "current_medications": "Ferrous Sulfate, Folic Acid, Vitamin C",
+    "sss_number": "33-5566778-0",
+    "tin_number": "111-222-333-000",
+    "valid_id_type": "SSS ID",
+    "valid_id_number": "33-5566778-0",
+    "emergency_contacts": [
+      {
+        "name": "Danny Flores",
+        "relationship": "Spouse",
+        "contactNumber": "09361234567"
+      }
+    ]
   },
   {
     "patient_id": "P-011",
@@ -116,9 +426,40 @@
     "gender": "Male",
     "philhealth_number": "69-234598890-5",
     "contact_number": "09161102661",
-    "address": "La Trinidad, Benguet",
+    "email": "",
+    "address": {
+      "street": "67 Bokod Highway",
+      "barangay": "Poblacion",
+      "city": "La Trinidad",
+      "province": "Benguet",
+      "zip_code": "2601"
+    },
     "status": "Active",
-    "last_visit": "2025-03-25"
+    "last_visit": "2025-03-25",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Retired",
+    "civil_status": "Widowed",
+    "date_of_birth": "1964-05-19",
+    "blood_type": "O+",
+    "height": "166",
+    "weight": "70",
+    "smoking_status": "Former smoker",
+    "alcohol_use": "Occasional",
+    "allergies": "None",
+    "existing_conditions": "Heart Disease, Hypertension, Diabetes Type 2",
+    "current_medications": "Metoprolol, Amlodipine, Metformin, Atorvastatin",
+    "sss_number": "33-6677889-0",
+    "tin_number": "444-555-666-000",
+    "valid_id_type": "Senior Citizen ID",
+    "valid_id_number": "SC-LT-2022-005678",
+    "emergency_contacts": [
+      {
+        "name": "Nina Navarro",
+        "relationship": "Child",
+        "contactNumber": "09451234567"
+      }
+    ]
   },
   {
     "patient_id": "P-012",
@@ -127,9 +468,40 @@
     "gender": "Female",
     "philhealth_number": "75-795048695-4",
     "contact_number": "09922908814",
-    "address": "La Trinidad, Benguet",
+    "email": "mila.torres@gmail.com",
+    "address": {
+      "street": "33 Shanum Road",
+      "barangay": "Pico",
+      "city": "La Trinidad",
+      "province": "Benguet",
+      "zip_code": "2601"
+    },
     "status": "Admitted",
-    "last_visit": "2025-09-20"
+    "last_visit": "2025-09-20",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Government Employee",
+    "civil_status": "Single",
+    "date_of_birth": "1997-06-11",
+    "blood_type": "B+",
+    "height": "162",
+    "weight": "54",
+    "smoking_status": "Non-smoker",
+    "alcohol_use": "None",
+    "allergies": "Eggs, Milk / Dairy",
+    "existing_conditions": "None",
+    "current_medications": "Folic Acid, Vitamin C",
+    "sss_number": "33-7788990-2",
+    "tin_number": "777-888-999-000",
+    "valid_id_type": "UMID",
+    "valid_id_number": "0023-4567890-1",
+    "emergency_contacts": [
+      {
+        "name": "Gloria Torres",
+        "relationship": "Parent",
+        "contactNumber": "09771234567"
+      }
+    ]
   },
   {
     "patient_id": "P-013",
@@ -138,9 +510,40 @@
     "gender": "Male",
     "philhealth_number": "13-245972181-9",
     "contact_number": "09616030798",
-    "address": "Tuba, Benguet",
+    "email": "",
+    "address": {
+      "street": "14 Camp One Road",
+      "barangay": "Tabaan Norte",
+      "city": "Tuba",
+      "province": "Benguet",
+      "zip_code": "2603"
+    },
     "status": "Discharged",
-    "last_visit": "2025-09-06"
+    "last_visit": "2025-09-06",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Construction Worker",
+    "civil_status": "Married",
+    "date_of_birth": "1980-10-02",
+    "blood_type": "O+",
+    "height": "169",
+    "weight": "77",
+    "smoking_status": "Current smoker",
+    "alcohol_use": "Heavy",
+    "allergies": "None",
+    "existing_conditions": "Hypertension",
+    "current_medications": "Amlodipine",
+    "sss_number": "33-8899001-3",
+    "tin_number": "",
+    "valid_id_type": "Voter's ID",
+    "valid_id_number": "VID-2022-0078901",
+    "emergency_contacts": [
+      {
+        "name": "Nena Fernandez",
+        "relationship": "Spouse",
+        "contactNumber": "09881234567"
+      }
+    ]
   },
   {
     "patient_id": "P-014",
@@ -149,9 +552,40 @@
     "gender": "Female",
     "philhealth_number": "72-809288596-4",
     "contact_number": "09885244257",
-    "address": "Baguio City, Benguet",
+    "email": "grace.villanueva@email.com",
+    "address": {
+      "street": "77 Dominican Hill",
+      "barangay": "Barangay VII",
+      "city": "Baguio City",
+      "province": "Benguet",
+      "zip_code": "2600"
+    },
     "status": "Admitted",
-    "last_visit": "2025-05-22"
+    "last_visit": "2025-05-22",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Doctor",
+    "civil_status": "Married",
+    "date_of_birth": "1980-01-30",
+    "blood_type": "A+",
+    "height": "163",
+    "weight": "57",
+    "smoking_status": "Non-smoker",
+    "alcohol_use": "None",
+    "allergies": "Penicillin, Amoxicillin",
+    "existing_conditions": "Epilepsy / Seizures",
+    "current_medications": "Carbamazepine, Vitamin D",
+    "sss_number": "33-9900112-4",
+    "tin_number": "222-333-444-000",
+    "valid_id_type": "Passport",
+    "valid_id_number": "P9876543B",
+    "emergency_contacts": [
+      {
+        "name": "Marco Villanueva",
+        "relationship": "Spouse",
+        "contactNumber": "09991234567"
+      }
+    ]
   },
   {
     "patient_id": "P-015",
@@ -160,8 +594,39 @@
     "gender": "Male",
     "philhealth_number": "15-855360356-9",
     "contact_number": "09643110922",
-    "address": "Tuba, Benguet",
+    "email": "",
+    "address": {
+      "street": "9 Gibraltar Road",
+      "barangay": "Poblacion",
+      "city": "Tuba",
+      "province": "Benguet",
+      "zip_code": "2603"
+    },
     "status": "Admitted",
-    "last_visit": "2025-04-04"
+    "last_visit": "2025-04-04",
+    "nationality": "Filipino",
+    "religion": "Roman Catholic",
+    "occupation": "Student",
+    "civil_status": "Single",
+    "date_of_birth": "2004-02-14",
+    "blood_type": "B+",
+    "height": "178",
+    "weight": "70",
+    "smoking_status": "Non-smoker",
+    "alcohol_use": "Occasional",
+    "allergies": "None",
+    "existing_conditions": "None",
+    "current_medications": "None",
+    "sss_number": "",
+    "tin_number": "",
+    "valid_id_type": "National ID",
+    "valid_id_number": "3456-7890-1234-5678",
+    "emergency_contacts": [
+      {
+        "name": "Benigno Aquino",
+        "relationship": "Parent",
+        "contactNumber": "09111234567"
+      }
+    ]
   }
 ]
