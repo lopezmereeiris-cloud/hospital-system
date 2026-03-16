@@ -78,7 +78,14 @@ export default function PatientBillingStatement({ billing }: Props) {
 
               <BadgeRow>
                 <CoverageBadge label={billing.encounterType} />
-                <CoverageBadge label={billing.serviceType} />
+                {billing.serviceType === "Checkup + Pharmacy" ? (
+                  <>
+                    <CoverageBadge label="Checkup" />
+                    <CoverageBadge label="Pharmacy" />
+                  </>
+                ) : (
+                  <CoverageBadge label={billing.serviceType} />
+                )}
                 <StatusBadge status={billing.status}>{billing.status}</StatusBadge>
               </BadgeRow>
             </div>

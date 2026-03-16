@@ -16,8 +16,6 @@ interface ConfirmationStepProps {
   appointmentType: string;
   reason: string;
   notes: string;
-  verificationIdType: string;
-  verificationIdNumber: string;
 }
 
 const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
@@ -28,8 +26,6 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
   appointmentType,
   reason,
   notes,
-  verificationIdType,
-  verificationIdNumber,
 }) => (
   <Box>
     <Box sx={{ textAlign: "center", mb: 3 }}>
@@ -56,10 +52,6 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
         { label: "Time", value: selectedTimeLabel || selectedTime },
         { label: "Type", value: appointmentType },
         { label: "Reason", value: reason },
-        {
-          label: "Verification ID",
-          value: `${verificationIdType} - ${verificationIdNumber.trim().toUpperCase() || ""}`,
-        },
       ].map((item) => (
         <Box
           key={item.label}
@@ -118,8 +110,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
     )}
 
     <Alert severity="info" sx={{ mt: 2, borderRadius: "10px" }}>
-      After submission, this request remains pending while admin validates schedule availability and
-      your ID details.
+      After submission, this request remains pending while admin validates schedule availability.
     </Alert>
   </Box>
 );

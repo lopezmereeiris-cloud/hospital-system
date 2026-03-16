@@ -134,9 +134,9 @@ const YakapRegistrationForm: React.FC<YakapRegistrationFormProps> = ({ onSubmit 
       case 0:
         return !!(form.firstName && form.lastName && form.dateOfBirth && form.gender && form.civilStatus);
       case 1:
-        return !!(form.contactNumber && form.street && form.barangay && form.city && form.province && form.zipCode);
+        return !!(form.contactNumber && form.email && form.street && form.barangay && form.city && form.province && form.zipCode);
       case 2:
-        return !!(form.philhealthNumber && form.validIdType && form.validIdNumber);
+        return !!form.philhealthNumber;
       case 3:
         return (
           form.emergencyContacts.length >= 2 &&

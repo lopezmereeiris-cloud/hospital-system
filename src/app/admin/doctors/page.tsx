@@ -1,14 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import EventBusyRoundedIcon from "@mui/icons-material/EventBusyRounded";
 import WorkspacesRoundedIcon from "@mui/icons-material/WorkspacesRounded";
+import BusinessRoundedIcon from "@mui/icons-material/BusinessRounded";
 import DashboardCard from "@/components/DashboardCard";
 import DoctorCards from "@/components/DoctorCard";
 import DoctorDetailModal from "@/components/DoctorDetailModal";
+import DepartmentPanel from "@/components/DepartmentPanel";
+import PremiumFilter from "@/components/PremiumFilter";
 import { Doctor } from "@/components/DoctorCard/interface";
 import { ScheduleBlock } from "@/components/DoctorSchedule";
 import doctorsData from "@/json/doctors.json";
@@ -16,20 +20,28 @@ import doctorSchedulesData from "@/json/doctorSchedules.json";
 import { palette } from "@/theme/palette";
 
 const scheduleMap = doctorSchedulesData as Record<string, ScheduleBlock[]>;
+type Tab = "doctors" | "departments";
 
 export default function DoctorsPage() {
   const doctors = doctorsData as Doctor[];
   const active = doctors.filter((d) => d.status === "Active").length;
   const onLeave = doctors.filter((d) => d.status === "On Leave").length;
   const specializations = new Set(doctors.map((d) => d.specialization)).size;
+  const departmentCount = new Set(doctors.map((d) => d.department)).size;
 
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [tab, setTab] = useState<Tab>("doctors");
 
   const handleDoctorClick = (doctor: Doctor) => {
     setSelectedDoctor(doctor);
     setModalOpen(true);
   };
+
+  const tabOptions: { value: Tab; label: string; count?: number }[] = [
+    { value: "doctors", label: "Doctors", count: doctors.length },
+    { value: "departments", label: "Departments", count: departmentCount },
+  ];
 
   return (
     <div>
@@ -60,15 +72,33 @@ export default function DoctorsPage() {
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
           <DashboardCard
-            title="Specializations"
-            value={specializations}
-            icon={<WorkspacesRoundedIcon />}
+            title="Departments"
+            value={departmentCount}
+            icon={<BusinessRoundedIcon />}
             color="#7C3AED"
           />
         </Grid>
       </Grid>
 
-      <DoctorCards doctors={doctors} onDoctorClick={handleDoctorClick} />
+      <Box
+        sx={{
+          mb: 3,
+          p: 0.5,
+          backgroundColor: palette.grey[100],
+          borderRadius: "12px",
+          display: "inline-flex",
+        }}
+      >
+        <PremiumFilter options={tabOptions} active={tab} onChange={setTab} />
+      </Box>
+
+      {tab === "doctors" && (
+        <DoctorCards doctors={doctors} onDoctorClick={handleDoctorClick} />
+      )}
+
+      {tab === "departments" && (
+        <DepartmentPanel doctors={doctors} />
+      )}
 
       <DoctorDetailModal
         open={modalOpen}

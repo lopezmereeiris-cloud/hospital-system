@@ -24,8 +24,6 @@ import ConfirmationStep from "./steps/ConfirmationStep";
 const doctors = doctorsData as Doctor[];
 const schedules = schedulesData as Record<string, Schedule[]>;
 
-const isValidIdNumber = (idNumber: string) => /^[A-Za-z0-9-]{6,20}$/.test(idNumber.trim());
-
 const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
   open,
   onClose,
@@ -40,8 +38,6 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
   const [appointmentType, setAppointmentType] = useState("Consultation");
   const [reason, setReason] = useState("");
   const [notes, setNotes] = useState("");
-  const [verificationIdType, setVerificationIdType] = useState("");
-  const [verificationIdNumber, setVerificationIdNumber] = useState("");
 
   const departments = useMemo(
     () => [...new Set(doctors.filter((d) => d.status === "Active").map((d) => d.department))],
@@ -76,8 +72,6 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
     setAppointmentType("Consultation");
     setReason("");
     setNotes("");
-    setVerificationIdType("");
-    setVerificationIdNumber("");
   };
 
   const handleClose = () => {
@@ -95,8 +89,6 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
         type: appointmentType,
         reason,
         notes,
-        verificationIdType,
-        verificationIdNumber: verificationIdNumber.trim().toUpperCase(),
       });
       handleClose();
       return;
@@ -113,7 +105,7 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
       case 1:
         return selectedDate !== "" && selectedTime !== "";
       case 2:
-        return reason.trim() !== "" && verificationIdType !== "" && isValidIdNumber(verificationIdNumber);
+        return reason.trim() !== "";
       case 3:
         return true;
       default:
@@ -143,7 +135,7 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
               Request Appointment
             </Typography>
             <Typography sx={{ fontSize: "0.88rem", color: "text.secondary", mt: 0.5 }}>
-              Complete all steps and submit a valid ID for request verification.
+              Complete all steps to submit your appointment request.
             </Typography>
           </div>
           <IconButton onClick={handleClose} size="small">
@@ -152,8 +144,7 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
         </Box>
 
         <Alert severity="info" sx={{ mb: 2.5, borderRadius: "10px" }}>
-          Requests are placed in <strong>Pending</strong> until admin confirms your schedule and
-          verifies your submitted ID.
+          Requests are placed in <strong>Pending</strong> until admin confirms your schedule.
         </Alert>
 
         <Stepper
@@ -211,13 +202,9 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
             appointmentType={appointmentType}
             reason={reason}
             notes={notes}
-            verificationIdType={verificationIdType}
-            verificationIdNumber={verificationIdNumber}
             onAppointmentTypeChange={setAppointmentType}
             onReasonChange={setReason}
             onNotesChange={setNotes}
-            onIdTypeChange={setVerificationIdType}
-            onIdNumberChange={setVerificationIdNumber}
           />
         )}
 
@@ -230,8 +217,6 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
             appointmentType={appointmentType}
             reason={reason}
             notes={notes}
-            verificationIdType={verificationIdType}
-            verificationIdNumber={verificationIdNumber}
           />
         )}
 

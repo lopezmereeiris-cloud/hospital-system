@@ -317,7 +317,14 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
                         <SubtleText>{record.roomLabel}</SubtleText>
                       </StyledBodyCell>
                       <StyledBodyCell>
-                        <CoverageBadge>{record.serviceType}</CoverageBadge>
+                        {record.serviceType === "Checkup + Pharmacy" ? (
+                          <>
+                            <CoverageBadge>Checkup</CoverageBadge>{" "}
+                            <CoverageBadge>Pharmacy</CoverageBadge>
+                          </>
+                        ) : (
+                          <CoverageBadge>{record.serviceType}</CoverageBadge>
+                        )}
                         <BadgeRow>
                           <CoverageBadge>{record.patientType}</CoverageBadge>
                         </BadgeRow>
@@ -378,7 +385,14 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
                   </PatientMeta>
                   <BadgeRow>
                     <CoverageBadge>{selectedRecord.encounterType}</CoverageBadge>
-                    <CoverageBadge>{selectedRecord.serviceType}</CoverageBadge>
+                    {selectedRecord.serviceType === "Checkup + Pharmacy" ? (
+                      <>
+                        <CoverageBadge>Checkup</CoverageBadge>
+                        <CoverageBadge>Pharmacy</CoverageBadge>
+                      </>
+                    ) : (
+                      <CoverageBadge>{selectedRecord.serviceType}</CoverageBadge>
+                    )}
                     {selectedRecord.yakapDeduction > 0 && (
                       <CoverageBadge active>{selectedRecord.yakapMatchLabel || "YAKAP"}</CoverageBadge>
                     )}

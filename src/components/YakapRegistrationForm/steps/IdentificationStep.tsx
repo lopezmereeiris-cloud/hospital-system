@@ -40,7 +40,7 @@ const IdentificationStep: React.FC<IdentificationStepProps> = ({
 
     <FieldRow>
       <div>
-        <FieldLabel>Valid ID Type *</FieldLabel>
+        <FieldLabel>Valid ID Type</FieldLabel>
         <FieldSelect value={form.validIdType} onChange={(e) => onUpdate("validIdType", e.target.value)}>
           <option value="">Select ID Type...</option>
           <option value="PhilHealth ID">PhilHealth ID</option>
@@ -57,7 +57,7 @@ const IdentificationStep: React.FC<IdentificationStepProps> = ({
         </FieldSelect>
       </div>
       <div>
-        <FieldLabel>Valid ID Number *</FieldLabel>
+        <FieldLabel>Valid ID Number</FieldLabel>
         <FieldInput
           placeholder="Enter ID number"
           value={form.validIdNumber}

@@ -190,8 +190,6 @@ export default function ClientAppointmentsPage() {
     type: string;
     reason: string;
     notes: string;
-    verificationIdType: string;
-    verificationIdNumber: string;
   }) => {
     const newAppt: Appointment = {
       id: appointments.length + 1,
@@ -211,8 +209,6 @@ export default function ClientAppointmentsPage() {
       ]
         .filter(Boolean)
         .join(" "),
-      verificationIdType: data.verificationIdType,
-      verificationIdNumber: data.verificationIdNumber,
     };
 
     setAppointments((prev) => [...prev, newAppt]);

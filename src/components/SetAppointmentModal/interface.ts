@@ -28,15 +28,13 @@ export interface SetAppointmentModalProps {
     type: string;
     reason: string;
     notes: string;
-    verificationIdType: string;
-    verificationIdNumber: string;
   }) => void;
 }
 
 export const STEPS = [
   "Select Doctor",
   "Choose Date & Time",
-  "Details & Verification",
+  "Appointment Details",
   "Confirmation",
 ];
 
