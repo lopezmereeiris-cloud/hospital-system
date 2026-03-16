@@ -7,6 +7,7 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TablePagination from "@mui/material/TablePagination";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
@@ -85,6 +86,8 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
   const [programFilter, setProgramFilter] = useState<ProgramFilter>("all");
   const [serviceFilter, setServiceFilter] = useState<ServiceFilter>("all");
   const [selectedBillId, setSelectedBillId] = useState<string | null>(null);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const records = useMemo(() => {
     const today = new Date();
@@ -130,6 +133,7 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
   }, [records]);
 
   const filteredRecords = useMemo(() => {
+    setPage(0);
     const normalizedSearch = search.trim().toLowerCase();
     return records.filter((record) => {
       const matchesSearch =
@@ -157,6 +161,11 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
       return matchesSearch && matchesStatus && matchesProgram && matchesService;
     });
   }, [programFilter, records, search, serviceFilter, statusFilter]);
+
+  const pagedRecords = useMemo(
+    () => filteredRecords.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    [filteredRecords, page, rowsPerPage]
+  );
 
   const selectedRecord = useMemo(() => {
     const direct = filteredRecords.find((record) => record.billId === selectedBillId);
@@ -296,9 +305,10 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
                     </TableRow>
                   )}
 
-                  {filteredRecords.map((record) => (
+                  {pagedRecords.map((record) => (
                     <StyledRow
                       key={record.billId}
+                      onClick={() => setSelectedBillId(record.billId)}
                       sx={{
                         backgroundColor:
                           selectedRecord?.billId === record.billId
@@ -307,7 +317,7 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
                       }}
                     >
                       <StyledBodyCell>
-                        <BillIdButton onClick={() => setSelectedBillId(record.billId)}>
+                        <BillIdButton>
                           {record.billId}
                         </BillIdButton>
                         <SubtleText>{formatDate(record.serviceDate)}</SubtleText>
@@ -355,6 +365,25 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
               </Table>
             </TableContainer>
           </TableWrap>
+          <TablePagination
+            component="div"
+            count={filteredRecords.length}
+            page={page}
+            onPageChange={(_, newPage) => setPage(newPage)}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={(e) => {
+              setRowsPerPage(parseInt(e.target.value, 10));
+              setPage(0);
+            }}
+            rowsPerPageOptions={[5, 10, 25, 50]}
+            sx={{
+              borderTop: "1px solid #F3F4F6",
+              fontSize: "0.78rem",
+              ".MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows": {
+                fontSize: "0.78rem",
+              },
+            }}
+          />
         </PanelCard>
 
         <PanelCard>

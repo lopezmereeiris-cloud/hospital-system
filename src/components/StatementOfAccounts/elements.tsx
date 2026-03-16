@@ -97,9 +97,10 @@ export const StyledBodyCell = styled(TableCell)(({ theme }) => ({
 }));
 
 export const StyledRow = styled(TableRow)(({ theme }) => ({
+  cursor: "pointer",
   transition: "background-color 0.18s ease",
   "&:hover": {
-    backgroundColor: alpha(theme.palette.primary.main, 0.03),
+    backgroundColor: alpha(theme.palette.primary.main, 0.06),
   },
   "&:last-child td": {
     borderBottom: 0,

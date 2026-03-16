@@ -3,17 +3,21 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import EventBusyRoundedIcon from "@mui/icons-material/EventBusyRounded";
 import WorkspacesRoundedIcon from "@mui/icons-material/WorkspacesRounded";
 import BusinessRoundedIcon from "@mui/icons-material/BusinessRounded";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import DashboardCard from "@/components/DashboardCard";
 import DoctorCards from "@/components/DoctorCard";
 import DoctorDetailModal from "@/components/DoctorDetailModal";
+import AddDoctorModal from "@/components/AddDoctorModal";
 import DepartmentPanel from "@/components/DepartmentPanel";
 import PremiumFilter from "@/components/PremiumFilter";
 import { Doctor } from "@/components/DoctorCard/interface";
+import { AddDoctorFormData } from "@/components/AddDoctorModal/interface";
 import { ScheduleBlock } from "@/components/DoctorSchedule";
 import doctorsData from "@/json/doctors.json";
 import doctorSchedulesData from "@/json/doctorSchedules.json";
@@ -31,7 +35,15 @@ export default function DoctorsPage() {
 
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
   const [tab, setTab] = useState<Tab>("doctors");
+
+  const allDepartments = Array.from(new Set(doctors.map((d) => d.department)));
+
+  const handleAddDoctor = (data: AddDoctorFormData) => {
+    // In a real app this would call an API
+    console.log("New doctor added:", data);
+  };
 
   const handleDoctorClick = (doctor: Doctor) => {
     setSelectedDoctor(doctor);
@@ -83,13 +95,39 @@ export default function DoctorsPage() {
       <Box
         sx={{
           mb: 3,
-          p: 0.5,
-          backgroundColor: palette.grey[100],
-          borderRadius: "12px",
-          display: "inline-flex",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 1.5,
         }}
       >
-        <PremiumFilter options={tabOptions} active={tab} onChange={setTab} />
+        <Box
+          sx={{
+            p: 0.5,
+            backgroundColor: palette.grey[100],
+            borderRadius: "12px",
+            display: "inline-flex",
+          }}
+        >
+          <PremiumFilter options={tabOptions} active={tab} onChange={setTab} />
+        </Box>
+        <Button
+          variant="contained"
+          startIcon={<AddRoundedIcon />}
+          onClick={() => setAddModalOpen(true)}
+          sx={{
+            textTransform: "none",
+            borderRadius: "10px",
+            fontWeight: 600,
+            px: 2.5,
+            py: 1,
+            boxShadow: "none",
+            "&:hover": { boxShadow: "none" },
+          }}
+        >
+          Add Doctor
+        </Button>
       </Box>
 
       {tab === "doctors" && (
@@ -105,6 +143,13 @@ export default function DoctorsPage() {
         onClose={() => setModalOpen(false)}
         doctor={selectedDoctor}
         schedule={selectedDoctor ? scheduleMap[selectedDoctor.doctorId] || [] : []}
+      />
+
+      <AddDoctorModal
+        open={addModalOpen}
+        onClose={() => setAddModalOpen(false)}
+        onAdd={handleAddDoctor}
+        departments={allDepartments}
       />
     </div>
   );

@@ -33,7 +33,7 @@ const ContactAddressStep: React.FC<ContactAddressStepProps> = ({ form, onUpdate 
 
     <FieldRow>
       <div style={{ gridColumn: "1 / -1" }}>
-        <FieldLabel>Street Address *</FieldLabel>
+        <FieldLabel>Street Address</FieldLabel>
         <FieldInput
           placeholder="e.g. 123 Rizal Street"
           value={form.street}
@@ -44,7 +44,7 @@ const ContactAddressStep: React.FC<ContactAddressStepProps> = ({ form, onUpdate 
 
     <FieldRow>
       <div>
-        <FieldLabel>Barangay *</FieldLabel>
+        <FieldLabel>Barangay</FieldLabel>
         <FieldInput
           placeholder="e.g. Brgy. San Antonio"
           value={form.barangay}
@@ -52,7 +52,7 @@ const ContactAddressStep: React.FC<ContactAddressStepProps> = ({ form, onUpdate 
         />
       </div>
       <div>
-        <FieldLabel>City / Municipality *</FieldLabel>
+        <FieldLabel>City / Municipality</FieldLabel>
         <FieldInput
           placeholder="e.g. Quezon City"
           value={form.city}
@@ -63,7 +63,7 @@ const ContactAddressStep: React.FC<ContactAddressStepProps> = ({ form, onUpdate 
 
     <FieldRow>
       <div>
-        <FieldLabel>Province *</FieldLabel>
+        <FieldLabel>Province</FieldLabel>
         <FieldInput
           placeholder="e.g. Metro Manila"
           value={form.province}
@@ -71,7 +71,7 @@ const ContactAddressStep: React.FC<ContactAddressStepProps> = ({ form, onUpdate 
         />
       </div>
       <div>
-        <FieldLabel>Zip Code *</FieldLabel>
+        <FieldLabel>Zip Code</FieldLabel>
         <FieldInput
           placeholder="e.g. 1100"
           value={form.zipCode}
