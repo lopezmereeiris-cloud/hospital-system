@@ -25,6 +25,10 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import CloseIcon from "@mui/icons-material/Close";
 import ViewColumnOutlinedIcon from "@mui/icons-material/ViewColumnOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import Tooltip from "@mui/material/Tooltip";
+import { alpha } from "@mui/material/styles";
 
 import { palette } from "@/theme/palette";
 // Column definitions for filtering
@@ -92,7 +96,7 @@ const filterOptions: { value: FilterType; label: string }[] = [
   { value: "overstock", label: "Overstock" },
 ];
 
-const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
+const InventoryTable: React.FC<InventoryTableProps> = ({ medicines, onEdit, onView }) => {
   const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
   const paramFilter = searchParams?.get("filter") as FilterType | null;
   const [filter, setFilter] = useState<FilterType>(paramFilter || "all");
@@ -335,13 +339,26 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
         </Dialog>
       </InventoryToolbar>
 
-      <TableContainer sx={{ maxHeight: 600, overflowX: "auto" }}>
+      <TableContainer sx={{ maxHeight: 600, overflowX: "auto", overflowY: "auto" }}>
         <Table stickyHeader size="small">
           <TableHead>
             <StyledRow>
               {COLUMN_OPTIONS.filter(col => selectedColumns.includes(col.key)).map(col => (
                 <StyledHeaderCell key={col.key}>{col.label}</StyledHeaderCell>
               ))}
+              <StyledHeaderCell
+                sx={{
+                  textAlign: "center",
+                  position: "sticky",
+                  right: 0,
+                  zIndex: 3,
+                  bgcolor: "background.default",
+                  boxShadow: "-2px 0 6px rgba(16,24,40,0.06)",
+                  minWidth: 90,
+                }}
+              >
+                Actions
+              </StyledHeaderCell>
             </StyledRow>
           </TableHead>
           <TableBody>
@@ -380,6 +397,49 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
                       default: return null;
                     }
                   })}
+                  <StyledBodyCell key="actions" sx={{
+                    textAlign: "center",
+                    whiteSpace: "nowrap",
+                    position: "sticky",
+                    right: 0,
+                    zIndex: 1,
+                    bgcolor: "background.paper",
+                    boxShadow: "-2px 0 6px rgba(16,24,40,0.06)",
+                  }}>
+                    <Tooltip title="View details" arrow>
+                      <IconButton
+                        size="small"
+                        onClick={() => onView?.(med)}
+                        sx={{
+                          color: "grey.400",
+                          border: `1px solid ${palette.grey[200]}`,
+                          borderRadius: "6px",
+                          width: 28,
+                          height: 28,
+                          mr: 0.5,
+                          "&:hover": { color: palette.primary.main, borderColor: palette.primary.main, bgcolor: alpha(palette.primary.main, 0.06) },
+                        }}
+                      >
+                        <VisibilityOutlinedIcon sx={{ fontSize: 15 }} />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit" arrow>
+                      <IconButton
+                        size="small"
+                        onClick={() => onEdit?.(med)}
+                        sx={{
+                          color: "grey.400",
+                          border: `1px solid ${palette.grey[200]}`,
+                          borderRadius: "6px",
+                          width: 28,
+                          height: 28,
+                          "&:hover": { color: palette.primary.main, borderColor: palette.primary.main, bgcolor: alpha(palette.primary.main, 0.06) },
+                        }}
+                      >
+                        <EditOutlinedIcon sx={{ fontSize: 15 }} />
+                      </IconButton>
+                    </Tooltip>
+                  </StyledBodyCell>
                 </StyledRow>
               );
             })}

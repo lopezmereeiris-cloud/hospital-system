@@ -16,6 +16,8 @@ import { palette } from "@/theme/palette";
 
 interface SupplyCardProps {
   item: SupplyItem;
+  onEdit?: () => void;
+  onView?: () => void;
 }
 
 type AlertInfo = {
@@ -37,7 +39,7 @@ function getAlert(item: SupplyItem): AlertInfo {
   return { label: "Normal", color: "success", bg: "#ECFDF3", fg: palette.success.main };
 }
 
-const SupplyCard: React.FC<SupplyCardProps> = ({ item }) => {
+const SupplyCard: React.FC<SupplyCardProps> = ({ item, onEdit, onView }) => {
   const stockPct = Math.min(
     item.maximumStockLevel > 0
       ? Math.round((item.quantityOnHand / item.maximumStockLevel) * 100)
@@ -177,6 +179,7 @@ const SupplyCard: React.FC<SupplyCardProps> = ({ item }) => {
           <Tooltip title="View details" arrow>
             <IconButton
               size="small"
+              onClick={onView}
               sx={{
                 color: "grey.400",
                 borderRadius: "6px",
@@ -192,6 +195,7 @@ const SupplyCard: React.FC<SupplyCardProps> = ({ item }) => {
           <Tooltip title="Edit" arrow>
             <IconButton
               size="small"
+              onClick={onEdit}
               sx={{
                 color: "grey.400",
                 borderRadius: "6px",

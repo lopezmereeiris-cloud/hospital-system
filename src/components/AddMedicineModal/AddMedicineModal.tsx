@@ -24,6 +24,9 @@ interface AddMedicineModalProps {
   open: boolean;
   onClose: () => void;
   onAdd: (medicine: Medicine) => void;
+  editMedicine?: Medicine | null;
+  onEdit?: (medicine: Medicine) => void;
+  mode?: "add" | "edit" | "view";
 }
 
 const initialForm = {
@@ -77,8 +80,32 @@ const fieldSx = {
   "& .MuiInputLabel-root": { fontSize: 13.5 },
 };
 
-const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAdd }) => {
+const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAdd, editMedicine, onEdit, mode = "add" }) => {
   const [form, setForm] = useState(initialForm);
+
+  const isView = mode === "view";
+  const isEdit = mode === "edit" || !!editMedicine;
+
+  React.useEffect(() => {
+    if (editMedicine) {
+      setForm({
+        genericName: editMedicine.genericName,
+        brandNames: editMedicine.brandNames.join(", "),
+        manufacturer: editMedicine.manufacturer,
+        dosageForm: editMedicine.dosageForm,
+        strength: editMedicine.strength,
+        therapeuticCategory: editMedicine.therapeuticCategory,
+        drugCategory: editMedicine.drugCategory,
+        batchNumber: editMedicine.batchNumber,
+        quantityOnHand: String(editMedicine.quantityOnHand),
+        unitCost: String(editMedicine.unitCost),
+        expiryDate: editMedicine.expiryDate,
+        storageLocation: editMedicine.storageLocation,
+      });
+    } else {
+      setForm(initialForm);
+    }
+  }, [editMedicine, open]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -134,7 +161,28 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
       recalledFlag: false,
       overstockFlag: false,
     };
-    onAdd(newMedicine);
+    if (isEdit && editMedicine && onEdit) {
+      const updated: Medicine = {
+        ...editMedicine,
+        genericName: form.genericName,
+        brandNames: form.brandNames ? form.brandNames.split(",").map((b) => b.trim()) : [],
+        manufacturer: form.manufacturer,
+        dosageForm: form.dosageForm,
+        strength: form.strength,
+        therapeuticCategory: form.therapeuticCategory,
+        drugCategory: form.drugCategory,
+        batchNumber: form.batchNumber,
+        quantityOnHand: qty,
+        unitCost: cost,
+        totalValue: cost * qty,
+        expiryDate: form.expiryDate,
+        storageLocation: form.storageLocation,
+        lastUpdatedDate: new Date().toISOString().split("T")[0],
+      };
+      onEdit(updated);
+    } else {
+      onAdd(newMedicine);
+    }
     setForm(initialForm);
     onClose();
   };
@@ -182,10 +230,10 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
           </Box>
           <Box>
             <Typography sx={{ fontSize: 17, fontWeight: 700, color: "grey.900", lineHeight: 1.2 }}>
-              Add New Medicine
+              {isView ? "Medicine Details" : isEdit ? "Edit Medicine" : "Add New Medicine"}
             </Typography>
             <Typography sx={{ fontSize: 12.5, color: "grey.500", mt: 0.25 }}>
-              Fill in the details to add medicine to inventory
+              {isView ? "Read-only view of medicine information" : isEdit ? "Update the medicine details" : "Fill in the details to add medicine to inventory"}
             </Typography>
           </Box>
         </Box>
@@ -214,7 +262,8 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.genericName}
               onChange={handleChange}
               fullWidth
-              required
+              required={!isView}
+              disabled={isView}
               placeholder="e.g. Amoxicillin"
               sx={fieldSx}
             />
@@ -226,6 +275,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.brandNames}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. Amoxil, Moxilin (comma separated)"
               sx={fieldSx}
             />
@@ -237,6 +287,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.manufacturer}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. GlaxoSmithKline Philippines"
               sx={fieldSx}
             />
@@ -248,6 +299,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.dosageForm}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. Capsule"
               sx={fieldSx}
             />
@@ -259,6 +311,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.strength}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. 500mg"
               sx={fieldSx}
             />
@@ -277,6 +330,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.therapeuticCategory}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. Antibiotic"
               sx={fieldSx}
             />
@@ -288,6 +342,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.drugCategory}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. Prescription"
               sx={fieldSx}
             />
@@ -306,6 +361,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.batchNumber}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. BATCH-AMX-2025"
               sx={fieldSx}
             />
@@ -317,6 +373,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.storageLocation}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. Shelf A-1"
               sx={fieldSx}
             />
@@ -330,6 +387,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               type="date"
               InputLabelProps={{ shrink: true }}
               fullWidth
+              disabled={isView}
               sx={fieldSx}
             />
           </Grid>
@@ -341,6 +399,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               onChange={handleChange}
               type="number"
               fullWidth
+              disabled={isView}
               placeholder="0"
               sx={fieldSx}
             />
@@ -353,6 +412,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               onChange={handleChange}
               type="number"
               fullWidth
+              disabled={isView}
               placeholder="0.00"
               InputProps={{
                 startAdornment: <InputAdornment position="start">₱</InputAdornment>,
@@ -387,26 +447,28 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
             "&:hover": { borderColor: "grey.400", bgcolor: palette.grey[50] },
           }}
         >
-          Cancel
+          {isView ? "Close" : "Cancel"}
         </Button>
-        <Button
-          onClick={handleAdd}
-          variant="contained"
-          disabled={!form.genericName}
-          sx={{
-            borderRadius: "10px",
-            textTransform: "none",
-            fontWeight: 700,
-            fontSize: 14,
-            bgcolor: palette.primary.main,
-            px: 3,
-            boxShadow: "none",
-            "&:hover": { bgcolor: "#3451d1", boxShadow: "none" },
-            "&.Mui-disabled": { bgcolor: palette.grey[200], color: "grey.400" },
-          }}
-        >
-          Add Medicine
-        </Button>
+        {!isView && (
+          <Button
+            onClick={handleAdd}
+            variant="contained"
+            disabled={!form.genericName}
+            sx={{
+              borderRadius: "10px",
+              textTransform: "none",
+              fontWeight: 700,
+              fontSize: 14,
+              bgcolor: palette.primary.main,
+              px: 3,
+              boxShadow: "none",
+              "&:hover": { bgcolor: "#3451d1", boxShadow: "none" },
+              "&.Mui-disabled": { bgcolor: palette.grey[200], color: "grey.400" },
+            }}
+          >
+            {isEdit ? "Save Changes" : "Add Medicine"}
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

@@ -40,6 +40,9 @@ export default function InventoryPage() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [selectedMedicine, setSelectedMedicine] = useState<Medicine | null>(null);
 
   const filteredMeds = medicines.filter((m) => {
     const q = search.toLowerCase();
@@ -64,6 +67,27 @@ export default function InventoryPage() {
 
   const handleAddMedicine = (medicine: Medicine) => {
     setMedicines((prev) => [...prev, medicine]);
+  };
+
+  const handleEditMedicine = (updated: Medicine) => {
+    setMedicines((prev) => prev.map((m) => m.id === updated.id ? updated : m));
+  };
+
+  const handleOpenEdit = (medicine: Medicine) => {
+    setSelectedMedicine(medicine);
+    setEditModalOpen(true);
+  };
+
+  const handleOpenView = (medicine: Medicine) => {
+    setSelectedMedicine(medicine);
+    setViewModalOpen(true);
+  };
+
+  const handleCloseModals = () => {
+    setAddModalOpen(false);
+    setEditModalOpen(false);
+    setViewModalOpen(false);
+    setSelectedMedicine(null);
   };
 
   return (
@@ -203,7 +227,7 @@ export default function InventoryPage() {
 
       {/* ── Content ── */}
       {view === "list" ? (
-        <InventoryTable medicines={filteredMeds} />
+        <InventoryTable medicines={filteredMeds} onEdit={handleOpenEdit} onView={handleOpenView} />
       ) : filteredMeds.length === 0 ? (
         <Box
           sx={{
@@ -220,7 +244,7 @@ export default function InventoryPage() {
         <Grid container spacing={2.5}>
           {filteredMeds.map((med) => (
             <Grid key={med.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-              <MedicineCard medicine={med} />
+              <MedicineCard medicine={med} onEdit={() => handleOpenEdit(med)} onView={() => handleOpenView(med)} />
             </Grid>
           ))}
         </Grid>
@@ -229,8 +253,27 @@ export default function InventoryPage() {
       {/* Add Medicine Modal */}
       <AddMedicineModal
         open={addModalOpen}
-        onClose={() => setAddModalOpen(false)}
+        onClose={handleCloseModals}
         onAdd={handleAddMedicine}
+      />
+
+      {/* Edit Medicine Modal */}
+      <AddMedicineModal
+        open={editModalOpen}
+        onClose={handleCloseModals}
+        onAdd={handleAddMedicine}
+        editMedicine={selectedMedicine}
+        onEdit={handleEditMedicine}
+        mode="edit"
+      />
+
+      {/* View Medicine Modal */}
+      <AddMedicineModal
+        open={viewModalOpen}
+        onClose={handleCloseModals}
+        onAdd={handleAddMedicine}
+        editMedicine={selectedMedicine}
+        mode="view"
       />
     </Box>
   );

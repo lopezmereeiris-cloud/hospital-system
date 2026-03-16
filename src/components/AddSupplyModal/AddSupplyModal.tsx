@@ -23,6 +23,9 @@ interface AddSupplyModalProps {
   open: boolean;
   onClose: () => void;
   onAdd: (item: SupplyItem) => void;
+  editItem?: SupplyItem | null;
+  onEdit?: (item: SupplyItem) => void;
+  mode?: "add" | "edit" | "view";
 }
 
 const initialForm = {
@@ -83,8 +86,31 @@ const fieldSx = {
   "& .MuiInputLabel-root": { fontSize: 13.5 },
 };
 
-const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd }) => {
+const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd, editItem, onEdit, mode = "add" }) => {
   const [form, setForm] = useState(initialForm);
+
+  const isView = mode === "view";
+  const isEdit = mode === "edit" || !!editItem;
+
+  React.useEffect(() => {
+    if (editItem) {
+      setForm({
+        name: editItem.name,
+        brand: editItem.brand,
+        supplier: editItem.supplier,
+        category: editItem.category,
+        subcategory: editItem.subcategory,
+        unit: editItem.unit,
+        batchNumber: editItem.batchNumber,
+        storageLocation: editItem.storageLocation,
+        expiryDate: editItem.expiryDate,
+        quantityOnHand: String(editItem.quantityOnHand),
+        unitCost: String(editItem.unitCost),
+      });
+    } else {
+      setForm(initialForm);
+    }
+  }, [editItem, open]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -119,7 +145,27 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
       overstockFlag: false,
       notes: "",
     };
-    onAdd(newItem);
+    if (isEdit && editItem && onEdit) {
+      const updated: SupplyItem = {
+        ...editItem,
+        name: form.name,
+        brand: form.brand,
+        supplier: form.supplier,
+        category: form.category,
+        subcategory: form.subcategory,
+        unit: form.unit,
+        batchNumber: form.batchNumber,
+        storageLocation: form.storageLocation,
+        expiryDate: form.expiryDate,
+        quantityOnHand: qty,
+        unitCost: cost,
+        totalValue: cost * qty,
+        lastUpdatedDate: new Date().toISOString().split("T")[0],
+      };
+      onEdit(updated);
+    } else {
+      onAdd(newItem);
+    }
     setForm(initialForm);
     onClose();
   };
@@ -167,10 +213,10 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
           </Box>
           <Box>
             <Typography sx={{ fontSize: 17, fontWeight: 700, color: "grey.900", lineHeight: 1.2 }}>
-              Add Supply Item
+              {isView ? "Supply Item Details" : isEdit ? "Edit Supply Item" : "Add Supply Item"}
             </Typography>
             <Typography sx={{ fontSize: 12.5, color: "grey.500", mt: 0.25 }}>
-              Fill in the details to add a new item to hospital inventory
+              {isView ? "Read-only view of supply item information" : isEdit ? "Update the supply item details" : "Fill in the details to add a new item to hospital inventory"}
             </Typography>
           </Box>
         </Box>
@@ -199,7 +245,8 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               value={form.name}
               onChange={handleChange}
               fullWidth
-              required
+              required={!isView}
+              disabled={isView}
               placeholder="e.g. Surgical Face Mask (N95)"
               sx={fieldSx}
             />
@@ -211,6 +258,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               value={form.brand}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. 3M"
               sx={fieldSx}
             />
@@ -222,6 +270,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               value={form.supplier}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. MedSupply PH Inc."
               sx={fieldSx}
             />
@@ -240,6 +289,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               value={form.category}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. PPE, Equipment, Consumables"
               sx={fieldSx}
             />
@@ -251,6 +301,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               value={form.subcategory}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. Masks, Beds, IV Supplies"
               sx={fieldSx}
             />
@@ -262,6 +313,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               value={form.unit}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. pieces, boxes, sets"
               sx={fieldSx}
             />
@@ -280,6 +332,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               value={form.batchNumber}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. MASK-2026-001"
               sx={fieldSx}
             />
@@ -291,6 +344,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               value={form.storageLocation}
               onChange={handleChange}
               fullWidth
+              disabled={isView}
               placeholder="e.g. Storage Room A"
               sx={fieldSx}
             />
@@ -304,6 +358,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               type="date"
               InputLabelProps={{ shrink: true }}
               fullWidth
+              disabled={isView}
               sx={fieldSx}
             />
           </Grid>
@@ -315,6 +370,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               onChange={handleChange}
               type="number"
               fullWidth
+              disabled={isView}
               placeholder="0"
               sx={fieldSx}
             />
@@ -327,6 +383,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               onChange={handleChange}
               type="number"
               fullWidth
+              disabled={isView}
               placeholder="0.00"
               InputProps={{
                 startAdornment: <InputAdornment position="start">₱</InputAdornment>,
@@ -361,26 +418,28 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
             "&:hover": { borderColor: "grey.400", bgcolor: palette.grey[50] },
           }}
         >
-          Cancel
+          {isView ? "Close" : "Cancel"}
         </Button>
-        <Button
-          onClick={handleAdd}
-          variant="contained"
-          disabled={!form.name}
-          sx={{
-            borderRadius: "10px",
-            textTransform: "none",
-            fontWeight: 700,
-            fontSize: 14,
-            bgcolor: palette.primary.main,
-            px: 3,
-            boxShadow: "none",
-            "&:hover": { bgcolor: "#3451d1", boxShadow: "none" },
-            "&.Mui-disabled": { bgcolor: palette.grey[200], color: "grey.400" },
-          }}
-        >
-          Add Item
-        </Button>
+        {!isView && (
+          <Button
+            onClick={handleAdd}
+            variant="contained"
+            disabled={!form.name}
+            sx={{
+              borderRadius: "10px",
+              textTransform: "none",
+              fontWeight: 700,
+              fontSize: 14,
+              bgcolor: palette.primary.main,
+              px: 3,
+              boxShadow: "none",
+              "&:hover": { bgcolor: "#3451d1", boxShadow: "none" },
+              "&.Mui-disabled": { bgcolor: palette.grey[200], color: "grey.400" },
+            }}
+          >
+            {isEdit ? "Save Changes" : "Add Item"}
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

@@ -41,6 +41,9 @@ export default function InventoryPage() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<SupplyItem | null>(null);
 
   const filteredItems = items.filter((i) => {
     const q = search.toLowerCase();
@@ -69,6 +72,27 @@ export default function InventoryPage() {
 
   const handleAddItem = (item: SupplyItem) => {
     setItems((prev) => [...prev, item]);
+  };
+
+  const handleEditItem = (updated: SupplyItem) => {
+    setItems((prev) => prev.map((i) => i.id === updated.id ? updated : i));
+  };
+
+  const handleOpenEdit = (item: SupplyItem) => {
+    setSelectedItem(item);
+    setEditModalOpen(true);
+  };
+
+  const handleOpenView = (item: SupplyItem) => {
+    setSelectedItem(item);
+    setViewModalOpen(true);
+  };
+
+  const handleCloseModals = () => {
+    setAddModalOpen(false);
+    setEditModalOpen(false);
+    setViewModalOpen(false);
+    setSelectedItem(null);
   };
 
   return (
@@ -263,7 +287,7 @@ export default function InventoryPage() {
 
       {/* ── Content ── */}
       {view === "list" ? (
-        <SupplyTable items={filteredItems} />
+        <SupplyTable items={filteredItems} onEdit={handleOpenEdit} onView={handleOpenView} />
       ) : filteredItems.length === 0 ? (
         <Box
           sx={{
@@ -280,7 +304,7 @@ export default function InventoryPage() {
         <Grid container spacing={2.5}>
           {filteredItems.map((item) => (
             <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-              <SupplyCard item={item} />
+              <SupplyCard item={item} onEdit={() => handleOpenEdit(item)} onView={() => handleOpenView(item)} />
             </Grid>
           ))}
         </Grid>
@@ -289,8 +313,27 @@ export default function InventoryPage() {
       {/* Add Supply Modal */}
       <AddSupplyModal
         open={addModalOpen}
-        onClose={() => setAddModalOpen(false)}
+        onClose={handleCloseModals}
         onAdd={handleAddItem}
+      />
+
+      {/* Edit Supply Modal */}
+      <AddSupplyModal
+        open={editModalOpen}
+        onClose={handleCloseModals}
+        onAdd={handleAddItem}
+        editItem={selectedItem}
+        onEdit={handleEditItem}
+        mode="edit"
+      />
+
+      {/* View Supply Modal */}
+      <AddSupplyModal
+        open={viewModalOpen}
+        onClose={handleCloseModals}
+        onAdd={handleAddItem}
+        editItem={selectedItem}
+        mode="view"
       />
     </Box>
   );

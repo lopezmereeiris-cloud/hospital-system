@@ -16,6 +16,8 @@ import { palette } from "@/theme/palette";
 
 interface MedicineCardProps {
   medicine: Medicine;
+  onEdit?: () => void;
+  onView?: () => void;
 }
 
 type AlertInfo = {
@@ -44,7 +46,7 @@ function getBarColor(alert: AlertInfo) {
   return palette.success.main;
 }
 
-const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
+const MedicineCard: React.FC<MedicineCardProps> = ({ medicine, onEdit, onView }) => {
   const stockPct = Math.min(
     Math.round((medicine.quantityOnHand / (medicine.maximumStockLevel || 1)) * 100),
     100
@@ -164,6 +166,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
           <Tooltip title="View details" arrow>
             <IconButton
               size="small"
+              onClick={onView}
               sx={{
                 color: "grey.400",
                 border: `1px solid ${palette.grey[200]}`,
@@ -179,6 +182,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
           <Tooltip title="Edit" arrow>
             <IconButton
               size="small"
+              onClick={onEdit}
               sx={{
                 color: "grey.400",
                 border: `1px solid ${palette.grey[200]}`,
