@@ -106,7 +106,7 @@ export default function AuditorInventoryPage() {
       </Typography>
 
       {view === "list" ? (
-        <InventoryTable medicines={filteredMeds} />
+        <InventoryTable medicines={filteredMeds} readOnly />
       ) : filteredMeds.length === 0 ? (
         <Box sx={{ textAlign: "center", py: 8, color: "grey.400", fontSize: 15, fontWeight: 600 }}>
           No medicines match your search or filter.

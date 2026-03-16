@@ -6,13 +6,11 @@ import { useParams } from "next/navigation";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
-import PictureAsPdfRoundedIcon from "@mui/icons-material/PictureAsPdfRounded";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import yakapData from "@/json/yakap.json";
 import { Beneficiary } from "@/components/BeneficiaryTable/interface";
@@ -95,10 +93,6 @@ export default function AuditorYakapBeneficiaryDetailPage() {
   const sortedTransactions = [...beneficiary.transactions].sort((left, right) => Date.parse(right.date) - Date.parse(left.date));
   const totalClaimed = sortedTransactions.reduce((total, transaction) => total + transaction.amount, 0);
 
-  const handleExportReceiptPdf = () => {
-    window.print();
-  };
-
   return (
     <Box sx={{ maxWidth: 1180, mx: "auto", pb: 3 }}>
       <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mb: 2.2, flexWrap: "wrap" }}>
@@ -176,9 +170,6 @@ export default function AuditorYakapBeneficiaryDetailPage() {
                 <ReceiptLongRoundedIcon sx={{ color: PH.green, fontSize: 18 }} />
                 <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "grey.900" }}>Benefit Usage History</div>
               </Box>
-              <Button variant="outlined" size="small" startIcon={<PictureAsPdfRoundedIcon />} onClick={handleExportReceiptPdf} sx={{ borderColor: "grey.300", color: "grey.700", fontWeight: 600, textTransform: "none" }}>
-                Export PDF Receipt
-              </Button>
             </Box>
 
             <Box sx={{ border: `1px solid ${palette.grey[200]}`, borderRadius: "12px", overflow: "hidden" }}>

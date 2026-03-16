@@ -47,4 +47,8 @@ export interface Medicine {
 
 export interface InventoryTableProps {
   medicines: Medicine[];
+  readOnly?: boolean;
+  onEdit?: (medicine: Medicine) => void;
+  onView?: (medicine: Medicine) => void;
+  onDelete?: (medicine: Medicine) => void;
 }

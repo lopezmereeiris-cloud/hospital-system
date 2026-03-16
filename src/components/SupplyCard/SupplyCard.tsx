@@ -10,12 +10,16 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import { alpha } from "@mui/material/styles";
 import { SupplyItem } from "@/components/SupplyTable/interface";
 import { palette } from "@/theme/palette";
 
 interface SupplyCardProps {
   item: SupplyItem;
+  onEdit?: (item: SupplyItem) => void;
+  onView?: (item: SupplyItem) => void;
+  onDelete?: (item: SupplyItem) => void;
 }
 
 type AlertInfo = {
@@ -37,7 +41,7 @@ function getAlert(item: SupplyItem): AlertInfo {
   return { label: "Normal", color: "success", bg: "#ECFDF3", fg: palette.success.main };
 }
 
-const SupplyCard: React.FC<SupplyCardProps> = ({ item }) => {
+const SupplyCard: React.FC<SupplyCardProps> = ({ item, onEdit, onView, onDelete }) => {
   const stockPct = Math.min(
     item.maximumStockLevel > 0
       ? Math.round((item.quantityOnHand / item.maximumStockLevel) * 100)
@@ -177,6 +181,7 @@ const SupplyCard: React.FC<SupplyCardProps> = ({ item }) => {
           <Tooltip title="View details" arrow>
             <IconButton
               size="small"
+              onClick={() => onView?.(item)}
               sx={{
                 color: "grey.400",
                 borderRadius: "6px",
@@ -192,6 +197,7 @@ const SupplyCard: React.FC<SupplyCardProps> = ({ item }) => {
           <Tooltip title="Edit" arrow>
             <IconButton
               size="small"
+              onClick={() => onEdit?.(item)}
               sx={{
                 color: "grey.400",
                 borderRadius: "6px",
@@ -202,6 +208,22 @@ const SupplyCard: React.FC<SupplyCardProps> = ({ item }) => {
               }}
             >
               <EditOutlinedIcon sx={{ fontSize: 17 }} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete" arrow>
+            <IconButton
+              size="small"
+              onClick={() => onDelete?.(item)}
+              sx={{
+                color: "grey.400",
+                borderRadius: "6px",
+                "&:hover": {
+                  bgcolor: alpha(palette.error.main, 0.08),
+                  color: palette.error.main,
+                },
+              }}
+            >
+              <DeleteOutlineRoundedIcon sx={{ fontSize: 17 }} />
             </IconButton>
           </Tooltip>
         </Box>

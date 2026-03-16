@@ -25,6 +25,11 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import CloseIcon from "@mui/icons-material/Close";
 import ViewColumnOutlinedIcon from "@mui/icons-material/ViewColumnOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import Tooltip from "@mui/material/Tooltip";
+import { alpha } from "@mui/material/styles";
 
 import { palette } from "@/theme/palette";
 // Column definitions for filtering
@@ -92,7 +97,7 @@ const filterOptions: { value: FilterType; label: string }[] = [
   { value: "overstock", label: "Overstock" },
 ];
 
-const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
+const InventoryTable: React.FC<InventoryTableProps> = ({ medicines, readOnly, onEdit, onView, onDelete }) => {
   const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
   const paramFilter = searchParams?.get("filter") as FilterType | null;
   const [filter, setFilter] = useState<FilterType>(paramFilter || "all");
@@ -342,6 +347,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
               {COLUMN_OPTIONS.filter(col => selectedColumns.includes(col.key)).map(col => (
                 <StyledHeaderCell key={col.key}>{col.label}</StyledHeaderCell>
               ))}
+              {!readOnly && <StyledHeaderCell sx={{ textAlign: "center" }}>Actions</StyledHeaderCell>}
             </StyledRow>
           </TableHead>
           <TableBody>
@@ -380,6 +386,60 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ medicines }) => {
                       default: return null;
                     }
                   })}
+                  {!readOnly && (
+                  <StyledBodyCell key="actions" sx={{ textAlign: "center", whiteSpace: "nowrap" }}>
+                    <Tooltip title="View details" arrow>
+                      <IconButton
+                        size="small"
+                        onClick={() => onView?.(med)}
+                        sx={{
+                          color: "grey.400",
+                          border: `1px solid ${palette.grey[200]}`,
+                          borderRadius: "6px",
+                          width: 28,
+                          height: 28,
+                          mr: 0.5,
+                          "&:hover": { color: palette.primary.main, borderColor: palette.primary.main, bgcolor: alpha(palette.primary.main, 0.06) },
+                        }}
+                      >
+                        <VisibilityOutlinedIcon sx={{ fontSize: 15 }} />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit" arrow>
+                      <IconButton
+                        size="small"
+                        onClick={() => onEdit?.(med)}
+                        sx={{
+                          color: "grey.400",
+                          border: `1px solid ${palette.grey[200]}`,
+                          borderRadius: "6px",
+                          width: 28,
+                          height: 28,
+                          mr: 0.5,
+                          "&:hover": { color: palette.primary.main, borderColor: palette.primary.main, bgcolor: alpha(palette.primary.main, 0.06) },
+                        }}
+                      >
+                        <EditOutlinedIcon sx={{ fontSize: 15 }} />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete" arrow>
+                      <IconButton
+                        size="small"
+                        onClick={() => onDelete?.(med)}
+                        sx={{
+                          color: "grey.400",
+                          border: `1px solid ${palette.grey[200]}`,
+                          borderRadius: "6px",
+                          width: 28,
+                          height: 28,
+                          "&:hover": { color: palette.error.main, borderColor: palette.error.main, bgcolor: alpha(palette.error.main, 0.06) },
+                        }}
+                      >
+                        <DeleteOutlineRoundedIcon sx={{ fontSize: 15 }} />
+                      </IconButton>
+                    </Tooltip>
+                  </StyledBodyCell>
+                  )}
                 </StyledRow>
               );
             })}

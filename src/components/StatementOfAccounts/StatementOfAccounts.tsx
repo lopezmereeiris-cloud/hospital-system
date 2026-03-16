@@ -487,7 +487,7 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
 
               <ActionRow>
                 {!readOnly && <PrimaryActionButton variant="contained">Record Payment</PrimaryActionButton>}
-                <SecondaryActionButton variant="outlined">Print Bill</SecondaryActionButton>
+                {!readOnly && <SecondaryActionButton variant="outlined">Print Bill</SecondaryActionButton>}
               </ActionRow>
             </DetailBody>
           )}

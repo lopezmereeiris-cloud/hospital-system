@@ -11,6 +11,9 @@ import InputBase from "@mui/material/InputBase";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
 import { alpha } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ViewListRoundedIcon from "@mui/icons-material/ViewListRounded";
@@ -41,6 +44,10 @@ export default function InventoryPage() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<SupplyItem | null>(null);
 
   const filteredItems = items.filter((i) => {
     const q = search.toLowerCase();
@@ -69,6 +76,33 @@ export default function InventoryPage() {
 
   const handleAddItem = (item: SupplyItem) => {
     setItems((prev) => [...prev, item]);
+  };
+
+  const handleEditItem = (item: SupplyItem) => {
+    setItems((prev) => prev.map((i) => (i.id === item.id ? item : i)));
+  };
+
+  const handleOpenEdit = (item: SupplyItem) => {
+    setSelectedItem(item);
+    setEditModalOpen(true);
+  };
+
+  const handleOpenView = (item: SupplyItem) => {
+    setSelectedItem(item);
+    setViewModalOpen(true);
+  };
+
+  const handleOpenDelete = (item: SupplyItem) => {
+    setSelectedItem(item);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedItem) {
+      setItems((prev) => prev.filter((i) => i.id !== selectedItem.id));
+    }
+    setDeleteConfirmOpen(false);
+    setSelectedItem(null);
   };
 
   return (
@@ -263,7 +297,12 @@ export default function InventoryPage() {
 
       {/* ── Content ── */}
       {view === "list" ? (
-        <SupplyTable items={filteredItems} />
+        <SupplyTable
+          items={filteredItems}
+          onEdit={handleOpenEdit}
+          onView={handleOpenView}
+          onDelete={handleOpenDelete}
+        />
       ) : filteredItems.length === 0 ? (
         <Box
           sx={{
@@ -280,7 +319,12 @@ export default function InventoryPage() {
         <Grid container spacing={2.5}>
           {filteredItems.map((item) => (
             <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-              <SupplyCard item={item} />
+              <SupplyCard
+                item={item}
+                onEdit={handleOpenEdit}
+                onView={handleOpenView}
+                onDelete={handleOpenDelete}
+              />
             </Grid>
           ))}
         </Grid>
@@ -292,6 +336,58 @@ export default function InventoryPage() {
         onClose={() => setAddModalOpen(false)}
         onAdd={handleAddItem}
       />
+
+      {/* Edit Supply Modal */}
+      <AddSupplyModal
+        open={editModalOpen}
+        onClose={() => { setEditModalOpen(false); setSelectedItem(null); }}
+        onAdd={handleAddItem}
+        mode="edit"
+        editItem={selectedItem}
+        onEdit={handleEditItem}
+      />
+
+      {/* View Supply Modal */}
+      <AddSupplyModal
+        open={viewModalOpen}
+        onClose={() => { setViewModalOpen(false); setSelectedItem(null); }}
+        onAdd={handleAddItem}
+        mode="view"
+        editItem={selectedItem}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deleteConfirmOpen}
+        onClose={() => { setDeleteConfirmOpen(false); setSelectedItem(null); }}
+        PaperProps={{ sx: { borderRadius: "12px", maxWidth: 400 } }}
+      >
+        <DialogContent sx={{ pt: 3, pb: 1, textAlign: "center" }}>
+          <Typography sx={{ fontSize: 17, fontWeight: 700, color: "grey.900", mb: 1 }}>
+            Delete Supply Item
+          </Typography>
+          <Typography sx={{ fontSize: 14, color: "grey.500" }}>
+            Are you sure you want to delete <strong>{selectedItem?.name}</strong>? This action cannot be undone.
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2.5, gap: 1, justifyContent: "center" }}>
+          <Button
+            onClick={() => { setDeleteConfirmOpen(false); setSelectedItem(null); }}
+            variant="outlined"
+            sx={{ borderRadius: "10px", textTransform: "none", fontWeight: 600, px: 3, borderColor: palette.grey[300], color: "grey.700" }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleConfirmDelete}
+            variant="contained"
+            color="error"
+            sx={{ borderRadius: "10px", textTransform: "none", fontWeight: 700, px: 3, boxShadow: "none" }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

@@ -18,6 +18,11 @@ import Checkbox from "@mui/material/Checkbox";
 import Divider from "@mui/material/Divider";
 import CloseIcon from "@mui/icons-material/Close";
 import ViewColumnOutlinedIcon from "@mui/icons-material/ViewColumnOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import Tooltip from "@mui/material/Tooltip";
+import { alpha } from "@mui/material/styles";
 import { palette } from "@/theme/palette";
 import { SupplyItem, SupplyTableProps } from "./interface";
 import { SupplyContainer, StyledHeaderCell, StyledBodyCell, StyledRow } from "./elements";
@@ -58,7 +63,7 @@ function getAlertChip(item: SupplyItem) {
   return <Chip label="Normal" color="success" size="small" />;
 }
 
-const SupplyTable: React.FC<SupplyTableProps> = ({ items }) => {
+const SupplyTable: React.FC<SupplyTableProps> = ({ items, onEdit, onView, onDelete }) => {
   const [visibleColumns, setVisibleColumns] = useState<string[]>([]);
   const [colDialogOpen, setColDialogOpen] = useState(false);
   const [tempCols, setTempCols] = useState<string[]>([]);
@@ -133,6 +138,7 @@ const SupplyTable: React.FC<SupplyTableProps> = ({ items }) => {
                 {isCol("expiry") && <StyledHeaderCell>Expiry Date</StyledHeaderCell>}
                 {isCol("storage") && <StyledHeaderCell>Storage</StyledHeaderCell>}
                 {isCol("alert") && <StyledHeaderCell>Alert</StyledHeaderCell>}
+                <StyledHeaderCell sx={{ textAlign: "center" }}>Actions</StyledHeaderCell>
               </StyledRow>
             </TableHead>
             <TableBody>
@@ -251,6 +257,58 @@ const SupplyTable: React.FC<SupplyTableProps> = ({ items }) => {
                       </StyledBodyCell>
                     )}
                     {isCol("alert") && <StyledBodyCell>{getAlertChip(item)}</StyledBodyCell>}
+                    <StyledBodyCell sx={{ textAlign: "center", whiteSpace: "nowrap" }}>
+                      <Tooltip title="View details" arrow>
+                        <IconButton
+                          size="small"
+                          onClick={() => onView?.(item)}
+                          sx={{
+                            color: "grey.400",
+                            border: `1px solid ${palette.grey[200]}`,
+                            borderRadius: "6px",
+                            width: 28,
+                            height: 28,
+                            mr: 0.5,
+                            "&:hover": { color: palette.primary.main, borderColor: palette.primary.main, bgcolor: alpha(palette.primary.main, 0.06) },
+                          }}
+                        >
+                          <VisibilityOutlinedIcon sx={{ fontSize: 15 }} />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Edit" arrow>
+                        <IconButton
+                          size="small"
+                          onClick={() => onEdit?.(item)}
+                          sx={{
+                            color: "grey.400",
+                            border: `1px solid ${palette.grey[200]}`,
+                            borderRadius: "6px",
+                            width: 28,
+                            height: 28,
+                            mr: 0.5,
+                            "&:hover": { color: palette.primary.main, borderColor: palette.primary.main, bgcolor: alpha(palette.primary.main, 0.06) },
+                          }}
+                        >
+                          <EditOutlinedIcon sx={{ fontSize: 15 }} />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete" arrow>
+                        <IconButton
+                          size="small"
+                          onClick={() => onDelete?.(item)}
+                          sx={{
+                            color: "grey.400",
+                            border: `1px solid ${palette.grey[200]}`,
+                            borderRadius: "6px",
+                            width: 28,
+                            height: 28,
+                            "&:hover": { color: palette.error.main, borderColor: palette.error.main, bgcolor: alpha(palette.error.main, 0.06) },
+                          }}
+                        >
+                          <DeleteOutlineRoundedIcon sx={{ fontSize: 15 }} />
+                        </IconButton>
+                      </Tooltip>
+                    </StyledBodyCell>
                   </StyledRow>
                 );
               })}
