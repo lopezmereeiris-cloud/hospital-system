@@ -57,6 +57,10 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) =>
 
   const handleProfile = () => {
     handleMenuClose();
+    if (user.role === "admin") {
+      router.push("/admin/profile");
+      return;
+    }
     router.push("/client/profile");
   };
 
@@ -64,7 +68,9 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) =>
     handleMenuClose();
     if (user.role === "admin") {
       router.push("/admin/settings");
+      return;
     }
+    router.push("/client/settings");
   };
 
   const handleLogoutClick = () => {
@@ -159,17 +165,15 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) =>
                   primaryTypographyProps={{ fontSize: "0.84rem", fontWeight: 500 }}
                 />
               </MenuItem>
-              {user.role === "admin" && (
-                <MenuItem onClick={handleSettings} sx={{ py: 1.2, gap: 1.5 }}>
-                  <ListItemIcon sx={{ minWidth: "auto" }}>
-                    <SettingsOutlinedIcon sx={{ fontSize: 20 }} />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Settings"
-                    primaryTypographyProps={{ fontSize: "0.84rem", fontWeight: 500 }}
-                  />
-                </MenuItem>
-              )}
+              <MenuItem onClick={handleSettings} sx={{ py: 1.2, gap: 1.5 }}>
+                <ListItemIcon sx={{ minWidth: "auto" }}>
+                  <SettingsOutlinedIcon sx={{ fontSize: 20 }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Settings"
+                  primaryTypographyProps={{ fontSize: "0.84rem", fontWeight: 500 }}
+                />
+              </MenuItem>
               <Divider sx={{ my: 0.5 }} />
               <MenuItem onClick={handleLogoutClick} sx={{ py: 1.2, gap: 1.5, color: "error.main" }}>
                 <ListItemIcon sx={{ minWidth: "auto", color: "inherit" }}>

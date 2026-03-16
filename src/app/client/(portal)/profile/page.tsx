@@ -1,7 +1,7 @@
 "use client";
 
-import ProfilePage from "@/components/ProfilePage";
+import PatientProfilePage from "@/components/PatientProfilePage";
 
 export default function ClientProfilePage() {
-  return <ProfilePage />;
+  return <PatientProfilePage />;
 }

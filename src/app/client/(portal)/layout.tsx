@@ -16,6 +16,7 @@ const clientPageTitles: Record<string, string> = {
   "/client/appointments": "Appointments",
   "/client/billing": "Billing",
   "/client/profile": "Profile",
+  "/client/settings": "Settings",
 };
 
 export default function ClientDashboardLayout({

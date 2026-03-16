@@ -11,7 +11,6 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { NavItem } from "@/components/Sidebar/interface";
 
-import { palette } from "@/theme/palette";
 import { UserProvider } from "@/context/UserContext";
 const EXPANDED_WIDTH = 260;
 const COLLAPSED_WIDTH = 78;
@@ -48,6 +47,7 @@ const defaultPageTitles: Record<string, string> = {
   "/admin/rooms": "Room Management",
   "/admin/doctors": "Doctor Directory",
   "/admin/billing": "Billing",
+  "/admin/profile": "Profile",
   "/admin/settings": "Settings",
 };
 
