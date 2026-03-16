@@ -38,7 +38,7 @@ const EmergencyContactsStep: React.FC<EmergencyContactsStepProps> = ({
         lineHeight: 1.45,
       }}
     >
-      Add at least two emergency contacts. You can add more contacts using the plus button.
+      Add at least one emergency contact. You can add more contacts using the plus button.
     </div>
 
     {contacts.map((contact, index) => (
@@ -71,9 +71,9 @@ const EmergencyContactsStep: React.FC<EmergencyContactsStepProps> = ({
               letterSpacing: "0.05em",
             }}
           >
-            Emergency Contact {index + 1} {index < 2 ? "(Required)" : "(Optional)"}
+            Emergency Contact {index + 1} {index < 1 ? "(Required)" : "(Optional)"}
           </div>
-          {index >= 2 && (
+          {index >= 1 && (
             <button
               type="button"
               onClick={() => onRemove(index)}

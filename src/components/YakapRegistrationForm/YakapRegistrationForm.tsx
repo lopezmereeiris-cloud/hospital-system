@@ -66,7 +66,6 @@ const INITIAL_DATA: RegistrationFormData = {
   validIdImage: null,
   emergencyContacts: [
     { name: "", relationship: "", contactNumber: "" },
-    { name: "", relationship: "", contactNumber: "" },
   ],
 };
 
@@ -139,7 +138,7 @@ const YakapRegistrationForm: React.FC<YakapRegistrationFormProps> = ({ onSubmit 
         return !!form.philhealthNumber;
       case 3:
         return (
-          form.emergencyContacts.length >= 2 &&
+          form.emergencyContacts.length >= 1 &&
           form.emergencyContacts.every(
             (contact) => !!(contact.name && contact.relationship && contact.contactNumber),
           )
