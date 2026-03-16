@@ -191,16 +191,19 @@ export const FooterLink = styled(Link)(({ theme }) => ({
 
 export const HeroSection = styled("div")(({ theme }) => ({
   width: "52%",
-  background: `radial-gradient(ellipse at 30% 20%, ${alpha(theme.palette.primary.light, 0.9)} 0%, ${theme.palette.primary.main} 42%, ${theme.palette.primary.dark} 100%)`,
   borderRadius: 16,
   margin: 10,
   position: "relative",
   overflow: "hidden",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between",
+  justifyContent: "center",
   padding: "44px 40px 36px",
   minWidth: 0,
+  background: `linear-gradient(rgba(0, 40, 120, 0.5), rgba(0, 40, 120, 0.5)), url('/hospital.png')`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
   [theme.breakpoints.down("md")]: {
     width: "100%",
     margin: 0,

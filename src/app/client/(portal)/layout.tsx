@@ -15,6 +15,7 @@ const clientPageTitles: Record<string, string> = {
   "/client/yakap-balance": "YAKAP Balance",
   "/client/appointments": "Appointments",
   "/client/billing": "Billing",
+  "/client/profile": "Profile",
 };
 
 export default function ClientDashboardLayout({
