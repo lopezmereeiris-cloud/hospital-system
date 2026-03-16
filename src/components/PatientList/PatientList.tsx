@@ -1,9 +1,8 @@
-// Remove the RegisterPatientModal import and useState for open
-
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; 
 import { palette } from "@/theme/palette";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,7 +11,6 @@ import TableContainer from "@mui/material/TableContainer";
 import Chip from "@mui/material/Chip";
 import PersonAddRoundedIcon from "@mui/icons-material/PersonAddRounded";
 import { alpha } from "@mui/material/styles";
-import PatientDetailModal from "@/components/PatientModal/PatientDetailModal";
 import { Patient, PatientListProps } from "./interface";
 import { Box } from "@mui/material";
 import {
@@ -29,8 +27,7 @@ const statusColor: Record<string, "success" | "error" | "warning"> = {
 };
 
 const PatientList: React.FC<PatientListProps> = ({ patients }) => {
-  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
-  const [detailOpen, setDetailOpen] = useState(false);
+  const router = useRouter(); // ✅ add this
 
   return (
     <PatientContainer>
@@ -102,10 +99,7 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
             {patients.map((patient) => (
               <StyledRow
                 key={patient.patient_id}
-                onClick={() => {
-                  setSelectedPatient(patient);
-                  setDetailOpen(true);
-                }}
+                onClick={() => router.push(`/admin/registration/${encodeURIComponent(patient.patient_id)}`)} // ✅ navigate instead of open modal
                 sx={{ cursor: "pointer" }}
               >
                 <StyledBodyCell>{patient.patient_id}</StyledBodyCell>
@@ -126,12 +120,6 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <PatientDetailModal
-        open={detailOpen}
-        onClose={() => setDetailOpen(false)}
-        patient={selectedPatient}
-      />
     </PatientContainer>
   );
 };
