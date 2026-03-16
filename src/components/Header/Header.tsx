@@ -57,11 +57,20 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) =>
 
   const handleProfile = () => {
     handleMenuClose();
+    if (user.role === "admin") {
+      router.push("/admin/profile");
+      return;
+    }
     router.push("/client/profile");
   };
 
   const handleSettings = () => {
     handleMenuClose();
+    if (user.role === "admin") {
+      router.push("/admin/settings");
+      return;
+    }
+    router.push("/client/settings");
   };
 
   const handleLogoutClick = () => {
