@@ -1,0 +1,124 @@
+{
+  "La Union": {
+    "San Fernando City": {
+      "zipCode": "2500",
+      "barangays": [
+        "Abongan", "Alibago", "Alinaay", "Bacsil", "Bagbag", "Balbalungao", "Barangay I", "Barangay II", "Barangay III", "Barangay IV", "Barangay V", "Barangay VI", "Barangay VII", "Barangay VIII", "Bato", "Biday", "Birunget", "Bungro", "Cabaroan", "Cadaclan", "Calabugao", "Catbangen", "Dalacdac", "Dalangigan", "Darayday", "Davot", "Dingin", "Disso-or", "Falsolon", "Fancy", "Flores", "Lingsat", "Madayegdeg", "Mabini", "Mamileng", "Masicong", "Namtutan", "Natividad East", "Natividad West", "Pagdaraoan", "Pagudpud", "Parian East", "Parian West", "Pias", "Poro", "Proved", "Sabangan", "Sagayad", "San Antonio", "San Roque", "Santiago Norte", "Santiago Sur", "Saoay", "Sevilla", "Siboan-Otbot", "Tanqui", "Tanquigan"
+      ]
+    },
+    "Agoo": {
+      "zipCode": "2504",
+      "barangays": [
+        "Ambitacay", "Amsic", "Angin", "Balawarte", "Capas", "Consolacion", "Macalva Central", "Macalva Norte", "Macalva Sur", "Nazareno", "Poblacion I", "Poblacion II", "Poblacion III", "Poblacion IV", "Poblacion V", "Poblacion VI", "Poblacion VII", "Quezon", "San Agustin East", "San Agustin West", "San Antonino", "San Antonio", "San Francisco", "San Isidro", "San Joaquin Norte", "San Joaquin Sur", "San Jose", "San Juan", "San Luis", "San Martin", "San Miguel", "San Nicolas Central", "San Nicolas East", "San Nicolas West", "San Pedro", "Santa Barbara", "Santa Monica", "Santiago", "Santo Rosario East", "Santo Rosario West", "Victoria"
+      ]
+    },
+    "Aringay": {
+      "zipCode": "2503",
+      "barangays": [
+        "Alaska", "Basca", "Dulao", "Gallano", "Macabato", "Manga", "Pangao-aoan East", "Pangao-aoan West", "Poblacion", "Quirino", "Samara", "Santa Cecilia", "Santa Lucia", "Santa Rita East", "Santa Rita West", "Santo Tomas East", "Santo Tomas West", "Ubbog", "Zaragosa"
+      ]
+    },
+    "Bacnotan": {
+      "zipCode": "2515",
+      "barangays": [
+        "Agtipal", "Agustin", "Bacqui", "Balballosa", "Bungcag", "Busel-busel", "Bussaoit", "Cabusligan", "Caraycar", "Casili Norte", "Casili Sur", "Cubcubo", "Dindiyan", "Galongen", "Guinabang", "Imelda", "Immayos Norte", "Immayos Sur", "Linmansangan", "Margaat", "Nagsidorisan", "Nagsimbaanan", "Nangalisan East", "Nangalisan West", "Nipa", "Paratong Norte", "Paratong Sur", "Pila", "Poblacion East", "Poblacion West", "Quirino", "Rabon", "Sablig", "San Gaspar", "San Ildefonso Norte", "San Ildefonso Sur", "San Miguel", "San Pedro", "Santa Cruz", "Santo Tomas", "Sapilang", "Saytan", "Sipulo", "Tallipugo", "Ubbog"
+      ]
+    },
+    "Bagulin": {
+      "zipCode": "2508",
+      "barangays": [
+        "Alibangsay", "Baay", "Cambaly", "Cardiz", "Dagup", "Libbo", "Suyo", "Tagudtud", "Tuel"
+      ]
+    },
+    "Balaoan": {
+      "zipCode": "2512",
+      "barangays": [
+        "Almieda", "Antonino", "Balsaan", "Banilag", "Benteng", "Cadmang-Reservoir", "Camiling", "Cardiz", "Carisquis", "Deet", "Duplat", "Guesset", "Guinabucan", "Lioac Norte", "Lioac Sur", "Mabilbila Norte", "Mabilbila Sur", "Maragayap", "Nagrebcan", "Nagsaag", "Nalasin", "Nangalisan", "Poblacion East", "Poblacion West", "Rimos I", "Rimos II", "Rimos III", "Rimos IV", "Rimos V", "San Blas", "San Eugenio", "Sapang", "Suguidan Norte", "Suguidan Sur"
+      ]
+    },
+    "Bangar": {
+      "zipCode": "2520",
+      "barangays": [
+        "Alinaay", "Barrientos", "Cadapli", "Caggao", "Decrito", "Gabut", "Garnaden Norte", "Garnaden Sur", "Lagatit", "Laguindingan", "Lubing", "Luna", "Magallanes", "Nagtablaan", "Napaset", "Pao Norte", "Pao Sur", "Payocpoc Norte Este", "Payocpoc Norte Oeste", "Payocpoc Sur", "Pilar", "Poblacion Norte", "Poblacion Sur", "Pudoc", "Rissing", "Salincob", "San Blas", "San Ildefonso", "San Miguel", "San Pedro", "San Vicente", "Sinapangan Norte", "Sinapangan Sur", "Tablac"
+      ]
+    },
+    "Bauang": {
+      "zipCode": "2501",
+      "barangays": [
+        "Acao", "Baccuit Norte", "Baccuit Sur", "Bagbag", "Ballay", "Bambang", "Bantug", "Buselbusel", "Busiing Norte", "Busiing Sur", "Cabalayangan", "Cabaruan", "Cabuaan", "Cabusligan", "Calumbaya", "Cambugan", "Canaoay", "Carlatan", "Catbangen", "Dili", "Disso-or", "Guerrero", "Lavenda", "Lingsat", "Mabilao", "Nagsaing", "Naguilian", "Paringao", "Payocpoc", "Pilar", "Pindangan Centro", "Pindangan Este", "Pindangan Weste", "Planas", "Poblacion", "Pudoc Norte", "Pudoc Sur", "Pugo", "Quinavite", "Rissing", "Salincob", "San Agustin", "San Felipe", "San Fermin", "San Gonzalo", "San Juan", "San Luis", "San Pedro", "Sapilang", "Sevilla", "Siboan", "Suguidan", "Tococ East", "Tococ West", "Victoria"
+      ]
+    },
+    "Burgos": {
+      "zipCode": "2522",
+      "barangays": [
+        "Aldea", "Ambitacay", "Bacsil", "Bangaoilen", "Batbato", "Cabaroan", "Caoayan", "Capas", "Imelda", "Nagrebcan", "Nagsaag", "Nalvo Norte", "Nalvo Sur", "Patpata Norte", "Patpata Sur", "Pias Norte", "Pias Sur", "Poblacion Norte", "Poblacion Sur", "Remedios", "Sabuanan", "San Blas", "San Juan", "San Pedro", "Tabuco", "Ubbog", "Zaragosa"
+      ]
+    },
+    "Caba": {
+      "zipCode": "2502",
+      "barangays": [
+        "Bilis", "Buquig", "Cabuaan", "Casilagan", "Consolacion", "Don Matias", "Esmeralda", "Evangelista", "Immaculate", "La Paz", "Labangon", "Lacong", "Lanas", "Lipit Norte", "Lipit Sur", "Lloren", "Lomboy", "Lucap", "Magungunay", "Maragayap", "Nagsaing", "Nalasin", "Nanaman", "Paatan Norte", "Paatan Sur", "Pagdalagan Norte", "Pagdalagan Sur", "Palali Norte", "Palali Sur", "Palina Este", "Palina Oeste", "Penning", "Poblacion East", "Poblacion West", "Pullac", "Quinavite", "Quirino", "Rayunan", "San Agustin", "San Carlos", "San Cornelio", "San Fermin", "San Marcos", "San Miguel", "Santo Tomas", "Sapang"
+      ]
+    },
+    "Luna": {
+      "zipCode": "2513",
+      "barangays": [
+        "Alinaay", "Bacsil", "Baldias", "Balsaan", "Belverde", "Bungro", "Calumbaya", "Darigayos", "Guesset", "Gumot", "Lacong", "Lagben", "Laoag", "Lioac", "Lipit", "Lloren", "Lussoc", "Magallanes", "Nagsaag", "Nalvo", "Patpata", "Pias", "Poblacion Norte", "Poblacion Sur", "Quirino", "Ragas", "Raois", "Reyna", "Sabuanan", "San Blas", "San Jose", "San Juan", "San Pedro", "Santiago", "Sapang", "Sevilla", "Suguidan", "Tococ", "Ubbog"
+      ]
+    },
+    "Naguilian": {
+      "zipCode": "2506",
+      "barangays": [
+        "Aguinaldo", "Ambaracao Norte", "Ambaracao Sur", "Angin", "Aurora", "Benguet", "Bili", "Bimmotobot", "Bisangol", "Bucao East", "Bucao West", "Buenavista", "Bulag", "Bulbulala", "Bungro", "Cabaroan", "Cadaclan", "Caffil", "Caggao", "Calautit", "Cares", "Flores", "Gulod", "Imelda", "La Torre Norte", "La Torre Sur", "Labut", "Lacong", "Legleg", "Lioac", "Lipit", "Magungunay", "Nancaad", "Nangalisan", "Napaset", "Oaqui", "Pagdalagan", "Paltoc", "Patong", "Poblacion East", "Poblacion West", "Pudoc", "Quirino", "San Andres", "San Felipe", "San Fermin", "San Guillermo", "San Isidro", "San Juan", "San Marcos", "San Miguel", "San Pedro", "Santiago Norte", "Santiago Sur", "Sapilang", "Sevilla", "Suguidan Norte", "Suguidan Sur", "Tabuco", "Tococ", "Ubbog", "Victoria"
+      ]
+    },
+    "Pugo": {
+      "zipCode": "2507",
+      "barangays": [
+        "Ambangonan", "Amguid", "Apayao", "Benin", "Binbin", "Cabaritan", "Cadaclan", "Calaoa", "Caoayan", "Catanagan", "Corrales", "Daguioman", "Damortis", "Darayday", "Dingin", "Imelda", "Lugam", "Maragayap", "Namboongan", "Namulandayan", "Patong", "Poblacion East", "Poblacion West", "Raraburan", "Resurreccion", "Reyna", "San Isidro", "San Jose", "San Juan", "Santiago", "Sapang", "Ubbog"
+      ]
+    },
+    "Rosario": {
+      "zipCode": "2514",
+      "barangays": [
+        "Aludable", "Anonas", "Bawanta", "Bobonan", "Bonga", "Bunga Norte", "Bunga Sur", "Cabaroan", "Cabuaan", "Calot", "Camangaan", "Capas", "Catuellan", "Cauringan", "Darigayos", "Guesset", "Labut", "Lacong", "Lipit Norte", "Lipit Sur", "Lira", "Mabbit", "Mabusag Norte", "Mabusag Sur", "Magallanes", "Mameltac", "Masical", "Monte Vista", "Nagsaag", "Naguiraman", "Namatican", "Nangalisan", "Narra", "Ortega", "Paratong", "Pattiqui", "Pideg", "Poblacion North", "Poblacion South", "Quirino", "Ragas", "Rayunan", "Sabuanan", "Sablot", "San Fermin", "San Jose", "San Juan", "San Nicolas", "San Pedro", "Sapang Norte", "Sapang Sur", "Sevilla", "Suguidan", "Tamurong", "Ubbog"
+      ]
+    },
+    "San Gabriel": {
+      "zipCode": "2519",
+      "barangays": [
+        "Amontoc", "Apayao", "Bagumbayan", "Balbalosa", "Bangar", "Bobonan", "Bulalaan", "Bumbuneg", "Dalipey", "Danac East", "Danac West", "Guesset", "Imelda", "Labueg", "Lawaan", "Lingsat", "Lipay Norte", "Lipay Proper", "Lipay Sur", "Lussoc", "Mambug", "Namillangan", "Nangalisan", "Nanpotoan", "Napo", "Poblacion East", "Poblacion West", "Quirino", "Raraburan", "San Cornelio", "San Fermin", "San Francisco", "San Pablo", "Santa Cruz", "Sapilang", "Sisilang na Lupa", "Sunken", "Tablang", "Tambo", "Tobol"
+      ]
+    },
+    "San Juan": {
+      "zipCode": "2514",
+      "barangays": [
+        "Agoo", "Aldea", "Bacsil", "Ballay", "Barrientos", "Bato", "Biday", "Bimmotobot", "Cabaroan", "Cadmang", "Caggao", "Caoayan", "Carusucan", "Darigayos", "Dibayabay", "Dibua Norte", "Dibua Sur", "Imelda", "Ipapad", "Lagatit", "Lagben", "Laoag", "Lingsat", "Luna", "Magungunay", "Mambug", "Nalasin", "Namatican", "Paringao", "Patpata", "Pias", "Pilar", "Poblacion Norte", "Poblacion Sur", "Quirino", "Rabon", "Ressurreccion", "Rissing", "Sabuanan", "Salincob", "San Blas", "San Felipe", "San Francisco", "San Jose", "San Juan", "San Pedro", "Santo Tomas", "Sapilang", "Sevilla", "Suguidan", "Tabuco", "Tococ", "Ubbog", "Victoria", "Zaragosa"
+      ]
+    },
+    "Santo Tomas": {
+      "zipCode": "2511",
+      "barangays": [
+        "Allangigan Primero", "Allangigan Segundo", "Balbalosa", "Baybay Norte", "Baybay Sur", "Bimmotobot", "Cabaroan", "Cabuaan", "Cabusligan", "Calautit", "Camarse", "Catuellan", "Concepcion", "Darigayos", "Dinayungan", "Guesset", "Immaculate", "La Paz Este", "La Paz Weste", "Lacong", "Lanas", "Lipit Norte", "Lipit Sur", "Lloren", "Lomboy", "Lucap", "Lubing", "Magungunay", "Mambug", "Nagrebcan", "Naguilian", "Nagsaing", "Nalvo Norte", "Nalvo Sur", "Namboongan", "Nanaman", "Napaset", "Paatan Norte", "Paatan Sur", "Pattiqui", "Payas", "Poblacion Norte", "Poblacion Sur", "Pudoc Norte", "Pudoc Sur", "Quinavite", "Quirino", "Rabon", "Rissing", "Sablig", "Sabuanan", "Salincob", "San Blas", "San Carlos", "San Felipe", "San Fermin", "San Marcos", "San Miguel", "San Pedro", "Santiago Norte", "Santiago Sur", "Sapilang", "Sapang", "Sevilla", "Suguidan Norte", "Suguidan Sur", "Tabuco", "Tococ", "Ubbog", "Victoria"
+      ]
+    },
+    "Santol": {
+      "zipCode": "2509",
+      "barangays": [
+        "Amassag", "Apaya", "Apaya East", "Ayoyo", "Baac", "Bagao", "Balluyan", "Camiling", "Cardiz", "Cargayan", "Dagup", "Dindiyan", "Don Matias", "Duplas", "Evangelista", "Guilig", "Guinabang", "Immaculate", "Lagatit", "Lagben", "Lumibao", "Lubing", "Macabibi", "Manarang", "Nagrebcan", "Nagsaag", "Nalvo", "Nangalisan", "Paratong", "Patpata", "Pias", "Poblacion East", "Poblacion West", "Poblacion Norte", "Poblacion Sur", "Pudoc", "Quirino", "Rissing", "Sabuanan", "San Eugenio", "San Fermin", "San Jose", "San Juan", "San Pedro", "Sapang", "Suguidan", "Tabuco", "Ubbog"
+      ]
+    },
+    "Sudipen": {
+      "zipCode": "2518",
+      "barangays": [
+        "Balbalayang", "Balluyan", "Bayabas", "Camiling", "Cardiz", "Comias", "Dagupan", "Dalacdac", "Duplas", "Imelda", "Ipet", "Lagatit", "Lagben", "Legleg", "Lingsat", "Mabusag", "Macabibi", "Mangaan", "Maticmatic", "Nagrebcan", "Nagsaag", "Nalasin", "Nangalisan", "Napo", "Narra", "Patpata", "Pias", "Poblacion East", "Poblacion West", "Quirino", "Raraburan", "Sabuanan", "San Andres", "San Eugenio", "San Fermin", "San Guillermo", "San Isidro", "San Jose", "San Juan", "San Pedro", "Sapang", "Suguidan", "Tabuco", "Tococ", "Ubbog"
+      ]
+    },
+    "Tubao": {
+      "zipCode": "2505",
+      "barangays": [
+        "Amallapay", "Anggalo", "Asia", "Ayusan Norte", "Ayusan Sur", "Bangar", "Barasbasen", "Bulbulala", "Busel-busel", "Cabaroan", "Cadmang", "Caggao", "Caoayan", "Capas", "Catuellan", "Cauringan", "Consolacion", "Coral", "Darigayos", "Imelda", "La Paz", "Labut", "Lacong", "Lloren", "Lomboy", "Lucap", "Magungunay", "Nagsaag", "Nalasin", "Nanaman", "Paatan Norte", "Paatan Sur", "Pagdalagan Norte", "Pagdalagan Sur", "Palali Norte", "Palali Sur", "Payas", "Pias", "Pilar", "Poblacion East", "Poblacion West", "Pullac", "Quirino", "Rissing", "San Agustin", "San Carlos", "San Cornelio", "San Fermin", "San Marcos", "San Miguel", "Santa Cruz", "Santo Tomas", "Sapang", "Suguidan", "Tococ", "Ubbog", "Victoria"
+      ]
+    }
+  }
+}

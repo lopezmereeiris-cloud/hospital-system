@@ -23,7 +23,7 @@ import { navIcons } from "./icons";
 const defaultNavItems: NavItem[] = [
   { label: "Dashboard", path: "/admin", icon: "dashboard" },
   { label: "YAKAP", path: "/admin/yakap", icon: "yakap" },
-  { label: "Patient Registration", path: "/admin/registration", icon: "register" },
+  { label: "Patients", path: "/admin/registration", icon: "register" },
   { label: "Appointments", path: "/admin/appointments", icon: "calendar" },
   { label: "Inventory", path: "/admin/inventory", icon: "inventory" },
   { label: "Rooms", path: "/admin/rooms", icon: "rooms" },
