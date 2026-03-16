@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import AddMedicineModal from "@/components/AddMedicineModal";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -28,7 +30,7 @@ import { palette } from "@/theme/palette";
 type FilterKey = "all" | "low_stock" | "near_expiry" | "expired";
 
 export default function InventoryPage() {
-  const medicines = inventoryData as Medicine[];
+  const [medicines, setMedicines] = useState<Medicine[]>(inventoryData as Medicine[]);
   const lowStock = medicines.filter((m) => m.lowStockAlert).length;
   const nearExpiry = medicines.filter((m) => m.nearExpiryFlag).length;
   const expired = medicines.filter((m) => m.expiredFlag).length;
@@ -37,6 +39,7 @@ export default function InventoryPage() {
   const [view, setView] = useState<"list" | "card">("list");
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   const filteredMeds = medicines.filter((m) => {
     const q = search.toLowerCase();
@@ -59,53 +62,12 @@ export default function InventoryPage() {
     { key: "expired", label: "Expired", count: expired },
   ];
 
+  const handleAddMedicine = (medicine: Medicine) => {
+    setMedicines((prev) => [...prev, medicine]);
+  };
+
   return (
     <Box sx={{ maxWidth: 1440, mx: "auto" }}>
-      {/* ── Stat Cards ── */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
-          <DashboardCard
-            title="Total Items"
-            value={medicines.length}
-            icon={<MedicationRoundedIcon />}
-            color={palette.primary.main}
-          />
-        </Grid>
-        <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
-          <DashboardCard
-            title="Low Stock"
-            value={lowStock}
-            subtitle="Need reorder"
-            icon={<WarningAmberRoundedIcon />}
-            color={palette.warning.main}
-          />
-        </Grid>
-        <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
-          <DashboardCard
-            title="Near Expiry"
-            value={nearExpiry}
-            icon={<ScheduleRoundedIcon />}
-            color={palette.info.main}
-          />
-        </Grid>
-        <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
-          <DashboardCard
-            title="Expired"
-            value={expired}
-            icon={<DoNotDisturbRoundedIcon />}
-            color={palette.error.main}
-          />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 4, lg: 2.4 }}>
-          <DashboardCard
-            title="Total Value"
-            value={`₱${totalValue.toLocaleString()}`}
-            icon={<AccountBalanceWalletRoundedIcon />}
-            color={palette.success.main}
-          />
-        </Grid>
-      </Grid>
-
       {/* ── Toolbar ── */}
       <Paper
         sx={{
@@ -116,7 +78,7 @@ export default function InventoryPage() {
           boxShadow: "none",
         }}
       >
-        {/* Row 1: Search + View Toggle (always side by side) */}
+        {/* Row 1: Search + View Toggle + Add Medicine */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 1.25 }}>
           {/* Search */}
           <Box
@@ -190,6 +152,16 @@ export default function InventoryPage() {
               </IconButton>
             </Tooltip>
           </Box>
+
+          {/* Add Medicine Button */}
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ borderRadius: "8px", fontWeight: 700, ml: 2 }}
+            onClick={() => setAddModalOpen(true)}
+          >
+            Add Medicine
+          </Button>
         </Box>
 
         {/* Row 2: Filter Chips */}
@@ -253,6 +225,13 @@ export default function InventoryPage() {
           ))}
         </Grid>
       )}
+
+      {/* Add Medicine Modal */}
+      <AddMedicineModal
+        open={addModalOpen}
+        onClose={() => setAddModalOpen(false)}
+        onAdd={handleAddMedicine}
+      />
     </Box>
   );
 }

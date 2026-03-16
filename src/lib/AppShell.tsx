@@ -12,6 +12,7 @@ import Header from "@/components/Header";
 import { NavItem } from "@/components/Sidebar/interface";
 
 import { palette } from "@/theme/palette";
+import { UserProvider } from "@/context/UserContext";
 const EXPANDED_WIDTH = 260;
 const COLLAPSED_WIDTH = 78;
 
@@ -84,25 +85,27 @@ export default function AppShell({ children, navItems, pageTitles, logoText }: A
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <MainWrapper>
-        <Sidebar
-          open={sidebarOpen}
-          collapsed={collapsed}
-          onClose={() => setSidebarOpen(false)}
-          onToggleCollapse={() => setCollapsed(!collapsed)}
-          currentPath={pathname}
-          navItems={navItems}
-          logoText={logoText}
-        />
-        <Header
-          onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-          title={getPageTitle(pathname, titles)}
-          sidebarWidth={currentSidebarWidth}
-        />
-        <ContentArea sidebarWidth={currentSidebarWidth}>
-          {children}
-        </ContentArea>
-      </MainWrapper>
+      <UserProvider>
+        <MainWrapper>
+          <Sidebar
+            open={sidebarOpen}
+            collapsed={collapsed}
+            onClose={() => setSidebarOpen(false)}
+            onToggleCollapse={() => setCollapsed(!collapsed)}
+            currentPath={pathname}
+            navItems={navItems}
+            logoText={logoText}
+          />
+          <Header
+            onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+            title={getPageTitle(pathname, titles)}
+            sidebarWidth={currentSidebarWidth}
+          />
+          <ContentArea sidebarWidth={currentSidebarWidth}>
+            {children}
+          </ContentArea>
+        </MainWrapper>
+      </UserProvider>
     </ThemeProvider>
   );
 }

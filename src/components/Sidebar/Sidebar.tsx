@@ -25,7 +25,7 @@ const defaultNavItems: NavItem[] = [
   { label: "YAKAP", path: "/admin/yakap", icon: "yakap" },
   { label: "Patients", path: "/admin/registration", icon: "register" },
   { label: "Appointments", path: "/admin/appointments", icon: "calendar" },
-  { label: "Inventory", path: "/admin/inventory", icon: "inventory" },
+  { label: "Medicine", path: "/admin/inventory", icon: "inventory" },
   { label: "Rooms", path: "/admin/rooms", icon: "rooms" },
   { label: "Doctors", path: "/admin/doctors", icon: "doctors" },
   { label: "Billing", path: "/admin/billing", icon: "billing" },

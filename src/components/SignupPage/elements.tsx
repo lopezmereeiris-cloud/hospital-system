@@ -255,7 +255,10 @@ export const BackButton = styled("button")(({ theme }) => ({
 
 export const HeroSection = styled("div")(({ theme }) => ({
   width: "48%",
-  background: `radial-gradient(ellipse at 30% 20%, ${alpha(theme.palette.primary.light, 0.9)} 0%, ${theme.palette.primary.main} 42%, ${theme.palette.primary.dark} 100%)`,
+  background: `linear-gradient(rgba(0, 40, 120, 0.5), rgba(0, 40, 120, 0.5)), url('/hospital.png')`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
   borderRadius: 16,
   margin: 10,
   position: "relative",

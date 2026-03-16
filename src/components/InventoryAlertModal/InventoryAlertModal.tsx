@@ -44,7 +44,7 @@ const InventoryAlertModal: React.FC<InventoryAlertModalProps> = ({ open, onClose
         </Typography>
         <LinearProgress
           variant="determinate"
-          value={Math.min(Math.round((medicine.quantityOnHand / medicine.maximumStockLevel) * 100), 100)}
+          value={Math.min(Math.round((medicine.quantityOnHand / (medicine.maximumStockLevel || 1)) * 100), 100)}
           sx={{ height: 8, borderRadius: 3, mb: 2 }}
         />
         <Typography variant="body2" sx={{ mb: 1 }}>
@@ -59,14 +59,14 @@ const InventoryAlertModal: React.FC<InventoryAlertModalProps> = ({ open, onClose
         {mode === "reorder" ? (
           <>
             <Typography variant="subtitle1" sx={{ mb: 1 }}>Reorder Form</Typography>
-            <input type="number" placeholder="Quantity to reorder" style={{ width: "100%", marginBottom: 12, padding: 8, borderRadius: 6, border: '1px solid #E0E0E0' }} />
-            <input type="text" placeholder="Supplier (optional)" style={{ width: "100%", marginBottom: 12, padding: 8, borderRadius: 6, border: '1px solid #E0E0E0' }} />
-            <textarea placeholder="Notes (optional)" style={{ width: "100%", minHeight: 60, padding: 8, borderRadius: 6, border: '1px solid #E0E0E0' }} />
+            <input type="number" placeholder="Quantity to reorder" style={{ width: "100%", marginBottom: 12, padding: 8, borderRadius: 6, border: "1px solid #E0E0E0" }} />
+            <input type="text" placeholder="Supplier (optional)" style={{ width: "100%", marginBottom: 12, padding: 8, borderRadius: 6, border: "1px solid #E0E0E0" }} />
+            <textarea placeholder="Notes (optional)" style={{ width: "100%", minHeight: 60, padding: 8, borderRadius: 6, border: "1px solid #E0E0E0" }} />
           </>
         ) : (
           <>
             <Typography variant="subtitle1" sx={{ mb: 1 }}>Review Alert</Typography>
-            <textarea placeholder="Notes (optional)" style={{ width: "100%", minHeight: 60, padding: 8, borderRadius: 6, border: '1px solid #E0E0E0' }} />
+            <textarea placeholder="Notes (optional)" style={{ width: "100%", minHeight: 60, padding: 8, borderRadius: 6, border: "1px solid #E0E0E0" }} />
           </>
         )}
       </DialogContent>

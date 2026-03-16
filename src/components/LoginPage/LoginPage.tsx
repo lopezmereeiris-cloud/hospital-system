@@ -134,28 +134,7 @@ const LoginPage: React.FC = () => {
               Reach.
             </HeroHeading>
           </HeroTextBlock>
-          <CardArea>
-            <MiniNav>
-              <NavDot />
-              <NavDot $opacity={0.5} />
-              <NavDot $opacity={0.3} />
-            </MiniNav>
-            <PatientCardBox>
-              <CardLogoBox>
-                <HospitalIcon size={13} />
-              </CardLogoBox>
-              <ConsultLabel>Active Consultations</ConsultLabel>
-              <ConsultValue>3 Pending</ConsultValue>
-              <CardDivider />
-              <CardInfoRow>
-                <div>
-                  <PatientName>Juan D. Santos</PatientName>
-                  <PatientID>Patient ID: #00-4921</PatientID>
-                </div>
-                <ActiveBadge>Active</ActiveBadge>
-              </CardInfoRow>
-            </PatientCardBox>
-          </CardArea>
+          {/* Professional image background is handled in HeroSection styles */}
         </HeroSection>
       </CardWrapper>
     </PageWrapper>
