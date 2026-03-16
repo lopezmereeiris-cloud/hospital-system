@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -121,6 +121,31 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
     return grouped;
   }, [appointments]);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isDragging.current = true;
+    startX.current = e.pageX - (scrollRef.current?.offsetLeft ?? 0);
+    scrollLeft.current = scrollRef.current?.scrollLeft ?? 0;
+    if (scrollRef.current) scrollRef.current.style.cursor = "grabbing";
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = x - startX.current;
+    scrollRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
+  const stopDragging = () => {
+    isDragging.current = false;
+    if (scrollRef.current) scrollRef.current.style.cursor = "grab";
+  };
+
   return (
     <Paper
       sx={{
@@ -149,16 +174,37 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
         </Typography>
       </Box>
 
+      {/* Drag-to-scroll wrapper */}
       <Box
+        ref={scrollRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={stopDragging}
+        onMouseLeave={stopDragging}
         sx={{
-          display: "grid",
-          gridTemplateColumns: "100px repeat(7, minmax(0, 1fr))",
-          minWidth: "1100px",
+          overflowX: "auto",
+          cursor: "grab",
+          userSelect: "none",
+          WebkitOverflowScrolling: "touch",
+          /* subtle scrollbar styling */
+          "&::-webkit-scrollbar": { height: 6 },
+          "&::-webkit-scrollbar-track": { background: palette.grey[100] },
+          "&::-webkit-scrollbar-thumb": {
+            background: palette.grey[300],
+            borderRadius: 3,
+          },
         }}
       >
         <Box
           sx={{
-            borderRight: `1px solid ${palette.grey[200]}`,
+            display: "grid",
+            gridTemplateColumns: "100px repeat(7, minmax(0, 1fr))",
+            minWidth: "1100px",
+          }}
+        >
+          <Box
+            sx={{
+              borderRight: `1px solid ${palette.grey[200]}`,
             borderBottom: `1px solid ${palette.grey[200]}`,
             backgroundColor: "grey.50",
           }}
@@ -302,6 +348,8 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
             })}
           </React.Fragment>
         ))}
+      </Box>
+
       </Box>
     </Paper>
   );
