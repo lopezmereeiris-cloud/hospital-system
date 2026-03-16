@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import AddSupplyModal from "@/components/AddSupplyModal";
+import AddMedicineModal from "@/components/AddMedicineModal";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -15,104 +15,59 @@ import { alpha } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ViewListRoundedIcon from "@mui/icons-material/ViewListRounded";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
-import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
+import MedicationRoundedIcon from "@mui/icons-material/MedicationRounded";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 import ScheduleRoundedIcon from "@mui/icons-material/ScheduleRounded";
 import DoNotDisturbRoundedIcon from "@mui/icons-material/DoNotDisturbRounded";
 import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 import DashboardCard from "@/components/DashboardCard";
-import SupplyTable from "@/components/SupplyTable";
-import SupplyCard from "@/components/SupplyCard";
-import { SupplyItem } from "@/components/SupplyTable/interface";
-import suppliesData from "@/json/supplies.json";
-import { palette } from "@/theme/palette";
+import InventoryTable from "@/components/InventoryTable";
+import MedicineCard from "@/components/MedicineCard";
+import { Medicine } from "@/components/InventoryTable/interface";
+import inventoryData from "@/json/inventory.json";
 
+import { palette } from "@/theme/palette";
 type FilterKey = "all" | "low_stock" | "near_expiry" | "expired";
 
 export default function InventoryPage() {
-  const [items, setItems] = useState<SupplyItem[]>(suppliesData as SupplyItem[]);
-
-  const lowStock = items.filter((i) => i.lowStockAlert).length;
-  const nearExpiry = items.filter((i) => i.nearExpiryFlag).length;
-  const expired = items.filter((i) => i.expiredFlag).length;
-  const totalValue = items.reduce((sum, i) => sum + i.totalValue, 0);
+  const [medicines, setMedicines] = useState<Medicine[]>(inventoryData as Medicine[]);
+  const lowStock = medicines.filter((m) => m.lowStockAlert).length;
+  const nearExpiry = medicines.filter((m) => m.nearExpiryFlag).length;
+  const expired = medicines.filter((m) => m.expiredFlag).length;
+  const totalValue = medicines.reduce((sum, m) => sum + m.totalValue, 0);
 
   const [view, setView] = useState<"list" | "card">("list");
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [addModalOpen, setAddModalOpen] = useState(false);
 
-  const filteredItems = items.filter((i) => {
+  const filteredMeds = medicines.filter((m) => {
     const q = search.toLowerCase();
     const matchesSearch =
       !q ||
-      i.name.toLowerCase().includes(q) ||
-      i.brand.toLowerCase().includes(q) ||
-      i.category.toLowerCase().includes(q) ||
-      i.subcategory.toLowerCase().includes(q) ||
-      i.id.toLowerCase().includes(q);
-
+      m.genericName.toLowerCase().includes(q) ||
+      m.brandNames.some((b) => b.toLowerCase().includes(q)) ||
+      m.id.toLowerCase().includes(q);
     let matchesFilter = true;
-    if (filter === "low_stock") matchesFilter = i.lowStockAlert;
-    else if (filter === "near_expiry") matchesFilter = i.nearExpiryFlag;
-    else if (filter === "expired") matchesFilter = i.expiredFlag;
-
+    if (filter === "low_stock") matchesFilter = m.lowStockAlert;
+    else if (filter === "near_expiry") matchesFilter = m.nearExpiryFlag;
+    else if (filter === "expired") matchesFilter = m.expiredFlag;
     return matchesSearch && matchesFilter;
   });
 
   const filters: { key: FilterKey; label: string; count: number }[] = [
-    { key: "all", label: "All", count: items.length },
+    { key: "all", label: "All", count: medicines.length },
     { key: "low_stock", label: "Low Stock", count: lowStock },
     { key: "near_expiry", label: "Near Expiry", count: nearExpiry },
     { key: "expired", label: "Expired", count: expired },
   ];
 
-  const handleAddItem = (item: SupplyItem) => {
-    setItems((prev) => [...prev, item]);
+  const handleAddMedicine = (medicine: Medicine) => {
+    setMedicines((prev) => [...prev, medicine]);
   };
 
   return (
     <Box sx={{ maxWidth: 1440, mx: "auto" }}>
-      {/* ── Stats Cards ── */}
-      <Grid container spacing={2} sx={{ mb: 2.5 }}>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <DashboardCard
-            title="Total Items"
-            value={items.length}
-            subtitle="Supply items tracked"
-            icon={<Inventory2RoundedIcon />}
-            color={palette.primary.main}
-          />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <DashboardCard
-            title="Low Stock"
-            value={lowStock}
-            subtitle="Items below reorder level"
-            icon={<WarningAmberRoundedIcon />}
-            color={palette.warning.main}
-          />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <DashboardCard
-            title="Expiry Alerts"
-            value={nearExpiry + expired}
-            subtitle={`${expired} expired · ${nearExpiry} near expiry`}
-            icon={<ScheduleRoundedIcon />}
-            color={palette.error.main}
-          />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <DashboardCard
-            title="Total Value"
-            value={`₱${totalValue.toLocaleString()}`}
-            subtitle="Estimated inventory value"
-            icon={<AccountBalanceWalletRoundedIcon />}
-            color={palette.success.main}
-          />
-        </Grid>
-      </Grid>
-
       {/* ── Toolbar ── */}
       <Paper
         sx={{
@@ -123,7 +78,7 @@ export default function InventoryPage() {
           boxShadow: "none",
         }}
       >
-        {/* Row 1: Search + View Toggle + Add Button */}
+        {/* Row 1: Search + View Toggle + Add Medicine */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 1.25 }}>
           {/* Search */}
           <Box
@@ -142,15 +97,15 @@ export default function InventoryPage() {
           >
             <SearchRoundedIcon sx={{ color: "grey.400", fontSize: 20, mr: 1 }} />
             <InputBase
-              placeholder="Search supplies…"
+              placeholder="Search medicines…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               sx={{ flex: 1, fontSize: 14, fontWeight: 500, color: "grey.700" }}
-              inputProps={{ "aria-label": "search supplies" }}
+              inputProps={{ "aria-label": "search medicines" }}
             />
           </Box>
 
-          {/* View Toggle */}
+          {/* View Toggle — flexShrink:0 so it never disappears */}
           <Box
             sx={{
               display: "flex",
@@ -173,12 +128,7 @@ export default function InventoryPage() {
                   boxShadow: view === "list" ? "0 1px 3px rgba(16,24,40,0.10)" : "none",
                   color: view === "list" ? palette.primary.main : palette.grey[400],
                   transition: "all 0.15s ease",
-                  "&:hover": {
-                    bgcolor:
-                      view === "list"
-                        ? palette.background.paper
-                        : alpha(palette.primary.main, 0.06),
-                  },
+                  "&:hover": { bgcolor: view === "list" ? palette.background.paper : alpha(palette.primary.main, 0.06) },
                 }}
               >
                 <ViewListRoundedIcon sx={{ fontSize: 20 }} />
@@ -195,12 +145,7 @@ export default function InventoryPage() {
                   boxShadow: view === "card" ? "0 1px 3px rgba(16,24,40,0.10)" : "none",
                   color: view === "card" ? palette.primary.main : palette.grey[400],
                   transition: "all 0.15s ease",
-                  "&:hover": {
-                    bgcolor:
-                      view === "card"
-                        ? palette.background.paper
-                        : alpha(palette.primary.main, 0.06),
-                  },
+                  "&:hover": { bgcolor: view === "card" ? palette.background.paper : alpha(palette.primary.main, 0.06) },
                 }}
               >
                 <GridViewRoundedIcon sx={{ fontSize: 20 }} />
@@ -208,15 +153,14 @@ export default function InventoryPage() {
             </Tooltip>
           </Box>
 
-          {/* Add Supply Button */}
+          {/* Add Medicine Button */}
           <Button
             variant="contained"
             color="primary"
-            startIcon={<DoNotDisturbRoundedIcon sx={{ fontSize: 18, transform: "rotate(45deg)" }} />}
-            sx={{ borderRadius: "8px", fontWeight: 700, ml: 2, textTransform: "none" }}
+            sx={{ borderRadius: "8px", fontWeight: 700, ml: 2 }}
             onClick={() => setAddModalOpen(true)}
           >
-            Add Item
+            Add Medicine
           </Button>
         </Box>
 
@@ -243,9 +187,7 @@ export default function InventoryPage() {
                   cursor: "pointer",
                   transition: "all 0.15s ease",
                   "&:hover": {
-                    bgcolor: active
-                      ? alpha(palette.primary.main, 0.14)
-                      : palette.grey[100],
+                    bgcolor: active ? alpha(palette.primary.main, 0.14) : palette.grey[100],
                   },
                 }}
               />
@@ -254,17 +196,15 @@ export default function InventoryPage() {
         </Box>
       </Paper>
 
-      {/* ── Results Count ── */}
+      {/* ── Results count ── */}
       <Typography sx={{ fontSize: 13, fontWeight: 500, color: "grey.400", mb: 2 }}>
-        Showing{" "}
-        <span style={{ fontWeight: 700, color: "grey.700" }}>{filteredItems.length}</span> of{" "}
-        {items.length} items
+        Showing <span style={{ fontWeight: 700, color: "grey.700" }}>{filteredMeds.length}</span> of {medicines.length} medicines
       </Typography>
 
       {/* ── Content ── */}
       {view === "list" ? (
-        <SupplyTable items={filteredItems} />
-      ) : filteredItems.length === 0 ? (
+        <InventoryTable medicines={filteredMeds} />
+      ) : filteredMeds.length === 0 ? (
         <Box
           sx={{
             textAlign: "center",
@@ -274,23 +214,23 @@ export default function InventoryPage() {
             fontWeight: 600,
           }}
         >
-          No items match your search or filter.
+          No medicines match your search or filter.
         </Box>
       ) : (
         <Grid container spacing={2.5}>
-          {filteredItems.map((item) => (
-            <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-              <SupplyCard item={item} />
+          {filteredMeds.map((med) => (
+            <Grid key={med.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+              <MedicineCard medicine={med} />
             </Grid>
           ))}
         </Grid>
       )}
 
-      {/* Add Supply Modal */}
-      <AddSupplyModal
+      {/* Add Medicine Modal */}
+      <AddMedicineModal
         open={addModalOpen}
         onClose={() => setAddModalOpen(false)}
-        onAdd={handleAddItem}
+        onAdd={handleAddMedicine}
       />
     </Box>
   );

@@ -12,6 +12,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
 
 export const navIcons: Record<string, React.ReactElement> = {
   dashboard: <DashboardRoundedIcon sx={{ fontSize: 22 }} />,
@@ -25,4 +26,5 @@ export const navIcons: Record<string, React.ReactElement> = {
   register: <AssignmentIcon sx={{ fontSize: 22 }} />,
   wallet: <AccountBalanceWalletRoundedIcon sx={{ fontSize: 22 }} />,
   settings: <SettingsRoundedIcon sx={{ fontSize: 22 }} />,
+  supplies: <Inventory2RoundedIcon sx={{ fontSize: 22 }} />,
 };

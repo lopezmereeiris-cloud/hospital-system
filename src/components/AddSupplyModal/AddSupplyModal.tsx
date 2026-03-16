@@ -13,32 +13,30 @@ import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import InputAdornment from "@mui/material/InputAdornment";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import MedicationRoundedIcon from "@mui/icons-material/MedicationRounded";
-import LocalPharmacyRoundedIcon from "@mui/icons-material/LocalPharmacyRounded";
 import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
-
-import { Medicine } from "@/components/InventoryTable/interface";
+import CategoryRoundedIcon from "@mui/icons-material/CategoryRounded";
+import WarehouseRoundedIcon from "@mui/icons-material/WarehouseRounded";
+import { SupplyItem } from "@/components/SupplyTable/interface";
 import { palette } from "@/theme/palette";
 
-interface AddMedicineModalProps {
+interface AddSupplyModalProps {
   open: boolean;
   onClose: () => void;
-  onAdd: (medicine: Medicine) => void;
+  onAdd: (item: SupplyItem) => void;
 }
 
 const initialForm = {
-  genericName: "",
-  brandNames: "",
-  manufacturer: "",
-  dosageForm: "",
-  strength: "",
-  therapeuticCategory: "",
-  drugCategory: "",
+  name: "",
+  brand: "",
+  supplier: "",
+  category: "",
+  subcategory: "",
+  unit: "",
   batchNumber: "",
+  storageLocation: "",
+  expiryDate: "",
   quantityOnHand: "",
   unitCost: "",
-  expiryDate: "",
-  storageLocation: "",
 };
 
 const SectionHeader = ({ icon, label }: { icon: React.ReactNode; label: string }) => (
@@ -58,7 +56,15 @@ const SectionHeader = ({ icon, label }: { icon: React.ReactNode; label: string }
     >
       {icon}
     </Box>
-    <Typography sx={{ fontSize: 13, fontWeight: 700, color: "grey.700", letterSpacing: "0.03em", textTransform: "uppercase" }}>
+    <Typography
+      sx={{
+        fontSize: 13,
+        fontWeight: 700,
+        color: "grey.700",
+        letterSpacing: "0.03em",
+        textTransform: "uppercase",
+      }}
+    >
       {label}
     </Typography>
     <Box sx={{ flex: 1, height: "1px", bgcolor: "grey.100", ml: 1 }} />
@@ -77,7 +83,7 @@ const fieldSx = {
   "& .MuiInputLabel-root": { fontSize: 13.5 },
 };
 
-const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAdd }) => {
+const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd }) => {
   const [form, setForm] = useState(initialForm);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,53 +94,32 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
   const handleAdd = () => {
     const qty = Number(form.quantityOnHand) || 0;
     const cost = Number(form.unitCost) || 0;
-    const newMedicine: Medicine = {
-      id: `MED-${Date.now()}`,
-      genericName: form.genericName,
-      brandNames: form.brandNames ? form.brandNames.split(",").map((b) => b.trim()) : [],
-      manufacturer: form.manufacturer,
-      fdaRegistrationNo: "",
-      atcCode: "",
-      pndfListed: false,
-      pndfCategory: "",
-      dosageForm: form.dosageForm,
-      strength: form.strength,
-      routeOfAdministration: "",
-      therapeuticCategory: form.therapeuticCategory,
-      therapeuticAction: "",
-      unitOfMeasure: "",
-      packSize: "",
-      ddbClassification: "",
-      genericActCompliance: false,
-      dohProgramTag: null,
-      philhealthCoverage: false,
-      prescriptionRequired: false,
-      drugCategory: form.drugCategory,
-      storageTemperature: "",
-      storageInstructions: "",
-      handlingPrecautions: "",
-      storageLocation: form.storageLocation,
+    const newItem: SupplyItem = {
+      id: `SUP-${Date.now()}`,
+      name: form.name,
+      brand: form.brand,
+      supplier: form.supplier,
+      category: form.category,
+      subcategory: form.subcategory,
+      unit: form.unit,
       batchNumber: form.batchNumber,
+      storageLocation: form.storageLocation,
+      expiryDate: form.expiryDate,
       quantityOnHand: qty,
       unitCost: cost,
       totalValue: cost * qty,
-      sourceFund: "",
       reorderLevel: 0,
-      maximumStockLevel: 0,
-      averageMonthlyConsumption: 0,
-      status: "Active",
+      maximumStockLevel: Math.max(qty * 2, 1),
       dateReceived: new Date().toISOString().split("T")[0],
-      expiryDate: form.expiryDate,
-      manufacturingDate: "",
-      dateAddedToSystem: new Date().toISOString().split("T")[0],
       lastUpdatedDate: new Date().toISOString().split("T")[0],
-      nearExpiryFlag: false,
+      status: "Active",
       lowStockAlert: false,
+      nearExpiryFlag: false,
       expiredFlag: false,
-      recalledFlag: false,
       overstockFlag: false,
+      notes: "",
     };
-    onAdd(newMedicine);
+    onAdd(newItem);
     setForm(initialForm);
     onClose();
   };
@@ -153,7 +138,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
         },
       }}
     >
-      {/* ── Modal Header ── */}
+      {/* ── Header ── */}
       <Box
         sx={{
           display: "flex",
@@ -178,14 +163,14 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               color: palette.primary.main,
             }}
           >
-            <MedicationRoundedIcon sx={{ fontSize: 22 }} />
+            <Inventory2RoundedIcon sx={{ fontSize: 22 }} />
           </Box>
           <Box>
             <Typography sx={{ fontSize: 17, fontWeight: 700, color: "grey.900", lineHeight: 1.2 }}>
-              Add New Medicine
+              Add Supply Item
             </Typography>
             <Typography sx={{ fontSize: 12.5, color: "grey.500", mt: 0.25 }}>
-              Fill in the details to add medicine to inventory
+              Fill in the details to add a new item to hospital inventory
             </Typography>
           </Box>
         </Box>
@@ -202,64 +187,42 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
         </IconButton>
       </Box>
 
-      {/* ── Modal Body ── */}
+      {/* ── Body ── */}
       <DialogContent sx={{ px: 3, py: 3, bgcolor: palette.background.default }}>
-        {/* Section 1: Medicine Identity */}
-        <SectionHeader icon={<MedicationRoundedIcon sx={{ fontSize: 16 }} />} label="Medicine Identity" />
+        {/* Section 1: Item Identity */}
+        <SectionHeader icon={<Inventory2RoundedIcon sx={{ fontSize: 16 }} />} label="Item Identity" />
         <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid size={{ xs: 12, sm: 6 }}>
+          <Grid size={{ xs: 12 }}>
             <TextField
-              label="Generic Name"
-              name="genericName"
-              value={form.genericName}
+              label="Item Name"
+              name="name"
+              value={form.name}
               onChange={handleChange}
               fullWidth
               required
-              placeholder="e.g. Amoxicillin"
+              placeholder="e.g. Surgical Face Mask (N95)"
               sx={fieldSx}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
-              label="Brand Names"
-              name="brandNames"
-              value={form.brandNames}
+              label="Brand"
+              name="brand"
+              value={form.brand}
               onChange={handleChange}
               fullWidth
-              placeholder="e.g. Amoxil, Moxilin (comma separated)"
+              placeholder="e.g. 3M"
               sx={fieldSx}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
-              label="Manufacturer"
-              name="manufacturer"
-              value={form.manufacturer}
+              label="Supplier"
+              name="supplier"
+              value={form.supplier}
               onChange={handleChange}
               fullWidth
-              placeholder="e.g. GlaxoSmithKline Philippines"
-              sx={fieldSx}
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 3 }}>
-            <TextField
-              label="Dosage Form"
-              name="dosageForm"
-              value={form.dosageForm}
-              onChange={handleChange}
-              fullWidth
-              placeholder="e.g. Capsule"
-              sx={fieldSx}
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 3 }}>
-            <TextField
-              label="Strength"
-              name="strength"
-              value={form.strength}
-              onChange={handleChange}
-              fullWidth
-              placeholder="e.g. 500mg"
+              placeholder="e.g. MedSupply PH Inc."
               sx={fieldSx}
             />
           </Grid>
@@ -268,27 +231,38 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
         <Divider sx={{ mb: 3 }} />
 
         {/* Section 2: Classification */}
-        <SectionHeader icon={<LocalPharmacyRoundedIcon sx={{ fontSize: 16 }} />} label="Classification" />
+        <SectionHeader icon={<CategoryRoundedIcon sx={{ fontSize: 16 }} />} label="Classification" />
         <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid size={{ xs: 12, sm: 6 }}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
-              label="Therapeutic Category"
-              name="therapeuticCategory"
-              value={form.therapeuticCategory}
+              label="Category"
+              name="category"
+              value={form.category}
               onChange={handleChange}
               fullWidth
-              placeholder="e.g. Antibiotic"
+              placeholder="e.g. PPE, Equipment, Consumables"
               sx={fieldSx}
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 6 }}>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
-              label="Drug Category"
-              name="drugCategory"
-              value={form.drugCategory}
+              label="Subcategory"
+              name="subcategory"
+              value={form.subcategory}
               onChange={handleChange}
               fullWidth
-              placeholder="e.g. Prescription"
+              placeholder="e.g. Masks, Beds, IV Supplies"
+              sx={fieldSx}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 4 }}>
+            <TextField
+              label="Unit of Measure"
+              name="unit"
+              value={form.unit}
+              onChange={handleChange}
+              fullWidth
+              placeholder="e.g. pieces, boxes, sets"
               sx={fieldSx}
             />
           </Grid>
@@ -297,7 +271,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
         <Divider sx={{ mb: 3 }} />
 
         {/* Section 3: Stock & Storage */}
-        <SectionHeader icon={<Inventory2RoundedIcon sx={{ fontSize: 16 }} />} label="Stock & Storage" />
+        <SectionHeader icon={<WarehouseRoundedIcon sx={{ fontSize: 16 }} />} label="Stock & Storage" />
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
@@ -306,7 +280,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.batchNumber}
               onChange={handleChange}
               fullWidth
-              placeholder="e.g. BATCH-AMX-2025"
+              placeholder="e.g. MASK-2026-001"
               sx={fieldSx}
             />
           </Grid>
@@ -317,7 +291,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               value={form.storageLocation}
               onChange={handleChange}
               fullWidth
-              placeholder="e.g. Shelf A-1"
+              placeholder="e.g. Storage Room A"
               sx={fieldSx}
             />
           </Grid>
@@ -333,7 +307,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               sx={fieldSx}
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 4 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Quantity On Hand"
               name="quantityOnHand"
@@ -345,7 +319,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
               sx={fieldSx}
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 4 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Unit Cost"
               name="unitCost"
@@ -363,7 +337,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
         </Grid>
       </DialogContent>
 
-      {/* ── Modal Footer ── */}
+      {/* ── Footer ── */}
       <DialogActions
         sx={{
           px: 3,
@@ -392,7 +366,7 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
         <Button
           onClick={handleAdd}
           variant="contained"
-          disabled={!form.genericName}
+          disabled={!form.name}
           sx={{
             borderRadius: "10px",
             textTransform: "none",
@@ -405,11 +379,11 @@ const AddMedicineModal: React.FC<AddMedicineModalProps> = ({ open, onClose, onAd
             "&.Mui-disabled": { bgcolor: palette.grey[200], color: "grey.400" },
           }}
         >
-          Add Medicine
+          Add Item
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default AddMedicineModal;
+export default AddSupplyModal;
