@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { useRouter } from "next/navigation"; 
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
@@ -26,7 +27,6 @@ import ConfirmActionModal from "@/components/ConfirmActionModal";
 import AppointmentCalendar from "@/components/AppointmentCalendar";
 import AppointmentTable from "@/components/AppointmentTable";
 import AppointmentModal from "@/components/AppointmentModal";
-import BookAppointmentModal from "@/components/BookAppointmentModal";
 import {
   StyledBodyCell,
   StyledHeaderCell,
@@ -38,6 +38,7 @@ import appointmentsData from "@/json/appointments.json";
 import { palette } from "@/theme/palette";
 
 export default function AppointmentsPage() {
+  const router = useRouter(); // ✅ add this
   const [appointments, setAppointments] = useState<Appointment[]>(
     appointmentsData as Appointment[]
   );
@@ -45,7 +46,7 @@ export default function AppointmentsPage() {
     useState<Appointment | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
-  const [bookModalOpen, setBookModalOpen] = useState(false);
+  // ✅ removed: const [bookModalOpen, setBookModalOpen] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
   const [toast, setToast] = useState<{
     open: boolean;
@@ -168,16 +169,16 @@ export default function AppointmentsPage() {
   return (
     <div>
       <Box sx={{ mb: 2 }}>
-         <h2
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: 700,
-              margin: "0 0 4px 0",
-              color: "text.primary",
-            }}
-          >
-            Appointments
-          </h2>
+        <h2
+          style={{
+            fontSize: "1.5rem",
+            fontWeight: 700,
+            margin: "0 0 4px 0",
+            color: "text.primary",
+          }}
+        >
+          Appointments
+        </h2>
       </Box>
 
       <Box
@@ -194,15 +195,12 @@ export default function AppointmentsPage() {
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard label="Total Appointments" value={counts.total} />
           </Grid>
-
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard label="Pending" value={counts.pending} />
           </Grid>
-
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard label="Confirmed" value={counts.confirmed} />
           </Grid>
-
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <StatCard label="Completed" value={counts.completed} />
           </Grid>
@@ -288,16 +286,16 @@ export default function AppointmentsPage() {
                 <ViewListRoundedIcon sx={{ mr: 0.75, fontSize: 18 }} />
                 List View
               </ToggleButton>
-
               <ToggleButton value="calendar">
                 <CalendarMonthRoundedIcon sx={{ mr: 0.75, fontSize: 18 }} />
                 Calendar View
               </ToggleButton>
             </ToggleButtonGroup>
 
+            {/* ✅ now navigates to /admin/appointments/book instead of opening modal */}
             <Button
               variant="contained"
-              onClick={() => setBookModalOpen(true)}
+              onClick={() => router.push("/admin/appointments/book")}
               sx={{
                 backgroundColor: "primary.main",
                 textTransform: "none",
@@ -560,10 +558,7 @@ export default function AppointmentsPage() {
         onStatusChange={handleStatusChange}
       />
 
-      <BookAppointmentModal
-        open={bookModalOpen}
-        onClose={() => setBookModalOpen(false)}
-      />
+      {}
 
       <Snackbar
         open={toast.open}
