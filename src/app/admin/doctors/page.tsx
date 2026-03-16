@@ -112,6 +112,7 @@ export default function DoctorsPage() {
         >
           <PremiumFilter options={tabOptions} active={tab} onChange={setTab} />
         </Box>
+        {tab === "doctors" && (
         <Button
           variant="contained"
           startIcon={<AddRoundedIcon />}
@@ -128,6 +129,7 @@ export default function DoctorsPage() {
         >
           Add Doctor
         </Button>
+        )}
       </Box>
 
       {tab === "doctors" && (
