@@ -23,6 +23,9 @@ interface AddSupplyModalProps {
   open: boolean;
   onClose: () => void;
   onAdd: (item: SupplyItem) => void;
+  mode?: "add" | "edit" | "view";
+  editItem?: SupplyItem | null;
+  onEdit?: (item: SupplyItem) => void;
 }
 
 const initialForm = {
@@ -83,19 +86,42 @@ const fieldSx = {
   "& .MuiInputLabel-root": { fontSize: 13.5 },
 };
 
-const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd }) => {
+const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd, mode = "add", editItem, onEdit }) => {
   const [form, setForm] = useState(initialForm);
+  const isView = mode === "view";
+  const isEdit = mode === "edit";
+
+  React.useEffect(() => {
+    if ((isEdit || isView) && editItem) {
+      setForm({
+        name: editItem.name || "",
+        brand: editItem.brand || "",
+        supplier: editItem.supplier || "",
+        category: editItem.category || "",
+        subcategory: editItem.subcategory || "",
+        unit: editItem.unit || "",
+        batchNumber: editItem.batchNumber || "",
+        storageLocation: editItem.storageLocation || "",
+        expiryDate: editItem.expiryDate || "",
+        quantityOnHand: editItem.quantityOnHand?.toString() || "",
+        unitCost: editItem.unitCost?.toString() || "",
+      });
+    } else if (mode === "add") {
+      setForm(initialForm);
+    }
+  }, [editItem, mode, isEdit, isView]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAdd = () => {
+  const handleSubmit = () => {
     const qty = Number(form.quantityOnHand) || 0;
     const cost = Number(form.unitCost) || 0;
-    const newItem: SupplyItem = {
-      id: `SUP-${Date.now()}`,
+    const item: SupplyItem = {
+      ...(isEdit && editItem ? editItem : {}),
+      id: isEdit && editItem ? editItem.id : `SUP-${Date.now()}`,
       name: form.name,
       brand: form.brand,
       supplier: form.supplier,
@@ -108,18 +134,22 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
       quantityOnHand: qty,
       unitCost: cost,
       totalValue: cost * qty,
-      reorderLevel: 0,
-      maximumStockLevel: Math.max(qty * 2, 1),
-      dateReceived: new Date().toISOString().split("T")[0],
+      reorderLevel: isEdit && editItem ? editItem.reorderLevel : 0,
+      maximumStockLevel: isEdit && editItem ? editItem.maximumStockLevel : Math.max(qty * 2, 1),
+      dateReceived: isEdit && editItem ? editItem.dateReceived : new Date().toISOString().split("T")[0],
       lastUpdatedDate: new Date().toISOString().split("T")[0],
-      status: "Active",
-      lowStockAlert: false,
-      nearExpiryFlag: false,
-      expiredFlag: false,
-      overstockFlag: false,
-      notes: "",
+      status: isEdit && editItem ? editItem.status : "Active",
+      lowStockAlert: isEdit && editItem ? editItem.lowStockAlert : false,
+      nearExpiryFlag: isEdit && editItem ? editItem.nearExpiryFlag : false,
+      expiredFlag: isEdit && editItem ? editItem.expiredFlag : false,
+      overstockFlag: isEdit && editItem ? editItem.overstockFlag : false,
+      notes: isEdit && editItem ? editItem.notes : "",
     };
-    onAdd(newItem);
+    if (isEdit) {
+      onEdit?.(item);
+    } else {
+      onAdd(item);
+    }
     setForm(initialForm);
     onClose();
   };
@@ -167,10 +197,10 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
           </Box>
           <Box>
             <Typography sx={{ fontSize: 17, fontWeight: 700, color: "grey.900", lineHeight: 1.2 }}>
-              Add Supply Item
+              {isView ? "View Supply Item" : isEdit ? "Edit Supply Item" : "Add Supply Item"}
             </Typography>
             <Typography sx={{ fontSize: 12.5, color: "grey.500", mt: 0.25 }}>
-              Fill in the details to add a new item to hospital inventory
+              {isView ? "Supply item details (read-only)" : isEdit ? "Update the supply item details" : "Fill in the details to add a new item to hospital inventory"}
             </Typography>
           </Box>
         </Box>
@@ -199,8 +229,9 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               value={form.name}
               onChange={handleChange}
               fullWidth
-              required
+              required={!isView}
               placeholder="e.g. Surgical Face Mask (N95)"
+              slotProps={{ input: { readOnly: isView } }}
               sx={fieldSx}
             />
           </Grid>
@@ -212,6 +243,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               onChange={handleChange}
               fullWidth
               placeholder="e.g. 3M"
+              slotProps={{ input: { readOnly: isView } }}
               sx={fieldSx}
             />
           </Grid>
@@ -223,6 +255,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               onChange={handleChange}
               fullWidth
               placeholder="e.g. MedSupply PH Inc."
+              slotProps={{ input: { readOnly: isView } }}
               sx={fieldSx}
             />
           </Grid>
@@ -241,6 +274,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               onChange={handleChange}
               fullWidth
               placeholder="e.g. PPE, Equipment, Consumables"
+              slotProps={{ input: { readOnly: isView } }}
               sx={fieldSx}
             />
           </Grid>
@@ -252,6 +286,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               onChange={handleChange}
               fullWidth
               placeholder="e.g. Masks, Beds, IV Supplies"
+              slotProps={{ input: { readOnly: isView } }}
               sx={fieldSx}
             />
           </Grid>
@@ -263,6 +298,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               onChange={handleChange}
               fullWidth
               placeholder="e.g. pieces, boxes, sets"
+              slotProps={{ input: { readOnly: isView } }}
               sx={fieldSx}
             />
           </Grid>
@@ -281,6 +317,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               onChange={handleChange}
               fullWidth
               placeholder="e.g. MASK-2026-001"
+              slotProps={{ input: { readOnly: isView } }}
               sx={fieldSx}
             />
           </Grid>
@@ -292,6 +329,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               onChange={handleChange}
               fullWidth
               placeholder="e.g. Storage Room A"
+              slotProps={{ input: { readOnly: isView } }}
               sx={fieldSx}
             />
           </Grid>
@@ -304,6 +342,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               type="date"
               InputLabelProps={{ shrink: true }}
               fullWidth
+              slotProps={{ input: { readOnly: isView } }}
               sx={fieldSx}
             />
           </Grid>
@@ -316,6 +355,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               type="number"
               fullWidth
               placeholder="0"
+              slotProps={{ input: { readOnly: isView } }}
               sx={fieldSx}
             />
           </Grid>
@@ -329,6 +369,7 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
               fullWidth
               placeholder="0.00"
               InputProps={{
+                readOnly: isView,
                 startAdornment: <InputAdornment position="start">₱</InputAdornment>,
               }}
               sx={fieldSx}
@@ -361,26 +402,28 @@ const AddSupplyModal: React.FC<AddSupplyModalProps> = ({ open, onClose, onAdd })
             "&:hover": { borderColor: "grey.400", bgcolor: palette.grey[50] },
           }}
         >
-          Cancel
+          {isView ? "Close" : "Cancel"}
         </Button>
-        <Button
-          onClick={handleAdd}
-          variant="contained"
-          disabled={!form.name}
-          sx={{
-            borderRadius: "10px",
-            textTransform: "none",
-            fontWeight: 700,
-            fontSize: 14,
-            bgcolor: palette.primary.main,
-            px: 3,
-            boxShadow: "none",
-            "&:hover": { bgcolor: "#3451d1", boxShadow: "none" },
-            "&.Mui-disabled": { bgcolor: palette.grey[200], color: "grey.400" },
-          }}
-        >
-          Add Item
-        </Button>
+        {!isView && (
+          <Button
+            onClick={handleSubmit}
+            variant="contained"
+            disabled={!form.name}
+            sx={{
+              borderRadius: "10px",
+              textTransform: "none",
+              fontWeight: 700,
+              fontSize: 14,
+              bgcolor: palette.primary.main,
+              px: 3,
+              boxShadow: "none",
+              "&:hover": { bgcolor: "#3451d1", boxShadow: "none" },
+              "&.Mui-disabled": { bgcolor: palette.grey[200], color: "grey.400" },
+            }}
+          >
+            {isEdit ? "Save Changes" : "Add Item"}
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

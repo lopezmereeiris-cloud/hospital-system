@@ -26,4 +26,7 @@ export interface SupplyItem {
 
 export interface SupplyTableProps {
   items: SupplyItem[];
+  onEdit?: (item: SupplyItem) => void;
+  onView?: (item: SupplyItem) => void;
+  onDelete?: (item: SupplyItem) => void;
 }

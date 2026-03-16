@@ -10,12 +10,16 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import { alpha } from "@mui/material/styles";
 import { Medicine } from "@/components/InventoryTable/interface";
 import { palette } from "@/theme/palette";
 
 interface MedicineCardProps {
   medicine: Medicine;
+  onEdit?: (medicine: Medicine) => void;
+  onView?: (medicine: Medicine) => void;
+  onDelete?: (medicine: Medicine) => void;
 }
 
 type AlertInfo = {
@@ -44,7 +48,7 @@ function getBarColor(alert: AlertInfo) {
   return palette.success.main;
 }
 
-const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
+const MedicineCard: React.FC<MedicineCardProps> = ({ medicine, onEdit, onView, onDelete }) => {
   const stockPct = Math.min(
     Math.round((medicine.quantityOnHand / (medicine.maximumStockLevel || 1)) * 100),
     100
@@ -164,6 +168,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
           <Tooltip title="View details" arrow>
             <IconButton
               size="small"
+              onClick={() => onView?.(medicine)}
               sx={{
                 color: "grey.400",
                 border: `1px solid ${palette.grey[200]}`,
@@ -179,6 +184,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
           <Tooltip title="Edit" arrow>
             <IconButton
               size="small"
+              onClick={() => onEdit?.(medicine)}
               sx={{
                 color: "grey.400",
                 border: `1px solid ${palette.grey[200]}`,
@@ -189,6 +195,22 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
               }}
             >
               <EditOutlinedIcon sx={{ fontSize: 16 }} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete" arrow>
+            <IconButton
+              size="small"
+              onClick={() => onDelete?.(medicine)}
+              sx={{
+                color: "grey.400",
+                border: `1px solid ${palette.grey[200]}`,
+                borderRadius: "8px",
+                width: 30,
+                height: 30,
+                "&:hover": { color: palette.error.main, borderColor: palette.error.main, bgcolor: alpha(palette.error.main, 0.06) },
+              }}
+            >
+              <DeleteOutlineRoundedIcon sx={{ fontSize: 16 }} />
             </IconButton>
           </Tooltip>
         </Box>
