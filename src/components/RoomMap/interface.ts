@@ -4,5 +4,6 @@ export interface RoomMapProps {
   rooms: Room[];
   roomTypes: RoomType[];
   onRoomClick: (room: Room) => void;
-  onAddRoom: () => void;
+  onAddRoom?: () => void;
+  readOnly?: boolean;
 }

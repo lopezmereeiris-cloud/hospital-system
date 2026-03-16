@@ -55,14 +55,16 @@ const filterOptions: { value: StatusFilter; label: string }[] = [
   { value: "depleted", label: "Depleted" },
 ];
 
-const BeneficiaryTable: React.FC<BeneficiaryTableProps> = ({ beneficiaries }) => {
+const BeneficiaryTable: React.FC<BeneficiaryTableProps> = ({
+  beneficiaries,
+  basePath = "/admin/yakap",
+}) => {
   const router = useRouter();
   const [filter, setFilter] = useState<StatusFilter>("all");
   const [sortBy, setSortBy] = useState<SortKey>("registered");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
   const filtered = beneficiaries.filter((b) => {
-    /* status filter */
     if (filter === "Active" || filter === "Inactive") {
       if (b.status !== filter) return false;
     }
@@ -131,122 +133,122 @@ const BeneficiaryTable: React.FC<BeneficiaryTableProps> = ({ beneficiaries }) =>
 
   return (
     <BeneficiaryContainer>
-        <BeneficiaryToolbar>
-          <div style={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
-            Registered Beneficiaries
-          </div>
-          <PremiumFilter
-            options={optionsWithCounts}
-            active={filter}
-            onChange={setFilter}
-          />
-        </BeneficiaryToolbar>
+      <BeneficiaryToolbar>
+        <div style={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
+          Registered Beneficiaries
+        </div>
+        <PremiumFilter
+          options={optionsWithCounts}
+          active={filter}
+          onChange={setFilter}
+        />
+      </BeneficiaryToolbar>
 
-        <TableContainer sx={{ maxHeight: 600 }}>
-          <Table stickyHeader size="small">
-            <TableHead>
-              <StyledRow>
-                {columns.map((column) => (
-                  <StyledHeaderCell key={column.key} sortDirection={sortBy === column.key ? sortDirection : false}>
-                    <TableSortLabel
-                      active={sortBy === column.key}
-                      direction={sortBy === column.key ? sortDirection : "asc"}
-                      onClick={() => handleSort(column.key)}
-                      sx={{
-                        color: "inherit",
-                        "&.Mui-active": { color: "grey.700" },
-                        "& .MuiTableSortLabel-icon": { color: "inherit !important" },
-                      }}
-                    >
-                      {column.label}
-                    </TableSortLabel>
-                  </StyledHeaderCell>
-                ))}
-              </StyledRow>
-            </TableHead>
-            <TableBody>
-              {sorted.map((b) => {
-                const usedPct = Math.round((b.benefitUsed / b.annualBenefit) * 100);
-                const barColor =
-                  b.benefitBalance === 0
-                    ? palette.error.main
-                    : b.benefitBalance <= 3000
-                    ? palette.warning.main
-                    : PH.green;
-
-                const fullName = [b.firstName, b.middleName, b.lastName, b.suffix]
-                  .filter(Boolean)
-                  .join(" ");
-
-                return (
-                  <StyledRow
-                    key={b.id}
-                    onClick={() => router.push(`/admin/yakap/${encodeURIComponent(b.id)}`)}
-                    sx={{ cursor: "pointer" }}
+      <TableContainer sx={{ maxHeight: 600 }}>
+        <Table stickyHeader size="small">
+          <TableHead>
+            <StyledRow>
+              {columns.map((column) => (
+                <StyledHeaderCell key={column.key} sortDirection={sortBy === column.key ? sortDirection : false}>
+                  <TableSortLabel
+                    active={sortBy === column.key}
+                    direction={sortBy === column.key ? sortDirection : "asc"}
+                    onClick={() => handleSort(column.key)}
+                    sx={{
+                      color: "inherit",
+                      "&.Mui-active": { color: "grey.700" },
+                      "& .MuiTableSortLabel-icon": { color: "inherit !important" },
+                    }}
                   >
-                    <StyledBodyCell sx={{ fontWeight: 600, whiteSpace: "nowrap" }}>
-                      {b.id}
-                    </StyledBodyCell>
-                    <StyledBodyCell sx={{ fontWeight: 500, whiteSpace: "nowrap" }}>
-                      {fullName}
-                    </StyledBodyCell>
-                    <StyledBodyCell sx={{ whiteSpace: "nowrap" }}>
-                      {b.contactNumber}
-                    </StyledBodyCell>
-                    <StyledBodyCell>{b.address.barangay}</StyledBodyCell>
-                    <StyledBodyCell sx={{ whiteSpace: "nowrap" }}>
-                      {b.registrationDate}
-                    </StyledBodyCell>
-                    <StyledBodyCell>
-                      <Chip
-                        label={b.status}
-                        color={b.status === "Active" ? "success" : "error"}
-                        size="small"
-                      />
-                    </StyledBodyCell>
-                    <StyledBodyCell sx={{ minWidth: 140 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                        <LinearProgress
-                          variant="determinate"
-                          value={usedPct}
-                          sx={{
-                            flex: 1,
-                            height: 6,
+                    {column.label}
+                  </TableSortLabel>
+                </StyledHeaderCell>
+              ))}
+            </StyledRow>
+          </TableHead>
+          <TableBody>
+            {sorted.map((b) => {
+              const usedPct = Math.round((b.benefitUsed / b.annualBenefit) * 100);
+              const barColor =
+                b.benefitBalance === 0
+                  ? palette.error.main
+                  : b.benefitBalance <= 3000
+                  ? palette.warning.main
+                  : PH.green;
+
+              const fullName = [b.firstName, b.middleName, b.lastName, b.suffix]
+                .filter(Boolean)
+                .join(" ");
+
+              return (
+                <StyledRow
+                  key={b.id}
+                  onClick={() => router.push(`${basePath}/${encodeURIComponent(b.id)}`)}
+                  sx={{ cursor: "pointer" }}
+                >
+                  <StyledBodyCell sx={{ fontWeight: 600, whiteSpace: "nowrap" }}>
+                    {b.id}
+                  </StyledBodyCell>
+                  <StyledBodyCell sx={{ fontWeight: 500, whiteSpace: "nowrap" }}>
+                    {fullName}
+                  </StyledBodyCell>
+                  <StyledBodyCell sx={{ whiteSpace: "nowrap" }}>
+                    {b.contactNumber}
+                  </StyledBodyCell>
+                  <StyledBodyCell>{b.address.barangay}</StyledBodyCell>
+                  <StyledBodyCell sx={{ whiteSpace: "nowrap" }}>
+                    {b.registrationDate}
+                  </StyledBodyCell>
+                  <StyledBodyCell>
+                    <Chip
+                      label={b.status}
+                      color={b.status === "Active" ? "success" : "error"}
+                      size="small"
+                    />
+                  </StyledBodyCell>
+                  <StyledBodyCell sx={{ minWidth: 140 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={usedPct}
+                        sx={{
+                          flex: 1,
+                          height: 6,
+                          borderRadius: 3,
+                          bgcolor: "rgba(0,0,0,0.04)",
+                          "& .MuiLinearProgress-bar": {
                             borderRadius: 3,
-                            bgcolor: "rgba(0,0,0,0.04)",
-                            "& .MuiLinearProgress-bar": {
-                              borderRadius: 3,
-                              bgcolor: barColor,
-                            },
-                          }}
-                        />
-                        <span
-                          style={{
-                            fontSize: "0.68rem",
-                            fontWeight: 600,
-                            color: "text.secondary",
-                            minWidth: 28,
-                          }}
-                        >
-                          {usedPct}%
-                        </span>
-                      </div>
-                    </StyledBodyCell>
-                    <StyledBodyCell
-                      sx={{
-                        fontWeight: 700,
-                        color: b.benefitBalance === 0 ? palette.error.main : PH.green,
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      ₱{b.benefitBalance.toLocaleString()}
-                    </StyledBodyCell>
-                  </StyledRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                            bgcolor: barColor,
+                          },
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: "0.68rem",
+                          fontWeight: 600,
+                          color: "text.secondary",
+                          minWidth: 28,
+                        }}
+                      >
+                        {usedPct}%
+                      </span>
+                    </div>
+                  </StyledBodyCell>
+                  <StyledBodyCell
+                    sx={{
+                      fontWeight: 700,
+                      color: b.benefitBalance === 0 ? palette.error.main : PH.green,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    PHP {b.benefitBalance.toLocaleString()}
+                  </StyledBodyCell>
+                </StyledRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </BeneficiaryContainer>
   );
 };

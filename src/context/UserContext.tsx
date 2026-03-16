@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 export interface User {
   name: string;
-  role: "admin" | "patient";
+  role: "admin" | "patient" | "auditor";
   avatar?: string;
 }
 
@@ -20,8 +20,11 @@ const UserContext = createContext<UserContextProps | undefined>(undefined);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
+  const isAuditor = pathname.startsWith("/auditor");
   const defaultUser: User = isAdmin
     ? { name: "Hendrick", role: "admin", avatar: undefined }
+    : isAuditor
+    ? { name: "Alicia Ramos", role: "auditor", avatar: undefined }
     : { name: "Juan D. Santos", role: "patient", avatar: undefined };
   const [user, setUser] = useState<User>(defaultUser);
   return (

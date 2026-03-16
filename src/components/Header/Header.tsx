@@ -61,6 +61,10 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) =>
       router.push("/admin/profile");
       return;
     }
+    if (user.role === "auditor") {
+      router.push("/auditor/profile");
+      return;
+    }
     router.push("/client/profile");
   };
 
@@ -68,6 +72,10 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) =>
     handleMenuClose();
     if (user.role === "admin") {
       router.push("/admin/settings");
+      return;
+    }
+    if (user.role === "auditor") {
+      router.push("/auditor/settings");
       return;
     }
     router.push("/client/settings");
@@ -134,7 +142,13 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) =>
               </Avatar>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <UserName>{user.name}</UserName>
-                <UserRole>{user.role === "admin" ? "Admin" : "Patient"}</UserRole>
+                <UserRole>
+                  {user.role === "admin"
+                    ? "Admin"
+                    : user.role === "auditor"
+                    ? "Auditor"
+                    : "Patient"}
+                </UserRole>
               </div>
             </UserInfo>
 

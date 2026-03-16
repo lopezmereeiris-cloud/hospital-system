@@ -21,7 +21,7 @@ import {
   ActionsRow,
 } from "./elements";
 
-const ProfilePage: React.FC = () => {
+const ProfilePage: React.FC<{ readOnly?: boolean }> = ({ readOnly = false }) => {
   const fileRef = useRef<HTMLInputElement>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
@@ -83,6 +83,7 @@ const ProfilePage: React.FC = () => {
                 accept="image/*"
                 hidden
                 onChange={handleAvatarChange}
+                disabled={readOnly}
               />
             </AvatarUploadButton>
             <AvatarHint>
@@ -99,6 +100,7 @@ const ProfilePage: React.FC = () => {
                 placeholder="First name"
                 value={form.firstName}
                 onChange={handleChange("firstName")}
+                disabled={readOnly}
               />
             </FieldGroup>
             <FieldGroup>
@@ -108,6 +110,7 @@ const ProfilePage: React.FC = () => {
                 placeholder="Last name"
                 value={form.lastName}
                 onChange={handleChange("lastName")}
+                disabled={readOnly}
               />
             </FieldGroup>
           </FieldRow>
@@ -120,6 +123,7 @@ const ProfilePage: React.FC = () => {
                 placeholder="+63 9XX XXX XXXX"
                 value={form.phone}
                 onChange={handleChange("phone")}
+                disabled={readOnly}
               />
             </FieldGroup>
             <FieldGroup>
@@ -129,6 +133,7 @@ const ProfilePage: React.FC = () => {
                 placeholder="you@hospital.gov.ph"
                 value={form.email}
                 onChange={handleChange("email")}
+                disabled={readOnly}
               />
             </FieldGroup>
           </FieldRow>
@@ -145,6 +150,7 @@ const ProfilePage: React.FC = () => {
                 placeholder="••••••••"
                 value={form.currentPassword}
                 onChange={handleChange("currentPassword")}
+                disabled={readOnly}
               />
             </FieldGroup>
             <FieldGroup>
@@ -154,6 +160,7 @@ const ProfilePage: React.FC = () => {
                 placeholder="••••••••"
                 value={form.newPassword}
                 onChange={handleChange("newPassword")}
+                disabled={readOnly}
               />
             </FieldGroup>
           </FieldRow>
@@ -165,6 +172,7 @@ const ProfilePage: React.FC = () => {
                 placeholder="••••••••"
                 value={form.confirmPassword}
                 onChange={handleChange("confirmPassword")}
+                disabled={readOnly}
               />
             </FieldGroup>
             <FieldGroup />
@@ -182,6 +190,7 @@ const ProfilePage: React.FC = () => {
                 placeholder="Home address"
                 value={form.address}
                 onChange={handleChange("address")}
+                disabled={readOnly}
               />
             </FieldGroup>
             <FieldGroup>
@@ -191,44 +200,47 @@ const ProfilePage: React.FC = () => {
                 placeholder="+63 9XX XXX XXXX"
                 value={form.emergencyContact}
                 onChange={handleChange("emergencyContact")}
+                disabled={readOnly}
               />
             </FieldGroup>
           </FieldRow>
         </SectionCard>
 
         {/* ——— Actions ——— */}
-        <ActionsRow>
-          <Button
-            variant="outlined"
-            sx={{
-              borderRadius: 2.5,
-              textTransform: "none",
-              fontWeight: 600,
-              fontSize: "0.82rem",
-              px: 3,
-              borderColor: "grey.300",
-              color: "text.primary",
-              "&:hover": { borderColor: "grey.400", bgcolor: "grey.50" },
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              borderRadius: 2.5,
-              textTransform: "none",
-              fontWeight: 600,
-              fontSize: "0.82rem",
-              px: 3,
-              boxShadow: "none",
-              "&:hover": { boxShadow: "none" },
-            }}
-          >
-            Save Changes
-          </Button>
-        </ActionsRow>
+        {!readOnly && (
+          <ActionsRow>
+            <Button
+              variant="outlined"
+              sx={{
+                borderRadius: 2.5,
+                textTransform: "none",
+                fontWeight: 600,
+                fontSize: "0.82rem",
+                px: 3,
+                borderColor: "grey.300",
+                color: "text.primary",
+                "&:hover": { borderColor: "grey.400", bgcolor: "grey.50" },
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                borderRadius: 2.5,
+                textTransform: "none",
+                fontWeight: 600,
+                fontSize: "0.82rem",
+                px: 3,
+                boxShadow: "none",
+                "&:hover": { boxShadow: "none" },
+              }}
+            >
+              Save Changes
+            </Button>
+          </ActionsRow>
+        )}
       </form>
     </ProfileContainer>
   );

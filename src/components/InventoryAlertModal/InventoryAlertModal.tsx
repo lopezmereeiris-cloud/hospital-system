@@ -17,15 +17,22 @@ interface InventoryAlertModalProps {
   onClose: () => void;
   medicine: Medicine | null;
   mode: "reorder" | "review";
+  readOnly?: boolean;
 }
 
-const InventoryAlertModal: React.FC<InventoryAlertModalProps> = ({ open, onClose, medicine, mode }) => {
+const InventoryAlertModal: React.FC<InventoryAlertModalProps> = ({
+  open,
+  onClose,
+  medicine,
+  mode,
+  readOnly = false,
+}) => {
   if (!medicine) return null;
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle>
-        {mode === "reorder" ? "Reorder Medicine" : "Review Alert"}
+        {readOnly ? "Medicine Alert Details" : mode === "reorder" ? "Reorder Medicine" : "Review Alert"}
       </DialogTitle>
       <DialogContent dividers>
         <Typography variant="h6" sx={{ mb: 1 }}>{medicine.genericName}</Typography>
@@ -56,7 +63,14 @@ const InventoryAlertModal: React.FC<InventoryAlertModalProps> = ({ open, onClose
           <b>Storage:</b> {medicine.storageLocation}
         </Typography>
         <Divider sx={{ my: 2 }} />
-        {mode === "reorder" ? (
+        {readOnly ? (
+          <>
+            <Typography variant="subtitle1" sx={{ mb: 1 }}>Alert Summary</Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              This item is flagged for monitoring. Auditor access is view-only, so stock actions are disabled here.
+            </Typography>
+          </>
+        ) : mode === "reorder" ? (
           <>
             <Typography variant="subtitle1" sx={{ mb: 1 }}>Reorder Form</Typography>
             <input type="number" placeholder="Quantity to reorder" style={{ width: "100%", marginBottom: 12, padding: 8, borderRadius: 6, border: "1px solid #E0E0E0" }} />
@@ -71,10 +85,12 @@ const InventoryAlertModal: React.FC<InventoryAlertModalProps> = ({ open, onClose
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} variant="text">Cancel</Button>
-        <Button onClick={onClose} variant="contained" color="primary">
-          {mode === "reorder" ? "Submit Reorder" : "Mark as Reviewed"}
-        </Button>
+        <Button onClick={onClose} variant="text">{readOnly ? "Close" : "Cancel"}</Button>
+        {!readOnly && (
+          <Button onClick={onClose} variant="contained" color="primary">
+            {mode === "reorder" ? "Submit Reorder" : "Mark as Reviewed"}
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

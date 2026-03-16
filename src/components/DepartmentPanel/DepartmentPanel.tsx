@@ -37,6 +37,7 @@ export interface Department {
 
 interface DepartmentPanelProps {
   doctors: Doctor[];
+  readOnly?: boolean;
 }
 
 const INITIAL_FORM: Omit<Department, "id"> = {
@@ -81,7 +82,7 @@ function buildInitialDepartments(doctors: Doctor[]): Department[] {
   });
 }
 
-const DepartmentPanel: React.FC<DepartmentPanelProps> = ({ doctors }) => {
+const DepartmentPanel: React.FC<DepartmentPanelProps> = ({ doctors, readOnly = false }) => {
   const [departments, setDepartments] = useState<Department[]>(() => buildInitialDepartments(doctors));
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -139,14 +140,16 @@ const DepartmentPanel: React.FC<DepartmentPanelProps> = ({ doctors }) => {
         <Typography sx={{ fontSize: "1rem", fontWeight: 700, color: "text.primary" }}>
           Departments ({departments.length})
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddRoundedIcon />}
-          onClick={openCreate}
-          sx={{ textTransform: "none", borderRadius: "10px", fontWeight: 600, px: 2.5, py: 0.9, boxShadow: "none", "&:hover": { boxShadow: "none" } }}
-        >
-          Add Department
-        </Button>
+        {!readOnly && (
+          <Button
+            variant="contained"
+            startIcon={<AddRoundedIcon />}
+            onClick={openCreate}
+            sx={{ textTransform: "none", borderRadius: "10px", fontWeight: 600, px: 2.5, py: 0.9, boxShadow: "none", "&:hover": { boxShadow: "none" } }}
+          >
+            Add Department
+          </Button>
+        )}
       </Box>
 
       {/* Grid */}
@@ -225,12 +228,16 @@ const DepartmentPanel: React.FC<DepartmentPanelProps> = ({ doctors }) => {
                 </div>
               </Box>
               <Box sx={{ display: "flex", gap: 0.5 }}>
-                <IconButton size="small" onClick={(e) => { e.stopPropagation(); openEdit(detailDept); setDetailDept(null); }}>
-                  <EditRoundedIcon sx={{ fontSize: 18 }} />
-                </IconButton>
-                <IconButton size="small" onClick={(e) => { e.stopPropagation(); handleDelete(detailDept.id); }}>
-                  <DeleteRoundedIcon sx={{ fontSize: 18, color: palette.error.main }} />
-                </IconButton>
+                {!readOnly && (
+                  <>
+                    <IconButton size="small" onClick={(e) => { e.stopPropagation(); openEdit(detailDept); setDetailDept(null); }}>
+                      <EditRoundedIcon sx={{ fontSize: 18 }} />
+                    </IconButton>
+                    <IconButton size="small" onClick={(e) => { e.stopPropagation(); handleDelete(detailDept.id); }}>
+                      <DeleteRoundedIcon sx={{ fontSize: 18, color: palette.error.main }} />
+                    </IconButton>
+                  </>
+                )}
                 <IconButton size="small" onClick={() => setDetailDept(null)}>
                   <CloseRoundedIcon sx={{ fontSize: 18 }} />
                 </IconButton>
@@ -302,43 +309,45 @@ const DepartmentPanel: React.FC<DepartmentPanelProps> = ({ doctors }) => {
       </Dialog>
 
       {/* Create / Edit Modal */}
-      <Dialog open={modalOpen} onClose={() => setModalOpen(false)} maxWidth="sm" fullWidth>
-        <DialogContent sx={{ p: { xs: 2.5, sm: 3.5 } }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 3 }}>
-            <div>
-              <Typography sx={{ fontSize: "1.2rem", fontWeight: 700, color: "text.primary" }}>
-                {editingId ? "Edit Department" : "Add New Department"}
-              </Typography>
-              <Typography sx={{ fontSize: "0.82rem", color: "text.secondary", mt: 0.3 }}>
-                {editingId ? "Update department information below." : "Fill in the details for the new department."}
-              </Typography>
-            </div>
-            <IconButton size="small" onClick={() => setModalOpen(false)}>
-              <CloseRoundedIcon />
-            </IconButton>
-          </Box>
-
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2.2 }}>
-            <TextField label="Department Name" required fullWidth value={form.name} onChange={(e) => update("name", e.target.value)} placeholder="e.g. Cardiology" InputLabelProps={{ shrink: true }} sx={inputSx} />
-            <TextField label="Department Head" fullWidth value={form.head} onChange={(e) => update("head", e.target.value)} placeholder="e.g. Dr. Juan Dela Cruz" InputLabelProps={{ shrink: true }} sx={inputSx} />
-            <TextField label="Description" fullWidth multiline rows={3} value={form.description} onChange={(e) => update("description", e.target.value)} placeholder="Describe the department's services and scope..." InputLabelProps={{ shrink: true }} sx={inputSx} />
-            <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
-              <TextField label="Location" fullWidth value={form.location} onChange={(e) => update("location", e.target.value)} placeholder="e.g. East Wing, Floor 2" InputLabelProps={{ shrink: true }} sx={inputSx} />
-              <TextField label="Extension" fullWidth value={form.extension} onChange={(e) => update("extension", e.target.value)} placeholder="e.g. 1200" InputLabelProps={{ shrink: true }} sx={inputSx} />
+      {!readOnly && (
+        <Dialog open={modalOpen} onClose={() => setModalOpen(false)} maxWidth="sm" fullWidth>
+          <DialogContent sx={{ p: { xs: 2.5, sm: 3.5 } }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 3 }}>
+              <div>
+                <Typography sx={{ fontSize: "1.2rem", fontWeight: 700, color: "text.primary" }}>
+                  {editingId ? "Edit Department" : "Add New Department"}
+                </Typography>
+                <Typography sx={{ fontSize: "0.82rem", color: "text.secondary", mt: 0.3 }}>
+                  {editingId ? "Update department information below." : "Fill in the details for the new department."}
+                </Typography>
+              </div>
+              <IconButton size="small" onClick={() => setModalOpen(false)}>
+                <CloseRoundedIcon />
+              </IconButton>
             </Box>
-            <TextField label="Email" fullWidth value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="e.g. department@hospital.ph" InputLabelProps={{ shrink: true }} sx={inputSx} />
-          </Box>
 
-          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1.5, mt: 3, pt: 2.5, borderTop: `1px solid ${palette.divider}` }}>
-            <Button variant="outlined" onClick={() => setModalOpen(false)} sx={{ textTransform: "none", borderRadius: "10px", fontWeight: 600, px: 2.5, py: 0.9 }}>
-              Cancel
-            </Button>
-            <Button variant="contained" onClick={handleSave} disabled={!form.name.trim()} sx={{ textTransform: "none", borderRadius: "10px", fontWeight: 600, px: 2.5, py: 0.9, boxShadow: "none", "&:hover": { boxShadow: "none" } }}>
-              {editingId ? "Save Changes" : "Create Department"}
-            </Button>
-          </Box>
-        </DialogContent>
-      </Dialog>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2.2 }}>
+              <TextField label="Department Name" required fullWidth value={form.name} onChange={(e) => update("name", e.target.value)} placeholder="e.g. Cardiology" InputLabelProps={{ shrink: true }} sx={inputSx} />
+              <TextField label="Department Head" fullWidth value={form.head} onChange={(e) => update("head", e.target.value)} placeholder="e.g. Dr. Juan Dela Cruz" InputLabelProps={{ shrink: true }} sx={inputSx} />
+              <TextField label="Description" fullWidth multiline rows={3} value={form.description} onChange={(e) => update("description", e.target.value)} placeholder="Describe the department's services and scope..." InputLabelProps={{ shrink: true }} sx={inputSx} />
+              <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+                <TextField label="Location" fullWidth value={form.location} onChange={(e) => update("location", e.target.value)} placeholder="e.g. East Wing, Floor 2" InputLabelProps={{ shrink: true }} sx={inputSx} />
+                <TextField label="Extension" fullWidth value={form.extension} onChange={(e) => update("extension", e.target.value)} placeholder="e.g. 1200" InputLabelProps={{ shrink: true }} sx={inputSx} />
+              </Box>
+              <TextField label="Email" fullWidth value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="e.g. department@hospital.ph" InputLabelProps={{ shrink: true }} sx={inputSx} />
+            </Box>
+
+            <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1.5, mt: 3, pt: 2.5, borderTop: `1px solid ${palette.divider}` }}>
+              <Button variant="outlined" onClick={() => setModalOpen(false)} sx={{ textTransform: "none", borderRadius: "10px", fontWeight: 600, px: 2.5, py: 0.9 }}>
+                Cancel
+              </Button>
+              <Button variant="contained" onClick={handleSave} disabled={!form.name.trim()} sx={{ textTransform: "none", borderRadius: "10px", fontWeight: 600, px: 2.5, py: 0.9, boxShadow: "none", "&:hover": { boxShadow: "none" } }}>
+                {editingId ? "Save Changes" : "Create Department"}
+              </Button>
+            </Box>
+          </DialogContent>
+        </Dialog>
+      )}
     </Box>
   );
 };
