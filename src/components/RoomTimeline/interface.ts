@@ -27,5 +27,6 @@ export interface RoomTimelineProps {
   schedules: RoomSchedule[];
   roomTypes: RoomType[];
   onCellClick: (room: Room, date: string, schedule?: RoomSchedule | null) => void;
-  onCreateBooking: (payload: BookingPayload) => CreateBookingResult;
+  onCreateBooking?: (payload: BookingPayload) => CreateBookingResult;
+  readOnly?: boolean;
 }

@@ -23,6 +23,7 @@ export interface StatementOfAccountsProps {
   yakapMembers: YakapMember[];
   appointments: Appointment[];
   medicines: Medicine[];
+  readOnly?: boolean;
 }
 
 export type BillingStatus = "Pending" | "Partial" | "Paid";

@@ -79,6 +79,7 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
   yakapMembers,
   appointments,
   medicines,
+  readOnly = false,
 }) => {
   const [activeTab, setActiveTab] = useState<BillingTab>("all-bills");
   const [search, setSearch] = useState("");
@@ -485,7 +486,7 @@ const StatementOfAccounts: React.FC<StatementOfAccountsProps> = ({
               </NotesCard>
 
               <ActionRow>
-                <PrimaryActionButton variant="contained">Record Payment</PrimaryActionButton>
+                {!readOnly && <PrimaryActionButton variant="contained">Record Payment</PrimaryActionButton>}
                 <SecondaryActionButton variant="outlined">Print Bill</SecondaryActionButton>
               </ActionRow>
             </DetailBody>

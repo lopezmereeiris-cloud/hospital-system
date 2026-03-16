@@ -1,0 +1,183 @@
+"use client";
+
+import React, { useState } from "react";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Chip from "@mui/material/Chip";
+import { alpha } from "@mui/material/styles";
+import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
+import VolunteerActivismRoundedIcon from "@mui/icons-material/VolunteerActivismRounded";
+import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
+import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import DashboardCard from "@/components/DashboardCard";
+import BeneficiaryTable from "@/components/BeneficiaryTable";
+import { Beneficiary } from "@/components/BeneficiaryTable/interface";
+import yakapData from "@/json/yakap.json";
+import { palette } from "@/theme/palette";
+
+const PH = {
+  green: "#0D8A3F",
+  greenLight: "#14A44D",
+  blue: "#0066B2",
+  yellow: "#FFC107",
+};
+
+export default function AuditorYakapPage() {
+  const beneficiaries = yakapData as Beneficiary[];
+  const active = beneficiaries.filter((b) => b.status === "Active").length;
+  const totalUsed = beneficiaries.reduce((s, b) => s + b.benefitUsed, 0);
+  const totalBalance = beneficiaries.reduce((s, b) => s + b.benefitBalance, 0);
+  const lowBalance = beneficiaries.filter(
+    (b) => b.benefitBalance > 0 && b.benefitBalance <= 3000
+  ).length;
+  const depleted = beneficiaries.filter((b) => b.benefitBalance === 0).length;
+  const [search, setSearch] = useState("");
+
+  const filtered = beneficiaries.filter((b) => {
+    if (!search) return true;
+    const q = search.toLowerCase();
+    const fullName = `${b.firstName} ${b.middleName} ${b.lastName}`.toLowerCase();
+    return (
+      fullName.includes(q) ||
+      b.id.toLowerCase().includes(q) ||
+      b.philhealthNumber.toLowerCase().includes(q)
+    );
+  });
+
+  return (
+    <Box sx={{ maxWidth: 1440, mx: "auto" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          mb: 3,
+          flexWrap: "wrap",
+          gap: 1.5,
+        }}
+      >
+        <div>
+          <h2
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: 700,
+              margin: "0 0 4px 0",
+              color: "text.primary",
+            }}
+          >
+            YAKAP Program
+          </h2>
+          <p style={{ fontSize: "0.85rem", color: "text.secondary", margin: 0 }}>
+            PhilHealth beneficiary management and benefit monitoring.
+          </p>
+        </div>
+        <Chip
+          label="Read-only access"
+          size="small"
+          sx={{
+            bgcolor: alpha(PH.blue, 0.08),
+            color: PH.blue,
+            fontWeight: 700,
+          }}
+        />
+      </Box>
+
+      <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
+          <DashboardCard
+            title="Total Beneficiaries"
+            value={beneficiaries.length}
+            subtitle={`${active} active`}
+            icon={<GroupsRoundedIcon />}
+            color={PH.green}
+          />
+        </Grid>
+        <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
+          <DashboardCard
+            title="Active"
+            value={active}
+            icon={<VolunteerActivismRoundedIcon />}
+            color={PH.blue}
+          />
+        </Grid>
+        <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
+          <DashboardCard
+            title="Total Disbursed"
+            value={`PHP ${totalUsed.toLocaleString()}`}
+            icon={<AccountBalanceWalletRoundedIcon />}
+            color={PH.greenLight}
+          />
+        </Grid>
+        <Grid size={{ xs: 6, sm: 4, lg: 2.4 }}>
+          <DashboardCard
+            title="Low Balance"
+            value={lowBalance}
+            subtitle="<= PHP 3,000 remaining"
+            icon={<WarningAmberRoundedIcon />}
+            color={palette.warning.main}
+          />
+        </Grid>
+        <Grid size={{ xs: 12, sm: 4, lg: 2.4 }}>
+          <DashboardCard
+            title="Remaining Funds"
+            value={`PHP ${totalBalance.toLocaleString()}`}
+            subtitle={`${depleted} depleted`}
+            icon={<AccountBalanceWalletRoundedIcon />}
+            color={PH.yellow}
+          />
+        </Grid>
+      </Grid>
+
+      <Paper
+        sx={{
+          p: "12px 16px",
+          mb: 2.5,
+          borderRadius: "12px",
+          border: `1px solid ${palette.grey[200]}`,
+          boxShadow: "none",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flex: 1,
+              bgcolor: palette.background.default,
+              borderRadius: "8px",
+              border: `1px solid ${palette.grey[200]}`,
+              px: 1.5,
+              py: 0.25,
+              transition: "border-color 0.2s",
+              "&:focus-within": { borderColor: PH.green },
+            }}
+          >
+            <SearchRoundedIcon sx={{ color: "grey.400", fontSize: 20, mr: 1 }} />
+            <InputBase
+              placeholder="Search beneficiaries by name, ID, or PhilHealth number..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              sx={{ flex: 1, fontSize: 14, fontWeight: 500, color: "grey.700" }}
+              inputProps={{ "aria-label": "search beneficiaries" }}
+            />
+          </Box>
+          <Chip
+            label={`${filtered.length} result${filtered.length !== 1 ? "s" : ""}`}
+            size="small"
+            sx={{
+              bgcolor: alpha(PH.green, 0.08),
+              color: PH.green,
+              fontWeight: 600,
+              fontSize: "0.75rem",
+            }}
+          />
+        </Box>
+      </Paper>
+
+      <BeneficiaryTable beneficiaries={filtered} basePath="/auditor/yakap" />
+    </Box>
+  );
+}

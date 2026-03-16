@@ -16,6 +16,7 @@ import { palette } from "@/theme/palette";
 
 interface MedicineCardProps {
   medicine: Medicine;
+  readOnly?: boolean;
 }
 
 type AlertInfo = {
@@ -44,7 +45,7 @@ function getBarColor(alert: AlertInfo) {
   return palette.success.main;
 }
 
-const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
+const MedicineCard: React.FC<MedicineCardProps> = ({ medicine, readOnly = false }) => {
   const stockPct = Math.min(
     Math.round((medicine.quantityOnHand / (medicine.maximumStockLevel || 1)) * 100),
     100
@@ -176,21 +177,23 @@ const MedicineCard: React.FC<MedicineCardProps> = ({ medicine }) => {
               <VisibilityOutlinedIcon sx={{ fontSize: 16 }} />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Edit" arrow>
-            <IconButton
-              size="small"
-              sx={{
-                color: "grey.400",
-                border: `1px solid ${palette.grey[200]}`,
-                borderRadius: "8px",
-                width: 30,
-                height: 30,
-                "&:hover": { color: palette.primary.main, borderColor: palette.primary.main, bgcolor: alpha(palette.primary.main, 0.06) },
-              }}
-            >
-              <EditOutlinedIcon sx={{ fontSize: 16 }} />
-            </IconButton>
-          </Tooltip>
+          {!readOnly && (
+            <Tooltip title="Edit" arrow>
+              <IconButton
+                size="small"
+                sx={{
+                  color: "grey.400",
+                  border: `1px solid ${palette.grey[200]}`,
+                  borderRadius: "8px",
+                  width: 30,
+                  height: 30,
+                  "&:hover": { color: palette.primary.main, borderColor: palette.primary.main, bgcolor: alpha(palette.primary.main, 0.06) },
+                }}
+              >
+                <EditOutlinedIcon sx={{ fontSize: 16 }} />
+              </IconButton>
+            </Tooltip>
+          )}
         </Box>
       </Box>
     </Card>

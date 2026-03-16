@@ -46,4 +46,5 @@ export interface Beneficiary {
 
 export interface BeneficiaryTableProps {
   beneficiaries: Beneficiary[];
+  basePath?: string;
 }
