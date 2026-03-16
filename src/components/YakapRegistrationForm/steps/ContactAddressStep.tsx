@@ -56,7 +56,7 @@ const ContactAddressStep: React.FC<ContactAddressStepProps> = ({ form, onUpdate 
           />
         </div>
         <div>
-          <FieldLabel>Email Address *</FieldLabel>
+          <FieldLabel>Email Address</FieldLabel>
           <FieldInput
             type="email"
             placeholder="e.g. maria@email.com"
