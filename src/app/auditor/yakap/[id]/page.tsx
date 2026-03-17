@@ -160,7 +160,7 @@ export default function AuditorYakapBeneficiaryDetailPage() {
               <InfoField label="Name" value={beneficiary.emergencyContact.name} />
               <InfoField label="Relationship" value={beneficiary.emergencyContact.relationship} />
               <InfoField label="Contact Number" value={beneficiary.emergencyContact.contactNumber} />
-              <InfoField label="Benefit Year" value={String(beneficiary.benefitYear)} />
+              {/* <InfoField label="Benefit Year" value={String(beneficiary.benefitYear)} /> */}
             </Box>
           </Paper>
 

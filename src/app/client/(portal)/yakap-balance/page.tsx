@@ -579,10 +579,10 @@ export default function YakapBalancePage() {
                     <InfoItemLabel>Registered</InfoItemLabel>
                     <InfoItemValue>{fmtDate(beneficiary.registrationDate)}</InfoItemValue>
                   </InfoItem>
-                  <InfoItem>
+                  {/* <InfoItem>
                     <InfoItemLabel>Benefit Year</InfoItemLabel>
                     <InfoItemValue>{beneficiary.benefitYear}</InfoItemValue>
-                  </InfoItem>
+                  </InfoItem> */}
                 </InfoGrid>
               </InfoSection>
             </ProfileCard>

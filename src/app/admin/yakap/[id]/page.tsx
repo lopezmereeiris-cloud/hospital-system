@@ -475,7 +475,7 @@ export default function YakapBeneficiaryDetailPage() {
               <InfoField label="Name" value={b.emergencyContact.name} />
               <InfoField label="Relationship" value={b.emergencyContact.relationship} />
               <InfoField label="Contact Number" value={b.emergencyContact.contactNumber} />
-              <InfoField label="Benefit Year" value={String(b.benefitYear)} />
+              {/* <InfoField label="Benefit Year" value={String(b.benefitYear)} /> */}
             </Box>
           </Paper>
 
