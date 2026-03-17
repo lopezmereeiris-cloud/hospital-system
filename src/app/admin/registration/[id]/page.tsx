@@ -375,7 +375,6 @@ export default function PatientDetailPage() {
                 {editing ? (
                   <>
                     <EditField label="Blood Type" field="blood_type" value={p.blood_type || ""} onChange={update} options={["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Unknown"]} />
-                    <EditField label="Patient Type" field="patient_type" value={p.patient_type || ""} onChange={update} options={["Out-patient", "In-patient", "Day Care", "Emergency"]} />
                     <EditField label="Height (cm)" field="height" value={p.height || ""} onChange={update} type="number" />
                     <EditField label="Weight (kg)" field="weight" value={p.weight || ""} onChange={update} type="number" />
                     <EditField label="Smoking Status" field="smoking_status" value={p.smoking_status || ""} onChange={update} options={["Non-smoker", "Former smoker", "Current smoker"]} />
@@ -387,7 +386,6 @@ export default function PatientDetailPage() {
                 ) : (
                   <>
                     <InfoField label="Blood Type" value={p.blood_type || "-"} />
-                    <InfoField label="Patient Type" value={p.patient_type || "-"} />
                     <InfoField label="Height" value={p.height ? `${p.height} cm` : "-"} />
                     <InfoField label="Weight" value={p.weight ? `${p.weight} kg` : "-"} />
                     <InfoField label="Smoking Status" value={p.smoking_status || "-"} />

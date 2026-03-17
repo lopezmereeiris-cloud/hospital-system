@@ -144,46 +144,46 @@ const PatientRegistrationForm: React.FC<PatientRegistrationFormProps> = ({ onSub
     }));
   };
 
-  // const canProceed = (): boolean => {
-  //   switch (step) {
-  //     case 0: // Personal Info
-  //       return !!(form.firstName && form.lastName && form.dateOfBirth && form.gender && form.civilStatus && form.nationality);
-  //     case 1: // Medical Info
-  //       return !!(form.bloodType); 
-  //     case 2: // Contact & Address
-  //       return !!(form.contactNumber && form.street && form.barangay && form.city && form.province && form.zipCode);
-  //     case 3: // Identification
-  //       return true;
-  //     case 4: // Emergency Contact
-  //       return (
-  //         form.emergencyContacts.length >= 1 &&
-  //         form.emergencyContacts.every(
-  //           (contact) => !!(contact.name && contact.relationship && contact.contactNumber),
-  //         )
-  //       );
-  //     default:
-  //       return true;
-  //   }
-  // };
-
-
-  
   const canProceed = (): boolean => {
     switch (step) {
       case 0: // Personal Info
-        return true;
+        return !!(form.firstName && form.lastName && form.dateOfBirth && form.gender && form.civilStatus && form.nationality);
       case 1: // Medical Info
-        return true; 
+        return !!(form.bloodType); 
       case 2: // Contact & Address
-        return true;
+        return !!(form.contactNumber && form.street && form.barangay && form.city && form.province && form.zipCode);
       case 3: // Identification
         return true;
       case 4: // Emergency Contact
-        return true;
+        return (
+          form.emergencyContacts.length >= 1 &&
+          form.emergencyContacts.every(
+            (contact) => !!(contact.name && contact.relationship && contact.contactNumber),
+          )
+        );
       default:
         return true;
     }
   };
+
+
+  
+  // const canProceed = (): boolean => {
+  //   switch (step) {
+  //     case 0: // Personal Info
+  //       return true;
+  //     case 1: // Medical Info
+  //       return true; 
+  //     case 2: // Contact & Address
+  //       return true;
+  //     case 3: // Identification
+  //       return true;
+  //     case 4: // Emergency Contact
+  //       return true;
+  //     default:
+  //       return true;
+  //   }
+  // };
 
   const next = () => {
     if (step < STEPS.length - 1) setStep(step + 1);
