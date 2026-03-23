@@ -45,7 +45,7 @@ export default function PatientRegistrationPage() {
             color: "#4361EE",
           }}
         >
-          Patient
+          Patients
         </Link>
         <NavigateNextRoundedIcon sx={{ fontSize: 16, color: "#9CA3AF" }} />
         <Chip

@@ -44,7 +44,7 @@ const defaultPageTitles: Record<string, string> = {
   "/admin/registration": "Patients",
   "/admin/appointments": "Appointments",
   "/admin/medicineinventory": "Medicine",
-  "/admin/inventory": "Inventory",
+  "/admin/inventory": "Supplies",
   "/admin/rooms": "Room Management",
   "/admin/doctors": "Doctor Directory",
   "/admin/billing": "Billing",

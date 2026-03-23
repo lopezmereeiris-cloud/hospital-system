@@ -147,6 +147,8 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) =>
                     ? "Admin"
                     : user.role === "auditor"
                     ? "Auditor"
+                    : user.role === "doctor"
+                    ? "Doctor"
                     : "Patient"}
                 </UserRole>
               </div>
