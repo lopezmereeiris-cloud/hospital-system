@@ -9,14 +9,6 @@ export interface Doctor {
   status: string;
 }
 
-export interface Schedule {
-  day: string;
-  startTime: string;
-  endTime: string;
-  activity: string;
-  type: string;
-}
-
 export interface SetAppointmentModalProps {
   open: boolean;
   onClose: () => void;
@@ -32,9 +24,8 @@ export interface SetAppointmentModalProps {
 }
 
 export const STEPS = [
-  "Select Doctor",
-  "Choose Date & Time",
   "Appointment Details",
+  "Choose Date & Time",
   "Confirmation",
 ];
 
@@ -44,16 +35,6 @@ export const ID_TYPES = [
   "Driver's License",
   "PhilHealth ID",
   "Student ID",
-];
-
-export const DAYS_OF_WEEK = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
 ];
 
 export function format24HourTo12Hour(rawTime: string): string {
