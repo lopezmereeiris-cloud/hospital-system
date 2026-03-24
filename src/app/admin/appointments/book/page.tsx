@@ -30,11 +30,8 @@ import { Patient } from "@/components/PatientList/interface";
 import { palette } from "@/theme/palette";
 import {
   Doctor,
-  Schedule,
-  DAYS_OF_WEEK,
   format24HourTo12Hour,
 } from "@/components/SetAppointmentModal/interface";
-import Autocomplete from "@mui/material/Autocomplete";
 
 
 const PURPLE = "#4361EE";
@@ -98,15 +95,6 @@ const TIME_SLOTS = [
   "16:30",
 ];
 
-function format24HourTo12Hour(time: string) {
-  if (!time) return "";
-  const [hours, minutes] = time.split(":");
-  const hourNumber = Number(hours);
-  const suffix = hourNumber >= 12 ? "PM" : "AM";
-  const twelveHour = hourNumber % 12 || 12;
-  return `${twelveHour}:${minutes} ${suffix}`;
-}
-
 function formatDateDisplay(dateString: string) {
   if (!dateString) return "";
   const [year, month, day] = dateString.split("-");
@@ -144,7 +132,6 @@ function assignDoctorByAppointmentType(
 }
 
 export default function BookAppointmentPage() {
-  const { user } = useUser();
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
 
