@@ -46,11 +46,16 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
       }}
     >
       {[
-        { label: "Doctor", value: `Dr. ${selectedDoctor?.firstName} ${selectedDoctor?.lastName}` },
-        { label: "Department", value: selectedDoctor?.department || "" },
+        {
+          label: "Assigned Doctor",
+          value: selectedDoctor
+            ? `Dr. ${selectedDoctor.firstName} ${selectedDoctor.lastName}`
+            : "Doctor to be assigned",
+        },
+        { label: "Department", value: selectedDoctor?.department || "General Medicine" },
         { label: "Date", value: selectedDate },
-        { label: "Time", value: selectedTimeLabel || selectedTime },
-        { label: "Type", value: appointmentType },
+        { label: "Preferred Time", value: selectedTimeLabel || selectedTime },
+        { label: "Appointment Type", value: appointmentType },
         { label: "Reason", value: reason },
       ].map((item) => (
         <Box
@@ -110,7 +115,7 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
     )}
 
     <Alert severity="info" sx={{ mt: 2, borderRadius: "10px" }}>
-      After submission, this request remains pending while admin validates schedule availability.
+      Your request will remain pending while admin validates the schedule and final doctor assignment.
     </Alert>
   </Box>
 );

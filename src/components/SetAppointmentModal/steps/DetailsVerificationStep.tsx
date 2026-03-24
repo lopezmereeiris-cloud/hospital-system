@@ -4,19 +4,21 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { alpha } from "@mui/material/styles";
 import MedicalServicesRoundedIcon from "@mui/icons-material/MedicalServicesRounded";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
 import MonitorHeartRoundedIcon from "@mui/icons-material/MonitorHeartRounded";
 import VaccinesRoundedIcon from "@mui/icons-material/VaccinesRounded";
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { alpha } from "@mui/material/styles";
 import { palette } from "@/theme/palette";
+import type { Doctor } from "../interface";
 
 interface DetailsVerificationStepProps {
   appointmentType: string;
   reason: string;
   notes: string;
+  selectedDoctor: Doctor | null;
   onAppointmentTypeChange: (value: string) => void;
   onReasonChange: (value: string) => void;
   onNotesChange: (value: string) => void;
@@ -57,13 +59,13 @@ const DetailsVerificationStep: React.FC<DetailsVerificationStepProps> = ({
   appointmentType,
   reason,
   notes,
+  selectedDoctor,
   onAppointmentTypeChange,
   onReasonChange,
   onNotesChange,
 }) => (
   <Box>
-    {/* Appointment Type Section */}
-    <Box sx={{ mb: 3.5 }}>
+    <Box sx={{ mb: 3 }}>
       <Typography
         sx={{
           fontSize: "0.92rem",
@@ -75,7 +77,7 @@ const DetailsVerificationStep: React.FC<DetailsVerificationStepProps> = ({
         What type of appointment do you need?
       </Typography>
       <Typography sx={{ fontSize: "0.78rem", color: "text.secondary", mb: 2 }}>
-        Select the option that best describes your visit so we can prepare accordingly.
+        Select the option that best describes your visit so we can assign the most suitable doctor.
       </Typography>
 
       <Box
@@ -150,7 +152,8 @@ const DetailsVerificationStep: React.FC<DetailsVerificationStepProps> = ({
       </Box>
     </Box>
 
-    {/* Reason for Visit */}
+
+
     <Box sx={{ mb: 3 }}>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
         <EditNoteRoundedIcon sx={{ fontSize: 20, color: "primary.main" }} />
@@ -159,8 +162,7 @@ const DetailsVerificationStep: React.FC<DetailsVerificationStepProps> = ({
         </Typography>
       </Box>
       <Typography sx={{ fontSize: "0.78rem", color: "text.secondary", mb: 1.5 }}>
-        Briefly describe your symptoms or the reason you&apos;re seeing the doctor. This helps us
-        prepare for your visit.
+        Briefly describe your symptoms or the reason for your visit.
       </Typography>
       <TextField
         fullWidth
@@ -179,20 +181,21 @@ const DetailsVerificationStep: React.FC<DetailsVerificationStepProps> = ({
       />
     </Box>
 
-    {/* Additional Notes */}
     <Box sx={{ mb: 1 }}>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
         <InfoOutlinedIcon sx={{ fontSize: 20, color: "text.secondary" }} />
         <Typography sx={{ fontSize: "0.92rem", fontWeight: 700, color: "text.primary" }}>
           Additional notes
-          <Typography component="span" sx={{ fontSize: "0.78rem", fontWeight: 500, color: "text.secondary", ml: 0.75 }}>
+          <Typography
+            component="span"
+            sx={{ fontSize: "0.78rem", fontWeight: 500, color: "text.secondary", ml: 0.75 }}
+          >
             (optional)
           </Typography>
         </Typography>
       </Box>
       <Typography sx={{ fontSize: "0.78rem", color: "text.secondary", mb: 1.5 }}>
-        Include any details the doctor should know — allergies, current medications, mobility needs,
-        or special requests.
+        Include any details the doctor should know.
       </Typography>
       <TextField
         fullWidth

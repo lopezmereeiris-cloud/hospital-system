@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
@@ -13,16 +13,39 @@ import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import doctorsData from "@/json/doctors.json";
-import schedulesData from "@/json/doctorSchedules.json";
 import { palette } from "@/theme/palette";
-import { Doctor, Schedule, SetAppointmentModalProps, STEPS, DAYS_OF_WEEK } from "./interface";
-import DoctorSelectionStep from "./steps/DoctorSelectionStep";
+import { Doctor, SetAppointmentModalProps, STEPS, format24HourTo12Hour } from "./interface";
 import DateTimeSelectionStep from "./steps/DateTimeSelectionStep";
 import DetailsVerificationStep from "./steps/DetailsVerificationStep";
 import ConfirmationStep from "./steps/ConfirmationStep";
 
 const doctors = doctorsData as Doctor[];
-const schedules = schedulesData as Record<string, Schedule[]>;
+
+const APPOINTMENT_TYPE_MATCHERS: Record<string, string[]> = {
+  Consultation: ["internal medicine", "general", "family", "primary care", "cardiology"],
+  "Follow-up": ["internal medicine", "general", "family", "primary care", "cardiology"],
+  "Check-up": ["internal medicine", "general", "family", "primary care", "preventive"],
+  Procedure: ["surgery", "procedure", "internal medicine", "specialty"],
+};
+
+const DEFAULT_TIME_OPTIONS = [
+  "08:00",
+  "08:30",
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+];
 
 const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
   open,
@@ -30,45 +53,38 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
   onBook,
 }) => {
   const [activeStep, setActiveStep] = useState(0);
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [selectedTimeLabel, setSelectedTimeLabel] = useState("");
   const [appointmentType, setAppointmentType] = useState("Consultation");
   const [reason, setReason] = useState("");
   const [notes, setNotes] = useState("");
 
-  const departments = useMemo(
-    () => [...new Set(doctors.filter((d) => d.status === "Active").map((d) => d.department))],
-    []
-  );
+  const assignedDoctor = useMemo(() => {
+    const activeDoctors = doctors.filter((doctor) => doctor.status === "Active");
+    if (activeDoctors.length === 0) return null;
 
-  const filteredDoctors = useMemo(
-    () =>
-      doctors.filter(
-        (d) => d.status === "Active" && (selectedDepartment === "" || d.department === selectedDepartment)
-      ),
-    [selectedDepartment]
-  );
+    const keywords = APPOINTMENT_TYPE_MATCHERS[appointmentType] || [];
 
-  const availableSlots = useMemo(() => {
-    if (!selectedDoctor || !selectedDate) return [];
-    const date = new Date(selectedDate + "T00:00:00");
-    const dayName = DAYS_OF_WEEK[date.getDay()];
-    const doctorSchedule = schedules[selectedDoctor.doctorId] || [];
-    return doctorSchedule.filter(
-      (s) => s.day === dayName && (s.type === "consultation" || s.type === "specialty")
-    );
-  }, [selectedDoctor, selectedDate]);
+    const matchedDoctors = activeDoctors.filter((doctor) => {
+      const searchableText = [doctor.department, doctor.specialization, doctor.subSpecialization]
+        .join(" ")
+        .toLowerCase();
+
+      return keywords.some((keyword) => searchableText.includes(keyword));
+    });
+
+    return (matchedDoctors[0] || activeDoctors[0]) ?? null;
+  }, [appointmentType]);
+
+  const selectedTimeLabel = useMemo(() => {
+    if (!selectedTime) return "";
+    return format24HourTo12Hour(selectedTime);
+  }, [selectedTime]);
 
   const handleReset = () => {
     setActiveStep(0);
-    setSelectedDepartment("");
-    setSelectedDoctor(null);
     setSelectedDate("");
     setSelectedTime("");
-    setSelectedTimeLabel("");
     setAppointmentType("Consultation");
     setReason("");
     setNotes("");
@@ -82,10 +98,12 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
   const handleNext = () => {
     if (activeStep === STEPS.length - 1) {
       onBook({
-        doctor: `Dr. ${selectedDoctor!.firstName} ${selectedDoctor!.lastName}`,
-        department: selectedDoctor!.department,
+        doctor: assignedDoctor
+          ? `Dr. ${assignedDoctor.firstName} ${assignedDoctor.lastName}`
+          : "Doctor to be assigned",
+        department: assignedDoctor?.department || "General Medicine",
         date: selectedDate,
-        time: selectedTime,
+        time: selectedTimeLabel || selectedTime,
         type: appointmentType,
         reason,
         notes,
@@ -93,6 +111,7 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
       handleClose();
       return;
     }
+
     setActiveStep((prev) => prev + 1);
   };
 
@@ -101,12 +120,10 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
   const canProceed = () => {
     switch (activeStep) {
       case 0:
-        return selectedDoctor !== null;
+        return reason.trim() !== "";
       case 1:
         return selectedDate !== "" && selectedTime !== "";
       case 2:
-        return reason.trim() !== "";
-      case 3:
         return true;
       default:
         return false;
@@ -165,52 +182,35 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
         </Stepper>
 
         {activeStep === 0 && (
-          <DoctorSelectionStep
-            departments={departments}
-            filteredDoctors={filteredDoctors}
-            selectedDepartment={selectedDepartment}
-            selectedDoctor={selectedDoctor}
-            onDepartmentChange={(value) => {
-              setSelectedDepartment(value);
-              setSelectedDoctor(null);
-            }}
-            onDoctorSelect={setSelectedDoctor}
-          />
-        )}
-
-        {activeStep === 1 && (
-          <DateTimeSelectionStep
-            selectedDoctor={selectedDoctor}
-            selectedDate={selectedDate}
-            selectedTime={selectedTime}
-            availableSlots={availableSlots}
-            minDate={getMinDate()}
-            onDateChange={(value) => {
-              setSelectedDate(value);
-              setSelectedTime("");
-              setSelectedTimeLabel("");
-            }}
-            onTimeSelect={(time, label) => {
-              setSelectedTime(time);
-              setSelectedTimeLabel(label);
-            }}
-          />
-        )}
-
-        {activeStep === 2 && (
           <DetailsVerificationStep
             appointmentType={appointmentType}
             reason={reason}
             notes={notes}
+            selectedDoctor={assignedDoctor}
             onAppointmentTypeChange={setAppointmentType}
             onReasonChange={setReason}
             onNotesChange={setNotes}
           />
         )}
 
-        {activeStep === 3 && (
+        {activeStep === 1 && (
+          <DateTimeSelectionStep
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            minDate={getMinDate()}
+            timeOptions={DEFAULT_TIME_OPTIONS}
+            onDateChange={(value) => {
+              setSelectedDate(value);
+            }}
+            onTimeSelect={(time) => {
+              setSelectedTime(time);
+            }}
+          />
+        )}
+
+        {activeStep === 2 && (
           <ConfirmationStep
-            selectedDoctor={selectedDoctor}
+            selectedDoctor={assignedDoctor}
             selectedDate={selectedDate}
             selectedTime={selectedTime}
             selectedTimeLabel={selectedTimeLabel}
@@ -238,24 +238,12 @@ const SetAppointmentModal: React.FC<SetAppointmentModalProps> = ({
             Back
           </Button>
           <Button
-            variant="contained"
             onClick={handleNext}
+            variant="contained"
             disabled={!canProceed()}
-            sx={{
-              backgroundColor: activeStep === 3 ? palette.success.main : palette.primary.main,
-              textTransform: "none",
-              borderRadius: "10px",
-              px: 3,
-              py: 1,
-              fontWeight: 600,
-              boxShadow: "none",
-              "&:hover": {
-                backgroundColor: activeStep === 3 ? "#0E9F5A" : "#3A56D4",
-                boxShadow: "none",
-              },
-            }}
+            sx={{ textTransform: "none", borderRadius: "10px", px: 3, py: 1, fontWeight: 700 }}
           >
-            {activeStep === 3 ? "Submit for Admin Approval" : "Continue"}
+            {activeStep === STEPS.length - 1 ? "Submit Request" : "Continue"}
           </Button>
         </Box>
       </DialogContent>
