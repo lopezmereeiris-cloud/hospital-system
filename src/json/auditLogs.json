@@ -1,0 +1,932 @@
+[
+  {
+    "id": "seed-1",
+    "timestamp": "2026-03-24T14:13:00.000Z",
+    "action": "LOGIN",
+    "module": "Authentication",
+    "entity": "User Session",
+    "entityId": "SESSION-001",
+    "actor": {
+      "name": "Hendrick",
+      "role": "admin"
+    },
+    "summary": "User login recorded for Hendrick.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed out",
+        "after": "Signed in"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": null,
+        "after": "Logged in to portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-2",
+    "timestamp": "2026-03-24T14:26:00.000Z",
+    "action": "LOGOUT",
+    "module": "Medicine Inventory",
+    "entity": "Medicine",
+    "entityId": "MED-2026-002",
+    "actor": {
+      "name": "Alicia Ramos",
+      "role": "auditor"
+    },
+    "summary": "User logout recorded for Alicia Ramos.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed in",
+        "after": "Signed out"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": "Active",
+        "after": "Logged out from portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-3",
+    "timestamp": "2026-03-24T14:39:00.000Z",
+    "action": "CREATE",
+    "module": "Supplies",
+    "entity": "Supply Item",
+    "entityId": "SUP-2026-003",
+    "actor": {
+      "name": "Dr. Emily Carter",
+      "role": "doctor"
+    },
+    "summary": "New Supply Item record was created.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Not existing",
+        "after": "Created"
+      },
+      {
+        "field": "createdBy",
+        "label": "Created By",
+        "before": null,
+        "after": "Dr. Emily Carter"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-4",
+    "timestamp": "2026-03-24T14:52:00.000Z",
+    "action": "UPDATE",
+    "module": "Doctor Directory",
+    "entity": "Doctor",
+    "entityId": "DOC-004",
+    "actor": {
+      "name": "Hendrick",
+      "role": "admin"
+    },
+    "summary": "Doctor details were updated.",
+    "changes": [
+      {
+        "field": "status",
+        "label": "Status",
+        "before": "Pending",
+        "after": "Updated"
+      },
+      {
+        "field": "lastModifiedBy",
+        "label": "Last Modified By",
+        "before": "System",
+        "after": "Hendrick"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-5",
+    "timestamp": "2026-03-24T15:05:00.000Z",
+    "action": "DELETE",
+    "module": "Appointments",
+    "entity": "Appointment",
+    "entityId": "APT-2026-1005",
+    "actor": {
+      "name": "Alicia Ramos",
+      "role": "auditor"
+    },
+    "summary": "Appointment record was deleted.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Existing",
+        "after": "Deleted"
+      },
+      {
+        "field": "deletedBy",
+        "label": "Deleted By",
+        "before": null,
+        "after": "Alicia Ramos"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-6",
+    "timestamp": "2026-03-24T15:18:00.000Z",
+    "action": "LOGIN",
+    "module": "Settings",
+    "entity": "Hospital Settings",
+    "entityId": "SESSION-006",
+    "actor": {
+      "name": "Dr. Emily Carter",
+      "role": "doctor"
+    },
+    "summary": "User login recorded for Dr. Emily Carter.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed out",
+        "after": "Signed in"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": null,
+        "after": "Logged in to portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-7",
+    "timestamp": "2026-03-24T15:31:00.000Z",
+    "action": "LOGOUT",
+    "module": "Patient Registry",
+    "entity": "Patient Profile",
+    "entityId": "PAT-2026-007",
+    "actor": {
+      "name": "Hendrick",
+      "role": "admin"
+    },
+    "summary": "User logout recorded for Hendrick.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed in",
+        "after": "Signed out"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": "Active",
+        "after": "Logged out from portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-8",
+    "timestamp": "2026-03-24T15:44:00.000Z",
+    "action": "CREATE",
+    "module": "Billing",
+    "entity": "Billing Record",
+    "entityId": "BIL-2026-008",
+    "actor": {
+      "name": "Alicia Ramos",
+      "role": "auditor"
+    },
+    "summary": "New Billing Record record was created.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Not existing",
+        "after": "Created"
+      },
+      {
+        "field": "createdBy",
+        "label": "Created By",
+        "before": null,
+        "after": "Alicia Ramos"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-9",
+    "timestamp": "2026-03-24T15:57:00.000Z",
+    "action": "UPDATE",
+    "module": "Room Management",
+    "entity": "Room Assignment",
+    "entityId": "ROOM-009",
+    "actor": {
+      "name": "Dr. Emily Carter",
+      "role": "doctor"
+    },
+    "summary": "Room Assignment details were updated.",
+    "changes": [
+      {
+        "field": "status",
+        "label": "Status",
+        "before": "Pending",
+        "after": "Updated"
+      },
+      {
+        "field": "lastModifiedBy",
+        "label": "Last Modified By",
+        "before": "System",
+        "after": "Dr. Emily Carter"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-10",
+    "timestamp": "2026-03-24T16:10:00.000Z",
+    "action": "DELETE",
+    "module": "Authentication",
+    "entity": "User Session",
+    "entityId": "SESSION-010",
+    "actor": {
+      "name": "Hendrick",
+      "role": "admin"
+    },
+    "summary": "User Session record was deleted.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Existing",
+        "after": "Deleted"
+      },
+      {
+        "field": "deletedBy",
+        "label": "Deleted By",
+        "before": null,
+        "after": "Hendrick"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-11",
+    "timestamp": "2026-03-24T16:23:00.000Z",
+    "action": "LOGIN",
+    "module": "Medicine Inventory",
+    "entity": "Medicine",
+    "entityId": "MED-2026-011",
+    "actor": {
+      "name": "Alicia Ramos",
+      "role": "auditor"
+    },
+    "summary": "User login recorded for Alicia Ramos.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed out",
+        "after": "Signed in"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": null,
+        "after": "Logged in to portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-12",
+    "timestamp": "2026-03-24T16:36:00.000Z",
+    "action": "LOGOUT",
+    "module": "Supplies",
+    "entity": "Supply Item",
+    "entityId": "SUP-2026-012",
+    "actor": {
+      "name": "Dr. Emily Carter",
+      "role": "doctor"
+    },
+    "summary": "User logout recorded for Dr. Emily Carter.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed in",
+        "after": "Signed out"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": "Active",
+        "after": "Logged out from portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-13",
+    "timestamp": "2026-03-24T16:49:00.000Z",
+    "action": "CREATE",
+    "module": "Doctor Directory",
+    "entity": "Doctor",
+    "entityId": "DOC-013",
+    "actor": {
+      "name": "Hendrick",
+      "role": "admin"
+    },
+    "summary": "New Doctor record was created.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Not existing",
+        "after": "Created"
+      },
+      {
+        "field": "createdBy",
+        "label": "Created By",
+        "before": null,
+        "after": "Hendrick"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-14",
+    "timestamp": "2026-03-24T17:02:00.000Z",
+    "action": "UPDATE",
+    "module": "Appointments",
+    "entity": "Appointment",
+    "entityId": "APT-2026-1014",
+    "actor": {
+      "name": "Alicia Ramos",
+      "role": "auditor"
+    },
+    "summary": "Appointment details were updated.",
+    "changes": [
+      {
+        "field": "status",
+        "label": "Status",
+        "before": "Pending",
+        "after": "Updated"
+      },
+      {
+        "field": "lastModifiedBy",
+        "label": "Last Modified By",
+        "before": "System",
+        "after": "Alicia Ramos"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-15",
+    "timestamp": "2026-03-24T17:15:00.000Z",
+    "action": "DELETE",
+    "module": "Settings",
+    "entity": "Hospital Settings",
+    "entityId": "SESSION-015",
+    "actor": {
+      "name": "Dr. Emily Carter",
+      "role": "doctor"
+    },
+    "summary": "Hospital Settings record was deleted.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Existing",
+        "after": "Deleted"
+      },
+      {
+        "field": "deletedBy",
+        "label": "Deleted By",
+        "before": null,
+        "after": "Dr. Emily Carter"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-16",
+    "timestamp": "2026-03-24T17:28:00.000Z",
+    "action": "LOGIN",
+    "module": "Patient Registry",
+    "entity": "Patient Profile",
+    "entityId": "PAT-2026-016",
+    "actor": {
+      "name": "Hendrick",
+      "role": "admin"
+    },
+    "summary": "User login recorded for Hendrick.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed out",
+        "after": "Signed in"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": null,
+        "after": "Logged in to portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-17",
+    "timestamp": "2026-03-24T17:41:00.000Z",
+    "action": "LOGOUT",
+    "module": "Billing",
+    "entity": "Billing Record",
+    "entityId": "BIL-2026-017",
+    "actor": {
+      "name": "Alicia Ramos",
+      "role": "auditor"
+    },
+    "summary": "User logout recorded for Alicia Ramos.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed in",
+        "after": "Signed out"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": "Active",
+        "after": "Logged out from portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-18",
+    "timestamp": "2026-03-24T17:54:00.000Z",
+    "action": "CREATE",
+    "module": "Room Management",
+    "entity": "Room Assignment",
+    "entityId": "ROOM-018",
+    "actor": {
+      "name": "Dr. Emily Carter",
+      "role": "doctor"
+    },
+    "summary": "New Room Assignment record was created.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Not existing",
+        "after": "Created"
+      },
+      {
+        "field": "createdBy",
+        "label": "Created By",
+        "before": null,
+        "after": "Dr. Emily Carter"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-19",
+    "timestamp": "2026-03-24T18:07:00.000Z",
+    "action": "UPDATE",
+    "module": "Authentication",
+    "entity": "User Session",
+    "entityId": "SESSION-019",
+    "actor": {
+      "name": "Hendrick",
+      "role": "admin"
+    },
+    "summary": "User Session details were updated.",
+    "changes": [
+      {
+        "field": "status",
+        "label": "Status",
+        "before": "Pending",
+        "after": "Updated"
+      },
+      {
+        "field": "lastModifiedBy",
+        "label": "Last Modified By",
+        "before": "System",
+        "after": "Hendrick"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-20",
+    "timestamp": "2026-03-24T18:20:00.000Z",
+    "action": "DELETE",
+    "module": "Medicine Inventory",
+    "entity": "Medicine",
+    "entityId": "MED-2026-020",
+    "actor": {
+      "name": "Alicia Ramos",
+      "role": "auditor"
+    },
+    "summary": "Medicine record was deleted.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Existing",
+        "after": "Deleted"
+      },
+      {
+        "field": "deletedBy",
+        "label": "Deleted By",
+        "before": null,
+        "after": "Alicia Ramos"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-21",
+    "timestamp": "2026-03-24T18:33:00.000Z",
+    "action": "LOGIN",
+    "module": "Supplies",
+    "entity": "Supply Item",
+    "entityId": "SUP-2026-021",
+    "actor": {
+      "name": "Dr. Emily Carter",
+      "role": "doctor"
+    },
+    "summary": "User login recorded for Dr. Emily Carter.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed out",
+        "after": "Signed in"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": null,
+        "after": "Logged in to portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-22",
+    "timestamp": "2026-03-24T18:46:00.000Z",
+    "action": "LOGOUT",
+    "module": "Doctor Directory",
+    "entity": "Doctor",
+    "entityId": "DOC-022",
+    "actor": {
+      "name": "Hendrick",
+      "role": "admin"
+    },
+    "summary": "User logout recorded for Hendrick.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed in",
+        "after": "Signed out"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": "Active",
+        "after": "Logged out from portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-23",
+    "timestamp": "2026-03-24T18:59:00.000Z",
+    "action": "CREATE",
+    "module": "Appointments",
+    "entity": "Appointment",
+    "entityId": "APT-2026-1023",
+    "actor": {
+      "name": "Alicia Ramos",
+      "role": "auditor"
+    },
+    "summary": "New Appointment record was created.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Not existing",
+        "after": "Created"
+      },
+      {
+        "field": "createdBy",
+        "label": "Created By",
+        "before": null,
+        "after": "Alicia Ramos"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-24",
+    "timestamp": "2026-03-24T19:12:00.000Z",
+    "action": "UPDATE",
+    "module": "Settings",
+    "entity": "Hospital Settings",
+    "entityId": "SESSION-024",
+    "actor": {
+      "name": "Dr. Emily Carter",
+      "role": "doctor"
+    },
+    "summary": "Hospital Settings details were updated.",
+    "changes": [
+      {
+        "field": "status",
+        "label": "Status",
+        "before": "Pending",
+        "after": "Updated"
+      },
+      {
+        "field": "lastModifiedBy",
+        "label": "Last Modified By",
+        "before": "System",
+        "after": "Dr. Emily Carter"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-25",
+    "timestamp": "2026-03-24T19:25:00.000Z",
+    "action": "DELETE",
+    "module": "Patient Registry",
+    "entity": "Patient Profile",
+    "entityId": "PAT-2026-025",
+    "actor": {
+      "name": "Hendrick",
+      "role": "admin"
+    },
+    "summary": "Patient Profile record was deleted.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Existing",
+        "after": "Deleted"
+      },
+      {
+        "field": "deletedBy",
+        "label": "Deleted By",
+        "before": null,
+        "after": "Hendrick"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-26",
+    "timestamp": "2026-03-24T19:38:00.000Z",
+    "action": "LOGIN",
+    "module": "Billing",
+    "entity": "Billing Record",
+    "entityId": "BIL-2026-026",
+    "actor": {
+      "name": "Alicia Ramos",
+      "role": "auditor"
+    },
+    "summary": "User login recorded for Alicia Ramos.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed out",
+        "after": "Signed in"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": null,
+        "after": "Logged in to portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-27",
+    "timestamp": "2026-03-24T19:51:00.000Z",
+    "action": "LOGOUT",
+    "module": "Room Management",
+    "entity": "Room Assignment",
+    "entityId": "ROOM-027",
+    "actor": {
+      "name": "Dr. Emily Carter",
+      "role": "doctor"
+    },
+    "summary": "User logout recorded for Dr. Emily Carter.",
+    "changes": [
+      {
+        "field": "sessionStatus",
+        "label": "Session Status",
+        "before": "Signed in",
+        "after": "Signed out"
+      },
+      {
+        "field": "lastActivity",
+        "label": "Last Activity",
+        "before": "Active",
+        "after": "Logged out from portal"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-28",
+    "timestamp": "2026-03-24T20:04:00.000Z",
+    "action": "CREATE",
+    "module": "Authentication",
+    "entity": "User Session",
+    "entityId": "SESSION-028",
+    "actor": {
+      "name": "Hendrick",
+      "role": "admin"
+    },
+    "summary": "New User Session record was created.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Not existing",
+        "after": "Created"
+      },
+      {
+        "field": "createdBy",
+        "label": "Created By",
+        "before": null,
+        "after": "Hendrick"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-29",
+    "timestamp": "2026-03-24T20:17:00.000Z",
+    "action": "UPDATE",
+    "module": "Medicine Inventory",
+    "entity": "Medicine",
+    "entityId": "MED-2026-029",
+    "actor": {
+      "name": "Alicia Ramos",
+      "role": "auditor"
+    },
+    "summary": "Medicine details were updated.",
+    "changes": [
+      {
+        "field": "status",
+        "label": "Status",
+        "before": "Pending",
+        "after": "Updated"
+      },
+      {
+        "field": "lastModifiedBy",
+        "label": "Last Modified By",
+        "before": "System",
+        "after": "Alicia Ramos"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  },
+  {
+    "id": "seed-30",
+    "timestamp": "2026-03-24T20:30:00.000Z",
+    "action": "DELETE",
+    "module": "Supplies",
+    "entity": "Supply Item",
+    "entityId": "SUP-2026-030",
+    "actor": {
+      "name": "Dr. Emily Carter",
+      "role": "doctor"
+    },
+    "summary": "Supply Item record was deleted.",
+    "changes": [
+      {
+        "field": "recordStatus",
+        "label": "Record Status",
+        "before": "Existing",
+        "after": "Deleted"
+      },
+      {
+        "field": "deletedBy",
+        "label": "Deleted By",
+        "before": null,
+        "after": "Dr. Emily Carter"
+      }
+    ],
+    "metadata": {
+      "source": "seed-data",
+      "batch": "v2"
+    }
+  }
+]

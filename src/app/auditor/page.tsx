@@ -48,6 +48,15 @@ const thStyle = {
   borderBottom: `1px solid ${palette.divider}`,
 };
 
+type InventoryAlert = {
+  id: number;
+  medicine: string;
+  type: "low_stock" | "near_expiry" | "expired";
+  quantity: number;
+  reorderLevel?: number;
+  expiryDate?: string;
+};
+
 export default function AuditorDashboardPage() {
   const { totalPatients, availableRooms, bedOccupancy, lowInventoryAlerts } = dashboardData;
   const router = useRouter();
@@ -55,6 +64,7 @@ export default function AuditorDashboardPage() {
   const [modalMode, setModalMode] = useState<"reorder" | "review">("review");
   const [modalMedicine, setModalMedicine] = useState<Medicine | null>(null);
   const medicines = inventoryData;
+  const inventoryAlerts = dashboardData.inventoryAlerts as InventoryAlert[];
 
   function findMedicine(alert: { medicine: string }) {
     const [generic, ...rest] = alert.medicine.split(" ");
@@ -148,7 +158,7 @@ export default function AuditorDashboardPage() {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "24px 28px 16px" }}>
           <div>
             <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "text.primary", marginBottom: 2 }}>Medicine Inventory Alerts</div>
-            <div style={{ fontSize: "0.78rem", color: "text.secondary" }}>{dashboardData.inventoryAlerts.length} items flagged for review</div>
+                <div style={{ fontSize: "0.78rem", color: "text.secondary" }}>{inventoryAlerts.length} items flagged for review</div>
           </div>
           <Chip label="View All" size="small" color="primary" variant="outlined" sx={{ cursor: "pointer" }} onClick={() => router.push("/auditor/inventory?filter=low_stock")} />
         </div>
@@ -165,7 +175,7 @@ export default function AuditorDashboardPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {dashboardData.inventoryAlerts.map((alert) => {
+              {inventoryAlerts.map((alert) => {
                 const cfg = alertTypeConfig[alert.type] ?? { label: alert.type, color: "info" as const };
                 const stockPct = alert.type === "low_stock" && alert.reorderLevel ? Math.round((alert.quantity / alert.reorderLevel) * 100) : null;
                 const barColor = cfg.color === "error" ? palette.error.main : cfg.color === "warning" ? palette.warning.main : palette.info.main;

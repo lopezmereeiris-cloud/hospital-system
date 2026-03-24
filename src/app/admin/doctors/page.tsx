@@ -22,12 +22,15 @@ import { ScheduleBlock } from "@/components/DoctorSchedule";
 import doctorsData from "@/json/doctors.json";
 import doctorSchedulesData from "@/json/doctorSchedules.json";
 import { palette } from "@/theme/palette";
+import { useUser } from "@/context/UserContext";
+import { appendAuditLog, buildFieldChanges } from "@/lib/auditLogs";
 
 const scheduleMap = doctorSchedulesData as Record<string, ScheduleBlock[]>;
 type Tab = "doctors" | "departments";
 
 export default function DoctorsPage() {
-  const doctors = doctorsData as Doctor[];
+  const { user } = useUser();
+  const [doctors, setDoctors] = useState<Doctor[]>(doctorsData as Doctor[]);
   const active = doctors.filter((d) => d.status === "Active").length;
   const onLeave = doctors.filter((d) => d.status === "On Leave").length;
   const specializations = new Set(doctors.map((d) => d.specialization)).size;
@@ -41,8 +44,43 @@ export default function DoctorsPage() {
   const allDepartments = Array.from(new Set(doctors.map((d) => d.department)));
 
   const handleAddDoctor = (data: AddDoctorFormData) => {
-    // In a real app this would call an API
-    console.log("New doctor added:", data);
+    const nextDoctorId = `DOC-${String(doctors.length + 1).padStart(3, "0")}`;
+    const doctor: Doctor = {
+      doctorId: nextDoctorId,
+      firstName: data.firstName,
+      middleName: data.middleName,
+      lastName: data.lastName,
+      dateOfBirth: data.dateOfBirth,
+      sex: data.sex,
+      contactNumber: data.contactNumber,
+      email: data.email,
+      specialization: data.specialization,
+      subSpecialization: data.subSpecialization || null,
+      department: data.department,
+      prcLicenseNumber: data.prcLicenseNumber,
+      ptrNumber: data.ptrNumber,
+      yearsOfExperience: Number(data.yearsOfExperience || 0),
+      bio: data.bio,
+      status: data.status,
+    };
+
+    setDoctors((prev) => [...prev, doctor]);
+
+    appendAuditLog({
+      action: "CREATE",
+      module: "Doctor Directory",
+      entity: "Doctor",
+      entityId: nextDoctorId,
+      actor: { name: user.name, role: user.role },
+      summary: `Added new doctor Dr. ${doctor.firstName} ${doctor.lastName}.`,
+      changes: buildFieldChanges(
+        {} as Record<string, unknown>,
+        doctor as unknown as Record<string, unknown>,
+        {
+          includeFields: ["doctorId", "firstName", "lastName", "department", "specialization", "status"],
+        }
+      ),
+    });
   };
 
   const handleDoctorClick = (doctor: Doctor) => {

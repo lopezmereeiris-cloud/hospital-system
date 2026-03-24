@@ -29,10 +29,13 @@ import SupplyCard from "@/components/SupplyCard";
 import { SupplyItem } from "@/components/SupplyTable/interface";
 import suppliesData from "@/json/supplies.json";
 import { palette } from "@/theme/palette";
+import { useUser } from "@/context/UserContext";
+import { appendAuditLog, buildFieldChanges } from "@/lib/auditLogs";
 
 type FilterKey = "all" | "low_stock" | "near_expiry" | "expired";
 
 export default function InventoryPage() {
+  const { user } = useUser();
   const [items, setItems] = useState<SupplyItem[]>(suppliesData as SupplyItem[]);
 
   const lowStock = items.filter((i) => i.lowStockAlert).length;
@@ -76,10 +79,41 @@ export default function InventoryPage() {
 
   const handleAddItem = (item: SupplyItem) => {
     setItems((prev) => [...prev, item]);
+    appendAuditLog({
+      action: "CREATE",
+      module: "Supplies",
+      entity: "Supply Item",
+      entityId: item.id,
+      actor: { name: user.name, role: user.role },
+      summary: `Added supply item ${item.name}.`,
+      changes: buildFieldChanges(
+        {} as Record<string, unknown>,
+        item as unknown as Record<string, unknown>,
+        {
+          includeFields: ["name", "category", "quantityOnHand", "status", "expiryDate"],
+        }
+      ),
+    });
   };
 
   const handleEditItem = (item: SupplyItem) => {
+    const previous = items.find((i) => i.id === item.id);
     setItems((prev) => prev.map((i) => (i.id === item.id ? item : i)));
+    if (previous) {
+      appendAuditLog({
+        action: "UPDATE",
+        module: "Supplies",
+        entity: "Supply Item",
+        entityId: item.id,
+        actor: { name: user.name, role: user.role },
+        summary: `Updated supply item ${item.name}.`,
+        changes: buildFieldChanges(
+          previous as unknown as Record<string, unknown>,
+          item as unknown as Record<string, unknown>,
+          { excludeFields: ["lastUpdatedDate"] }
+        ),
+      });
+    }
   };
 
   const handleOpenEdit = (item: SupplyItem) => {
@@ -100,6 +134,28 @@ export default function InventoryPage() {
   const handleConfirmDelete = () => {
     if (selectedItem) {
       setItems((prev) => prev.filter((i) => i.id !== selectedItem.id));
+      appendAuditLog({
+        action: "DELETE",
+        module: "Supplies",
+        entity: "Supply Item",
+        entityId: selectedItem.id,
+        actor: { name: user.name, role: user.role },
+        summary: `Deleted supply item ${selectedItem.name}.`,
+        changes: [
+          {
+            field: "recordStatus",
+            label: "Record Status",
+            before: "Existing",
+            after: "Deleted",
+          },
+          {
+            field: "deletedRecord",
+            label: "Deleted Record",
+            before: selectedItem,
+            after: null,
+          },
+        ],
+      });
     }
     setDeleteConfirmOpen(false);
     setSelectedItem(null);

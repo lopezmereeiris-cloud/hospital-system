@@ -30,6 +30,7 @@ const defaultNavItems: NavItem[] = [
   { label: "Rooms", path: "/admin/rooms", icon: "rooms" },
   { label: "Doctors", path: "/admin/doctors", icon: "doctors" },
   { label: "Billing", path: "/admin/billing", icon: "billing" },
+  { label: "Audit Logs", path: "/admin/audit-logs", icon: "audit" },
 ];
 
 function isActiveRoute(currentPath: string, itemPath: string, allItems: NavItem[]): boolean {

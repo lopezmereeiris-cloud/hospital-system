@@ -28,11 +28,14 @@ import InventoryTable from "@/components/InventoryTable";
 import MedicineCard from "@/components/MedicineCard";
 import { Medicine } from "@/components/InventoryTable/interface";
 import inventoryData from "@/json/inventory.json";
+import { useUser } from "@/context/UserContext";
+import { appendAuditLog, buildFieldChanges } from "@/lib/auditLogs";
 
 import { palette } from "@/theme/palette";
 type FilterKey = "all" | "low_stock" | "near_expiry" | "expired";
 
 export default function InventoryPage() {
+  const { user } = useUser();
   const [medicines, setMedicines] = useState<Medicine[]>(inventoryData as Medicine[]);
   const lowStock = medicines.filter((m) => m.lowStockAlert).length;
   const nearExpiry = medicines.filter((m) => m.nearExpiryFlag).length;
@@ -71,10 +74,41 @@ export default function InventoryPage() {
 
   const handleAddMedicine = (medicine: Medicine) => {
     setMedicines((prev) => [...prev, medicine]);
+    appendAuditLog({
+      action: "CREATE",
+      module: "Medicine Inventory",
+      entity: "Medicine",
+      entityId: medicine.id,
+      actor: { name: user.name, role: user.role },
+      summary: `Added medicine ${medicine.genericName}.`,
+      changes: buildFieldChanges(
+        {} as Record<string, unknown>,
+        medicine as unknown as Record<string, unknown>,
+        {
+          includeFields: ["genericName", "brandNames", "quantityOnHand", "status", "expiryDate"],
+        }
+      ),
+    });
   };
 
   const handleEditMedicine = (medicine: Medicine) => {
+    const previous = medicines.find((m) => m.id === medicine.id);
     setMedicines((prev) => prev.map((m) => (m.id === medicine.id ? medicine : m)));
+    if (previous) {
+      appendAuditLog({
+        action: "UPDATE",
+        module: "Medicine Inventory",
+        entity: "Medicine",
+        entityId: medicine.id,
+        actor: { name: user.name, role: user.role },
+        summary: `Updated medicine ${medicine.genericName}.`,
+        changes: buildFieldChanges(
+          previous as unknown as Record<string, unknown>,
+          medicine as unknown as Record<string, unknown>,
+          { excludeFields: ["lastUpdatedDate"] }
+        ),
+      });
+    }
   };
 
   const handleOpenEdit = (medicine: Medicine) => {
@@ -95,6 +129,28 @@ export default function InventoryPage() {
   const handleConfirmDelete = () => {
     if (selectedMedicine) {
       setMedicines((prev) => prev.filter((m) => m.id !== selectedMedicine.id));
+      appendAuditLog({
+        action: "DELETE",
+        module: "Medicine Inventory",
+        entity: "Medicine",
+        entityId: selectedMedicine.id,
+        actor: { name: user.name, role: user.role },
+        summary: `Deleted medicine ${selectedMedicine.genericName}.`,
+        changes: [
+          {
+            field: "recordStatus",
+            label: "Record Status",
+            before: "Existing",
+            after: "Deleted",
+          },
+          {
+            field: "deletedRecord",
+            label: "Deleted Record",
+            before: selectedMedicine,
+            after: null,
+          },
+        ],
+      });
     }
     setDeleteConfirmOpen(false);
     setSelectedMedicine(null);

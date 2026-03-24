@@ -37,6 +37,8 @@ import {
   format24HourTo12Hour,
 } from "@/components/SetAppointmentModal/interface";
 import Autocomplete from "@mui/material/Autocomplete";
+import { useUser } from "@/context/UserContext";
+import { appendAuditLog } from "@/lib/auditLogs";
 
 
 const PURPLE = "#4361EE";
@@ -84,6 +86,7 @@ const APPOINTMENT_TYPES = [
 ];
 
 export default function BookAppointmentPage() {
+  const { user } = useUser();
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
 
@@ -159,6 +162,22 @@ export default function BookAppointmentPage() {
         type: appointmentType,
         reason,
         notes,
+      });
+      appendAuditLog({
+        action: "CREATE",
+        module: "Appointments",
+        entity: "Appointment",
+        entityId: `${selectedPatient?.patient_id ?? "UNKNOWN"}-${selectedDate}-${selectedTime}`,
+        actor: { name: user.name, role: user.role },
+        summary: `Booked ${appointmentType.toLowerCase()} appointment for ${selectedPatient?.name || "patient"}.`,
+        changes: [
+          { field: "patient", label: "Patient", before: null, after: selectedPatient?.name || "-" },
+          { field: "doctor", label: "Doctor", before: null, after: `Dr. ${selectedDoctor!.firstName} ${selectedDoctor!.lastName}` },
+          { field: "department", label: "Department", before: null, after: selectedDoctor?.department || "-" },
+          { field: "date", label: "Date", before: null, after: selectedDate },
+          { field: "time", label: "Time", before: null, after: selectedTimeLabel || selectedTime },
+          { field: "status", label: "Status", before: "Not Scheduled", after: "Confirmed" },
+        ],
       });
       router.push("/admin/appointments");
       return;

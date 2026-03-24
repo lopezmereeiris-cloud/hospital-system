@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import HistoryEduRoundedIcon from "@mui/icons-material/HistoryEduRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import MedicalServicesRoundedIcon from "@mui/icons-material/MedicalServicesRounded";
@@ -15,6 +16,7 @@ import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import patientsData from "@/json/patients.json";
 import { Patient } from "@/components/PatientList/interface";
+import { getMedicalRecordsByPatientId } from "@/lib/medicalRecords";
 import { palette } from "@/theme/palette";
 
 const PURPLE = "#4361EE";
@@ -222,6 +224,7 @@ function EditableSection({
           </Box>
         )}
       </Box>
+      {children}
       {editChildren(editing)}
     </Paper>
   );
@@ -243,7 +246,15 @@ export default function PatientDetailPage() {
 
   const updateAddress = (field: string, value: string) => {
     setData((prev) =>
-      prev ? { ...prev, address: { ...(prev.address ?? {}), [field]: value } as Patient["address"] } : prev
+      prev
+        ? {
+            ...prev,
+            address: {
+              ...(typeof prev.address === "string" ? {} : prev.address ?? {}),
+              [field]: value,
+            } as Patient["address"],
+          }
+        : prev
     );
   };
 
@@ -275,6 +286,10 @@ export default function PatientDetailPage() {
   }
 
   const p = data;
+  const address = typeof p.address === "string" ? {} : p.address ?? {};
+  const medicalRecords = getMedicalRecordsByPatientId(p.patient_id);
+  const latestRecord = medicalRecords[0] ?? null;
+  const historyHref = `/admin/registration/${encodeURIComponent(p.patient_id)}/medical-history`;
 
   return (
     <Box sx={{ maxWidth: 1180, mx: "auto", pb: 3 }}>
@@ -304,6 +319,26 @@ export default function PatientDetailPage() {
               {p.patient_type && (
                 <Chip label={p.patient_type} size="small" sx={{ bgcolor: "rgba(67,97,238,0.08)", color: PURPLE, fontWeight: 600 }} />
               )}
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1.3, flexWrap: "wrap" }}>
+              <Button
+                component={Link}
+                href={historyHref}
+                variant="contained"
+                startIcon={<HistoryEduRoundedIcon />}
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 700,
+                  borderRadius: "10px",
+                  boxShadow: "none",
+                }}
+              >
+                View Medical History
+              </Button>
+              <div style={{ fontSize: "0.8rem", color: "#667085" }}>
+                {medicalRecords.length} record{medicalRecords.length !== 1 ? "s" : ""} available
+                {latestRecord ? ` • Latest: ${formatDisplayDate(latestRecord.admissionDateTime)}` : ""}
+              </div>
             </Box>
           </Box>
           <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1.2, minWidth: 280 }}>
@@ -416,21 +451,21 @@ export default function PatientDetailPage() {
                   <>
                     <EditField label="Contact Number" field="contact_number" value={p.contact_number || ""} onChange={update} />
                     <EditField label="Email" field="email" value={p.email || ""} onChange={update} type="email" />
-                    <EditField label="Street" field="street" value={p.address?.street || ""} onChange={(f, v) => updateAddress("street", v)} />
-                    <EditField label="Barangay" field="barangay" value={p.address?.barangay || ""} onChange={(f, v) => updateAddress("barangay", v)} />
-                    <EditField label="City / Municipality" field="city" value={p.address?.city || ""} onChange={(f, v) => updateAddress("city", v)} />
-                    <EditField label="Province" field="province" value={p.address?.province || ""} onChange={(f, v) => updateAddress("province", v)} />
-                    <EditField label="Zip Code" field="zip_code" value={p.address?.zip_code || ""} onChange={(f, v) => updateAddress("zip_code", v)} />
+                    <EditField label="Street" field="street" value={address.street || ""} onChange={(f, v) => updateAddress("street", v)} />
+                    <EditField label="Barangay" field="barangay" value={address.barangay || ""} onChange={(f, v) => updateAddress("barangay", v)} />
+                    <EditField label="City / Municipality" field="city" value={address.city || ""} onChange={(f, v) => updateAddress("city", v)} />
+                    <EditField label="Province" field="province" value={address.province || ""} onChange={(f, v) => updateAddress("province", v)} />
+                    <EditField label="Zip Code" field="zip_code" value={address.zip_code || ""} onChange={(f, v) => updateAddress("zip_code", v)} />
                   </>
                 ) : (
                   <>
                     <InfoField label="Contact Number" value={p.contact_number || "-"} />
                     <InfoField label="Email" value={p.email || "-"} />
-                    <InfoField label="Street" value={p.address?.street || "-"} />
-                    <InfoField label="Barangay" value={p.address?.barangay || "-"} />
-                    <InfoField label="City / Municipality" value={p.address?.city || "-"} />
-                    <InfoField label="Province" value={p.address?.province || "-"} />
-                    <InfoField label="Zip Code" value={p.address?.zip_code || "-"} />
+                    <InfoField label="Street" value={address.street || "-"} />
+                    <InfoField label="Barangay" value={address.barangay || "-"} />
+                    <InfoField label="City / Municipality" value={address.city || "-"} />
+                    <InfoField label="Province" value={address.province || "-"} />
+                    <InfoField label="Zip Code" value={address.zip_code || "-"} />
                   </>
                 )}
               </Box>
@@ -523,6 +558,7 @@ export default function PatientDetailPage() {
 
         </Box>
       </Box>
+
     </Box>
   );
 }

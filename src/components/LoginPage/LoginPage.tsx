@@ -3,6 +3,7 @@ import { palette } from "@/theme/palette";
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { appendAuditLog } from "@/lib/auditLogs";
 import {
   PageWrapper,
   CardWrapper,
@@ -69,6 +70,22 @@ const LoginPage: React.FC = () => {
     }
     setLoading(true);
     setTimeout(() => {
+      appendAuditLog({
+        action: "LOGIN",
+        module: "Authentication",
+        entity: "User Session",
+        entityId: email,
+        actor: { name: email, role: "patient" },
+        summary: `Patient login successful for ${email}.`,
+        changes: [
+          {
+            field: "sessionStatus",
+            label: "Session Status",
+            before: "Signed out",
+            after: "Signed in",
+          },
+        ],
+      });
       router.push("/client");
     }, 800);
   }

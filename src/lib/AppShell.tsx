@@ -48,6 +48,7 @@ const defaultPageTitles: Record<string, string> = {
   "/admin/rooms": "Room Management",
   "/admin/doctors": "Doctor Directory",
   "/admin/billing": "Billing",
+  "/admin/audit-logs": "Audit Logs",
   "/admin/profile": "Profile",
   "/admin/settings": "Settings",
 };

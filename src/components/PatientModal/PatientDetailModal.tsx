@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { Patient } from "@/components/PatientList/interface";
+import { formatPatientAddress } from "@/lib/patients";
 
 interface Props {
   open: boolean;
@@ -136,7 +137,7 @@ export default function PatientDetailModal({
 
           <Box sx={infoCardStyle}>
             <Typography sx={labelStyle}>Address</Typography>
-            <Typography sx={valueStyle}>{patient.address}</Typography>
+            <Typography sx={valueStyle}>{formatPatientAddress(patient.address)}</Typography>
           </Box>
         </Box>
 

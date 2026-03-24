@@ -19,6 +19,8 @@ import LanguageRoundedIcon from "@mui/icons-material/LanguageRounded";
 import { alpha } from "@mui/material/styles";
 import { palette } from "@/theme/palette";
 import { useHospitalSettings, HospitalSettings } from "@/lib/HospitalSettingsContext";
+import { useUser } from "@/context/UserContext";
+import { appendAuditLog, buildFieldChanges } from "@/lib/auditLogs";
 
 type Section = "general" | "notifications" | "system";
 
@@ -31,6 +33,7 @@ const SECTIONS: { value: Section; label: string; icon: React.ReactNode; descript
 const inputSx = { "& .MuiOutlinedInput-root": { borderRadius: "10px" } };
 
 export default function SettingsPage() {
+  const { user } = useUser();
   const { settings, updateSettings } = useHospitalSettings();
   const [form, setForm] = useState<HospitalSettings>(settings);
   const [saved, setSaved] = useState(false);
@@ -45,7 +48,22 @@ export default function SettingsPage() {
   };
 
   const handleSave = () => {
+    const changes = buildFieldChanges(
+      settings as unknown as Record<string, unknown>,
+      form as unknown as Record<string, unknown>
+    );
     updateSettings(form);
+    if (changes.length > 0) {
+      appendAuditLog({
+        action: "UPDATE",
+        module: "Settings",
+        entity: "Hospital Settings",
+        entityId: section,
+        actor: { name: user.name, role: user.role },
+        summary: `Updated ${section} settings.`,
+        changes,
+      });
+    }
     setSaved(true);
   };
 

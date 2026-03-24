@@ -13,55 +13,12 @@ import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import patientsData from "@/json/patients.json";
+import MedicalRecordHistory from "@/components/MedicalRecordHistory";
+import { getMedicalRecordsByPatientId } from "@/lib/medicalRecords";
+import { type PatientRecord } from "@/lib/patients";
 import { palette } from "@/theme/palette";
 
 const PURPLE = "#4361EE";
-
-type PatientEmergencyContact = {
-  name: string;
-  relationship: string;
-  contactNumber: string;
-};
-
-type PatientAddress = {
-  street?: string;
-  barangay?: string;
-  city?: string;
-  province?: string;
-  zip_code?: string;
-};
-
-type PatientRecord = {
-  patient_id: string;
-  name: string;
-  age: number;
-  gender: string;
-  philhealth_number?: string;
-  status: string;
-  last_visit: string;
-  patient_type?: string;
-  blood_type?: string;
-  date_of_birth?: string;
-  civil_status?: string;
-  nationality?: string;
-  religion?: string;
-  occupation?: string;
-  height?: string;
-  weight?: string;
-  smoking_status?: string;
-  alcohol_use?: string;
-  allergies?: string;
-  existing_conditions?: string;
-  current_medications?: string;
-  contact_number?: string;
-  email?: string;
-  address?: PatientAddress;
-  emergency_contacts?: PatientEmergencyContact[];
-  sss_number?: string;
-  tin_number?: string;
-  valid_id_type?: string;
-  valid_id_number?: string;
-};
 
 const parseParam = (value: string) => {
   try {
@@ -134,6 +91,7 @@ export default function AuditorPatientDetailPage() {
   const params = useParams<{ id: string }>();
   const patientId = parseParam(typeof params.id === "string" ? params.id : "");
   const patient = (patientsData as PatientRecord[]).find((item) => item.patient_id === patientId);
+  const medicalRecords = patient ? getMedicalRecordsByPatientId(patient.patient_id) : [];
 
   if (!patient) {
     return (
@@ -152,6 +110,8 @@ export default function AuditorPatientDetailPage() {
       </Box>
     );
   }
+
+  const address = typeof patient.address === "string" ? {} : patient.address ?? {};
 
   return (
     <Box sx={{ maxWidth: 1180, mx: "auto", pb: 3 }}>
@@ -230,11 +190,11 @@ export default function AuditorPatientDetailPage() {
             <Box sx={{ display: "grid", gap: 1.2 }}>
               <InfoField label="Contact Number" value={patient.contact_number || "-"} />
               <InfoField label="Email" value={patient.email || "-"} />
-              <InfoField label="Street" value={patient.address?.street || "-"} />
-              <InfoField label="Barangay" value={patient.address?.barangay || "-"} />
-              <InfoField label="City / Municipality" value={patient.address?.city || "-"} />
-              <InfoField label="Province" value={patient.address?.province || "-"} />
-              <InfoField label="Zip Code" value={patient.address?.zip_code || "-"} />
+              <InfoField label="Street" value={address.street || "-"} />
+              <InfoField label="Barangay" value={address.barangay || "-"} />
+              <InfoField label="City / Municipality" value={address.city || "-"} />
+              <InfoField label="Province" value={address.province || "-"} />
+              <InfoField label="Zip Code" value={address.zip_code || "-"} />
             </Box>
           </Section>
 
@@ -268,6 +228,10 @@ export default function AuditorPatientDetailPage() {
             </Box>
           </Section>
         </Box>
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <MedicalRecordHistory patient={patient} records={medicalRecords} />
       </Box>
     </Box>
   );

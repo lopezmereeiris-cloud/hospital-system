@@ -37,6 +37,7 @@ import {
 } from "./elements";
 import { useUser } from "@/context/UserContext";
 import { NotificationsNoneRoundedIcon, MenuRoundedIcon } from "./icons";
+import { appendAuditLog } from "@/lib/auditLogs";
 
 const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) => {
   const theme = useTheme();
@@ -87,6 +88,22 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, title, sidebarWidth }) =>
   };
 
   const handleLogoutConfirm = () => {
+    appendAuditLog({
+      action: "LOGOUT",
+      module: "Authentication",
+      entity: "User Session",
+      entityId: user.name,
+      actor: { name: user.name, role: user.role },
+      summary: `${user.role === "admin" ? "Admin" : "User"} ${user.name} logged out.`,
+      changes: [
+        {
+          field: "sessionStatus",
+          label: "Session Status",
+          before: "Signed in",
+          after: "Signed out",
+        },
+      ],
+    });
     setLogoutOpen(false);
     router.push("/client/login");
   };

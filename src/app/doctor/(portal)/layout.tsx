@@ -5,13 +5,14 @@ import { NavItem } from "@/components/Sidebar/interface";
 
 const doctorNavItems: NavItem[] = [
   { label: "Dashboard", path: "/doctor", icon: "dashboard" },
-  { label: "Schedule", path: "/doctor/schedule", icon: "calendar" }
+  { label: "Schedule", path: "/doctor/schedule", icon: "calendar" },
+  { label: "Patients", path: "/doctor/patients", icon: "register" },
 ];
 
 const doctorPageTitles: Record<string, string> = {
   "/doctor": "Dashboard",
   "/doctor/schedule": "Schedule",
-
+  "/doctor/patients": "Patients",
 };
 
 export default function doctorDashboardLayout({
